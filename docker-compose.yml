@@ -18,3 +18,10 @@ services:
       - "./frontend:/app"
     working_dir: /app
     command: bash -c "npm install -g npm && npm install && npm run dev -- --host 0.0.0.0"
+  database:
+    image: postgres
+    environment:
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    volumes:
+      - ./backend/init.sql:/docker-entrypoint-initdb.d/init.sql

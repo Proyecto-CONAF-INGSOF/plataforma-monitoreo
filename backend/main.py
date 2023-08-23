@@ -1,6 +1,8 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
+from login import router
+
 
 class Person(BaseModel):
     name: str
@@ -8,7 +10,14 @@ class Person(BaseModel):
     age: int
 
 
+class AdminLogin(BaseModel):
+    username: str
+    password: str
+
+
 app = FastAPI()
+
+app.include_router(router, prefix="/admin", tags=["auth"])
 
 
 @app.get("/")
