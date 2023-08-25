@@ -1,14 +1,13 @@
 import bcrypt
 import secrets
-from fastapi import Depends, HTTPException, status
+from fastapi import Cookie, Depends, HTTPException, status
 from fastapi.routing import APIRouter
 from sqlmodel import Session, select
 from app.models.admins import Admin
 from app.models.database import get_session
 from app.schemas.admins import LoginAdmin, NewAdmin
-from sqlalchemy.exc import IntegrityError
+from sqlalchemy.exc import IntegrityError, NoResultFound
 from app.models.session import SessionAuth
-from app.schemas.token import Token
 import time
 
 from psycopg2.errors import UniqueViolation
@@ -77,10 +76,18 @@ async def login(admin: LoginAdmin, session: Session = Depends(get_session)):
 
 
 @router.post("/logout")
-async def logout(token: Token, session: Session = Depends(get_session)):
+async def logout(
+    session: Session = Depends(get_session),
+    user_token: str = Cookie(None),
+):
     # Buscamos token en base de datos
-    token_row = select(SessionAuth).where(SessionAuth.token == token.token)
-    token_db = session.exec(token_row).one()
+    token_row = select(SessionAuth).where(SessionAuth.token == user_token)
+    try:
+        token_db = session.exec(token_row).one()
+    except NoResultFound as _:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Token no encontrado"
+        )
 
     if token_db is not None:
         # Eliminamos token de base de datos
