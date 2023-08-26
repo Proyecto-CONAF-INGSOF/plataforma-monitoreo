@@ -1,4 +1,3 @@
-version: "0.1"
 services:
   backend:
     build:
@@ -11,7 +10,8 @@ services:
     working_dir: /app
     command: uvicorn app.main:app --reload --host 0.0.0.0 --port 8080
     depends_on:
-      - database
+      database:
+        condition: service_healthy
   frontend:
     image: node
     ports:
@@ -25,5 +25,8 @@ services:
     environment:
       - POSTGRES_PASSWORD=${DB_PASSWORD}
       - POSTGRES_DB=${DB_NAME}
-    volumes:
-      - ./backend/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "sh -c 'pg_isready -U postgres -d ${DB_NAME}'"]
+      interval: 10s
+      timeout: 3s
+      retries: 3

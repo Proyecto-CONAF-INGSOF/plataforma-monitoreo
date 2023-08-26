@@ -1,43 +1,22 @@
-import bcrypt
-import secrets
-from fastapi import Cookie, Depends, HTTPException, status
-from fastapi.routing import APIRouter
-from sqlmodel import Session, select
+from app.crud.admins import crear_admin, obtener_admin
+from app.crud.session_auth import crear_token, eliminar_token, obtener_token
 from app.models.admins import Admin
 from app.models.database import get_session
-from app.schemas.admins import LoginAdmin, NewAdmin
-from sqlalchemy.exc import IntegrityError, NoResultFound
-from app.models.session import SessionAuth
-import time
-
-from psycopg2.errors import UniqueViolation
-
+from app.schemas.admins import LoginAdmin
+from fastapi import Cookie, Depends, HTTPException, status
+from fastapi.routing import APIRouter
+from sqlmodel import Session
 
 router = APIRouter()
 
 
 @router.post("/registro")
-async def registro(admin: NewAdmin, session: Session = Depends(get_session)):
-    # Nuevo admin
-    admin_db = Admin.from_new_admin(admin)
-    session.add(admin_db)
-
-    # Intentamos guardar en base de datos, posible error de
-    # duplicidad de correo o nombre de usuario
-    try:
-        session.commit()
-    except IntegrityError as e:
-        # Chequeamos que el error es de duplicado
-        assert isinstance(e.orig, UniqueViolation)
-        session.rollback()
-        raise HTTPException(
-            status_code=status.HTTP_409_CONFLICT,
-            detail="El nombre de usuario o correo ya existe",
-        )
-
-    # Chequeamos que el admin se hay creado
-    session.refresh(admin_db)
-    if admin_db:
+async def registro(admin: Admin, session: Session = Depends(get_session)):
+    # Creamos nuevo admin, hasing ocurre en el crud
+    await crear_admin(admin, session)
+    # Verificamos que el admin se haya creado
+    session.refresh(admin)
+    if admin:
         return {"message": "Admin creado exitosamente"}
     # Error 409
     raise HTTPException(
@@ -45,62 +24,40 @@ async def registro(admin: NewAdmin, session: Session = Depends(get_session)):
     )
 
 
+# Inicio de sesión
 @router.post("/login")
 async def login(admin: LoginAdmin, session: Session = Depends(get_session)):
     # Creamos consulta, filtrado por email
-    statement = select(Admin).where(Admin.email == admin.email)
-    admin_db = session.exec(statement).first()
+    admin_db = await obtener_admin(admin.email, session)
 
     # Si el admin email existe en la base de datos
     if admin_db is not None:
         # Si las contrasenas coinciden
-        if bcrypt.checkpw(
-            admin.password.encode("utf-8"), admin_db.password.encode("utf-8")
-        ):
+        if admin_db.comparar_contrasena(admin.contrasena):
             # Generamos token de session y la retornamos al usuario,
             # con esto podra pasar barrera de seguridad en middleware
-            token = secrets.token_urlsafe(32)
             id = admin_db.id or 0
-            created_at = int(time.time())
-            admin_sess = SessionAuth(user_id=id, token=token, created_at=created_at)
-
-            session.add(admin_sess)
-            session.commit()
+            admin_sess = await crear_token(id, session)
+            # Verificamos que  el token se haya creado (con `session.refresh`)
             session.refresh(admin_sess)
-
-            return {"token": token}
+            if admin_sess:
+                return {"token": admin_sess.token}
     raise HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Usuario o contraseña incorrectos",
     )
 
 
+# Cerrar sesión
 @router.post("/logout")
 async def logout(
     session: Session = Depends(get_session),
     user_token: str = Cookie(None),
 ):
     # Buscamos token en base de datos
-    token_row = select(SessionAuth).where(SessionAuth.token == user_token)
-    try:
-        token_db = session.exec(token_row).one()
-    except NoResultFound as _:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED, detail="Token no encontrado"
-        )
-
-    if token_db is not None:
+    token_row = await obtener_token(user_token, session)
+    if token_row is not None:
         # Eliminamos token de base de datos
-        session.delete(token_db)
-        try:
-            session.commit()
-        except Exception as _:
-            # Si hay error, alertamos al usuario
-            session.rollback()
-            raise HTTPException(
-                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-                detail="Error al cerrar sesión",
-            )
-
+        await eliminar_token(token_row, session)
     # Exito al cerrar sesión
     return {"message": "Sesión cerrada exitosamente"}

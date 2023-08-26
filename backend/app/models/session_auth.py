@@ -1,8 +1,11 @@
 from typing import Optional
+
 from sqlmodel import Field, SQLModel
 
 
-# Modelo SQL de admin, id es opcional porque se genera automáticamente
+# Model SQL de las sessiones. Con esto los usuarios podran acceder
+# a contenido restringido, si tienen una session activa en la BD
+# y el token es valido.
 class SessionAuth(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     user_id: int

@@ -1,12 +1,7 @@
 from pydantic import BaseModel
 
 
-class NewAdmin(BaseModel):
-    username: str
-    password: str
-    email: str
-
-
+# Clase para el inicio de session de administradores
 class LoginAdmin(BaseModel):
     email: str
-    password: str
+    contrasena: str
