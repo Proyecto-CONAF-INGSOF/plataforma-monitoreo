@@ -1,3 +1,3 @@
-from .admins import NewAdmin, LoginAdmin
+from .admins import LoginAdmin
 
-__all__ = ["NewAdmin", "LoginAdmin"]
+__all__ = ["LoginAdmin"]

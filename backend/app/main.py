@@ -1,9 +1,6 @@
-from fastapi import FastAPI
 from app.models.database import create_db_and_tables
-
-
 from app.routes.admins import router as admins_router
-
+from fastapi import FastAPI
 
 app = FastAPI()
 
