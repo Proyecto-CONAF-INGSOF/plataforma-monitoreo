@@ -14,19 +14,15 @@ Esto iniciara los contenedores de desarrollo. Posterior a esto, todos los cambio
 
 Para poder agregar librerias al directorio `frontend` se deben seguir dos pasos:
 
-1. En primer lugar, entrar al contenedor del `frontend` e instalar la libreria. Por ejemplo si se desea instalar la libreria `chilean-rutify`, ejecutar los siguientes comandos desde su consola:
+1. En primer lugar, entrar al contenedor del `frontend`
 
 ```
 docker exec -it plataforma-monitoreo-frontend-1 bash # Entrar al contenedor del frontend
 ```
 
+2. En segundo lugar, instalar la libreria en el contenedor. Por ejemplo si se desea instalar la libreria `chilean-rutify`, ejecutar los siguientes comandos desde su consola:
+
 ```bash
 npm install chilean-rutify
 exit
-```
-
-2. Luego en el directorio `frontend` **fuera del contenedor**, ejecutar:
-
-```bash
-npm install chilean-rutify
 ```
