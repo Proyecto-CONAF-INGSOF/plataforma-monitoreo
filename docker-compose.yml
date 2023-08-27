@@ -13,13 +13,14 @@ services:
       database:
         condition: service_healthy
   frontend:
-    image: node
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
     ports:
       - 5173:5173
     volumes:
-      - "./frontend:/app"
-    working_dir: /app
-    command: bash -c "npm install -g npm && npm install && npm run dev -- --host 0.0.0.0"
+      - "./frontend:/usr/src/app"
+      - "/usr/src/app/node_modules" # Anonymous volume for node_modules
   database:
     image: postgres
     environment:
