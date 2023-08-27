@@ -6,12 +6,12 @@ from sqlmodel import Field, SQLModel
 
 # Modelo SQL de admin, id es opcional porque se genera automáticamente
 class Admin(SQLModel, table=True):
-    id: Optional[int] = Field(default=None, primary_key=True)
+    id: Optional[int] = Field(default=None, primary_key=True, index=True)
     nombre: str
     apellido: str
-    username: str = Field(unique=True)
+    username: str = Field(unique=True, index=True)
     contrasena: str
-    email: str = Field(unique=True)
+    email: str = Field(unique=True, index=True)
 
     # Hashear la contrasena antes de guardar en base de datos
     def hashear_contrasena(self):

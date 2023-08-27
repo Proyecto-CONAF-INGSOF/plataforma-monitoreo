@@ -2,16 +2,40 @@ from app.crud.admins import crear_admin, obtener_admin
 from app.crud.session_auth import crear_token, eliminar_token, obtener_token
 from app.models.admins import Admin
 from app.models.database import get_session
+from app.models.session_auth import SessionAuth
 from app.schemas.admins import LoginAdmin
-from fastapi import Cookie, Depends, HTTPException, status
+from fastapi import Cookie, Depends, HTTPException, Response, status
 from fastapi.routing import APIRouter
 from sqlmodel import Session
 
 router = APIRouter()
 
 
+async def auth_middleware(
+    user_token: str = Cookie(None), session: Session = Depends(get_session)
+) -> SessionAuth:
+    # Si el usuario no tiene token, no puede pasar
+    if user_token is None:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="No autorizado",
+        )
+    session_row = await obtener_token(user_token, session)
+    if session_row is None:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="No autorizado",
+        )
+    return session_row
+
+
 @router.post("/registro")
-async def registro(admin: Admin, session: Session = Depends(get_session)):
+async def registro(
+    admin: Admin,
+    user_token: str = Cookie(None),
+    session: Session = Depends(get_session),
+):
+    _ = await auth_middleware(user_token, session)
     # Creamos nuevo admin, hasing ocurre en el crud
     await crear_admin(admin, session)
     # Verificamos que el admin se haya creado
@@ -26,7 +50,9 @@ async def registro(admin: Admin, session: Session = Depends(get_session)):
 
 # Inicio de sesión
 @router.post("/login")
-async def login(admin: LoginAdmin, session: Session = Depends(get_session)):
+async def login(
+    admin: LoginAdmin, response: Response, session: Session = Depends(get_session)
+):
     # Creamos consulta, filtrado por email
     admin_db = await obtener_admin(admin.email, session)
 
@@ -41,7 +67,11 @@ async def login(admin: LoginAdmin, session: Session = Depends(get_session)):
             # Verificamos que  el token se haya creado (con `session.refresh`)
             session.refresh(admin_sess)
             if admin_sess:
-                return {"token": admin_sess.token}
+                response.set_cookie(
+                    key="user_token",
+                    value=admin_sess.token,
+                )
+                return "Success"
     raise HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Usuario o contraseña incorrectos",
@@ -51,6 +81,7 @@ async def login(admin: LoginAdmin, session: Session = Depends(get_session)):
 # Cerrar sesión
 @router.post("/logout")
 async def logout(
+    response: Response,
     session: Session = Depends(get_session),
     user_token: str = Cookie(None),
 ):
@@ -58,6 +89,7 @@ async def logout(
     token_row = await obtener_token(user_token, session)
     if token_row is not None:
         # Eliminamos token de base de datos
+        response.delete_cookie(key="user_token")
         await eliminar_token(token_row, session)
     # Exito al cerrar sesión
     return {"message": "Sesión cerrada exitosamente"}

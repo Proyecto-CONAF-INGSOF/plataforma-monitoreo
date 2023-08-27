@@ -9,6 +9,6 @@ from sqlmodel import Field, SQLModel
 class SessionAuth(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     user_id: int
-    token: str = Field(unique=True)
+    token: str = Field(unique=True, index=True)
     created_at: int
     expires_in: int = Field(default=3600)
