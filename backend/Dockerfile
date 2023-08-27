@@ -5,6 +5,9 @@ RUN mkdir /app
 WORKDIR /app
 RUN pip install --upgrade pip
 
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
 EXPOSE 8080/tcp
 EXPOSE 8080/udp
 
