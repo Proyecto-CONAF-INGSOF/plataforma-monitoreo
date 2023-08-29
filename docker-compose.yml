@@ -23,7 +23,7 @@ services:
     working_dir: "/usr/src/app"
     command: bash -c "npm install && npm run dev"
   database:
-    image: postgres
+    image: postgis/postgis
     environment:
       - POSTGRES_PASSWORD=${DB_PASSWORD}
       - POSTGRES_DB=${DB_NAME}
@@ -32,3 +32,10 @@ services:
       interval: 10s
       timeout: 3s
       retries: 3
+  dbconaf:
+    image: postgis/postgis
+    environment:
+      - POSTGRES_PASSWORD=${DB_CONAF_PASSWORD}
+      - POSTGRES_DB=${DB_CONAF_NAME}
+    volumes:
+      - "./db.sql:/docker-entrypoint-initdb.d/db.sql"
