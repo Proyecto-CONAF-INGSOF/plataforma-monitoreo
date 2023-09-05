@@ -3,14 +3,14 @@ import './NavbarStyles.css'; // Importa el archivo CSS
 
 const Navbar = () => {
   return (
-    <header>
+    <div className="navbar">
       <nav>
         <ul>
           <img src="forestin.svg" id="forestin" alt="Forestin Logo" />
           <li className="monitoreo">Monitoreo SNAPSE</li> {/* Asigna clases CSS */}
         </ul>
       </nav>
-    </header>
+    </div>
   );
 };
 

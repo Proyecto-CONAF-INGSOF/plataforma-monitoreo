@@ -1,8 +1,17 @@
+/* Sidebar.css */
+
 .sidebar {
-    width: 250px;
+    position: fixed;
+    margin-top: 60px;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 250px; /* O ajusta el ancho según tus necesidades */
     background-color: #004F40;
-    padding: 20px;
-}
+    
+    /* Estilos adicionales */
+  }
+  
 
 /* Estilos de los elementos del formulario */
 label {
@@ -18,3 +27,4 @@ select {
     padding: 5px;
     margin-bottom: 40px;
 }
+

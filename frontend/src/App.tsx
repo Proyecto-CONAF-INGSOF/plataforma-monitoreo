@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
 import Monitoring from './component/Monitoring';
+import Login from './component/Login';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -14,6 +15,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Monitoring/>} />
+        <Route path="/admin" element={<Login/>} />
         {/* Agrega más rutas para otras páginas */}
       </Routes>
     </Router>

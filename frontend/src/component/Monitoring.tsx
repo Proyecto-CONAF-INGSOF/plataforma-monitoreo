@@ -1,20 +1,18 @@
 import React from 'react';
-import Header from './Navbar'; // Asegúrate de que la ruta sea correcta
+import Header from './Navbar';
 import Sidebar from './Sidebar';
+import Content from './Content';
 
 const Monitoring = () => {
   return (
-    <div>
-      <Header />
-      {/* Resto de tu código HTML y componentes */}
-      <div className='container'>
-        <Sidebar/>
-      </div>
-      <main>
+    <div className='MonitorContainer'>
 
-      </main>
+      <Header />
+      <Sidebar />
+      <Content />
 
     </div>
+      
   );
 };
 

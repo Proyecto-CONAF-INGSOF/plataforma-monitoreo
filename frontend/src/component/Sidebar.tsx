@@ -3,8 +3,8 @@ import "./SidebarStyles.css";
 
 const Sidebar: React.FC = () => {
   return (
-    <div className="container">
-      <aside className="sidebar">
+    
+      <div className="sidebar">
         <form>
           <label>Seleccion de proyecto</label>
           <input type="checkbox" />
@@ -60,14 +60,8 @@ const Sidebar: React.FC = () => {
 
           <button type="button">Realizar análisis</button>
         </form>
-      </aside>
-      <main>
-        CONTENIDO PRINCIPAL/ MAPA
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. ...
-        </p>
-      </main>
-    </div>
+      </div>
+    
   );
 };
 
