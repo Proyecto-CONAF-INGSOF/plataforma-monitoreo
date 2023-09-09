@@ -2,7 +2,7 @@
 
 .sidebar {
     position: fixed;
-    margin-top: 60px;
+    margin-top: 80px;
     top: 0;
     left: 0;
     height: 100%;
@@ -44,8 +44,8 @@ label {
 
 select{
     -webkit-appearance: none;
-    -moz-appearance: none;
-    -o-appearance: none;
+    
+    margin-bottom: 20px;
     appearance: none;
     width:88%;
     margin-left: 14px;
@@ -55,19 +55,19 @@ select{
     font-weight: bold;
     color: #5E5E5E;
     text-align: center;
-    background-image: url(Polygon1.png);
+    padding-left: 10px;
+    background-image: url('Polygon1.png'); /* Ruta a tu imagen de flecha */
     background-repeat: no-repeat;
-    background-position: right center ;
+    background-position: right 4% center; /* Ajusta el valor según tus necesidades */
+    background-size: 14px 12px;
 }
+
+
+
 
 select::-ms-expand {
     display: none; /*Evita que se muestre la flecha por defecto en versiones de IE*/
     }
-
-
-
-
-
 
 
 
@@ -84,7 +84,7 @@ button{
     margin-left: 10px;
     cursor: pointer;
     font-weight: bold;
-    margin-top: 40px;
+    margin-top: 30px;
 }
 
 button:hover {

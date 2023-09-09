@@ -6,26 +6,60 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: 60px; /* Altura fija de la barra de navegación */
-    background-color: #006955;
+    height: 80px; /* Altura fija de la barra de navegación */
+    background-color: #605CA8;
     color: #fff;
+    
     /* Estilos adicionales */
   }
   
-  
+/* NavbarStyles.css */
 
-nav ul {
-    list-style-type: none;
-    margin: 0;
+.nav-container {
+  display: flex; /* Hace que los elementos se ordenen en fila */
+  justify-content: space-between; /* Coloca espacio entre los elementos */
+  align-items: center; /* Centra verticalmente los elementos */
 }
 
-nav ul li {
-    display: inline;
-    margin-right: 20px;
+.LeftNav {
+  display: flex; /* Hace que los elementos dentro de LeftNav y RightNav se ordenen en fila */
+  align-items: center; /* Centra verticalmente los elementos dentro de LeftNav y RightNav */
+  height: 100%;
+  width: 250px;
+  background-color: #555299;
 }
 
-nav a {
-    text-decoration: none;
-    color: #fff;
+p{
+  font-size: 16px;
+  font-weight: bold;
 }
 
+/* Ajusta los estilos según sea necesario */
+.logo {
+  width: 60px;
+  height: auto;
+  padding: 10px;
+}
+
+.logoMon{
+  width: 160px;
+  height: auto;
+  padding: 10px;
+}
+
+.actionButton{
+  position: absolute;
+  left: 250px;
+  top: -5px;
+  width: 35px;
+  height: 30px;
+  border-radius: 5px;
+  background-color:#605CA8;
+  background-image: url('boton_sidebar.png');
+  transition: 0.2s;
+}
+
+.actionButton:hover{
+  background-color:#706db1;
+  transform: scale(1.1);
+}
