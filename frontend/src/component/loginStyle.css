@@ -1,7 +1,7 @@
 /* loginStyle.css */
 
 .login-container {
-  background-image: url(../../public/forest.svg); /* Ruta al archivo forest.svg */
+  background-image: url(../../public/forest.jpg); /* Ruta al archivo forest.svg */
 
   font-family: Arial, sans-serif;
   display: flex;
@@ -23,8 +23,8 @@
   
 }
 
-LoginForm {
-  position: relative;
+.LoginForm {
+  position: absolute;
   margin-top: 280px;
   background-color: #FFFFFF;
   border: 1px solid #D9D9D9;

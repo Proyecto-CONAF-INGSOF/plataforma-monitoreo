@@ -9,9 +9,6 @@ const Login: React.FC = () => {
     <div className="login-container">
       <img src="coipo.svg" id="guaren" alt="Guaren Image" />
       <LoginForm />
-      <a href="#" className="forgot-password-link">
-        ¿Olvidó su contraseña?
-      </a>
     </div>
   );
 };

@@ -1,101 +1,103 @@
+/* Asegúrate de que el archivo CSS se vincule correctamente en tu HTML */
 
-form{
-    font-family: Arial, sans-serif;
-    margin-top: 20px;
-    margin-bottom: 20px;
-  }
+form {
+  font-family: Arial, sans-serif;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
 
 /* Login_form.css */
 
 .form-container {
-    position: relative;
-    margin-top: 280px;
-    margin-left: 480px;
-    background-color: #FFFFFF;
-    border: 1px solid #D9D9D9;
-    padding: 20px;
-    border-radius: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    width: 280px;
-    height: 300px;
-  }
+  position: absolute;
+  margin-top: 575px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #FFFFFF;
+  border: 1px solid #D9D9D9;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 280px;
+  height: 300px;
+}
+
+
+/* Resto de tus estilos */
+
+.input {
+  display: block;
+  margin-bottom: 10px;
+  font-family: Inter;
+  font-weight: 600;
+  font-size: 18px;
+  margin-left: 16%;
+  font-family: Arial, sans-serif;
+}
+
+.label {
+  display: block;
+  margin-bottom: 5px;
+  font-family: Inter;
+  font-weight: 700;
+  font-size: 18px;
+  margin-left: 16%;
+  color: #000000;
+  font-family: Arial, sans-serif;
+}
+
+.input::placeholder {
   
-  /* Resto de tus estilos */
-  
+  bottom: 0;
+  left: 0;
+  margin: 0;
+  padding: 0 5px;
+  color: #D9D9D9;
+  font-size: 13px;
+  font-family: Arial, sans-serif;
+}
 
-  .input {
-    display: block;
-    margin-bottom: 10px;
-    font-family: Inter;
-    font-weight: 600;
-    font-size: 18px;
-    margin-left: 16%;
-    margin-bottom: 26px;
-    font-family: Arial, sans-serif;
-  }
+.input {
+  width: 60%;
+  padding: 8px;
+  border: none;
+  border-bottom: 1px solid #000000;
+  position: relative;
+  font-size: 13px;
+  font-family: Arial, sans-serif;
+}
 
-  .label{
-    display: block;
-    margin-bottom: 5px;
-    font-family: Inter;
-    font-weight: 700;
-    font-size: 18px;
-    margin-left: 16%;
-    color: #000000;
-    font-family: Arial, sans-serif;
-  }
-  
-  .input::spaceholder{
-    position: absolute;
-    
-  }
+.input:focus::placeholder {
+  display: none; /* Oculta el marcador de posición cuando el campo está enfocado */
+}
 
-  .input {
-    width: 60%;
-    padding: 8px;
-    border: none;
-    border-bottom: 1px solid #000000;
-    position: relative;
-    font-size: 13px;
-    font-family: Arial, sans-serif;
-  }
+/* Estilo personalizado para el mensaje de validación */
+.input::placeholder::after {
+  content: " (Llena este campo)";
+  color: red; /* Puedes ajustar el color según tus preferencias */
+  font-size: 12px; /* Puedes ajustar el tamaño de fuente según tus preferencias */
+  font-weight: normal; /* Puedes ajustar la peso de fuente según tus preferencias */
+}
 
-  .input:focus::placeholder {
-    font-family: Arial, sans-serif;
-    display: none; /* Oculta el marcador de posición cuando el campo está enfocado */
-  }
+.button {
+  background-color: #006955;
+  color: white;
+  border: none;
+  min-width: 68%;
+  padding: 10px 15px;
+  border-radius: 20px;
+  cursor: pointer;
+  margin-left: 15%;
+  font-family: Arial, sans-serif;
+}
 
-  .input::placeholder {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    margin: 0;
-    padding: 0 5px;
-    color: #D9D9D9;
-    font-size: 13px;
-    font-family: Arial, sans-serif;
-  }
-
-  .button {
-    background-color: #006955;
-    color: white;
-    border: none;
-    width: 68%;
-    padding: 10px 15px;
-    border-radius: 20px;
-    cursor: pointer;
-    margin-left: 15%;
-    font-family: Arial, sans-serif;
-    
-  }
-
-  .forgot-password-link {
-    color: black; /* Color de texto en negro */
-    text-decoration: none; /* Elimina el subrayado */
-    font-family: Inter;
-    font-weight: 600;
-    font-size: 13px;
-    margin-left: 20%;
-    margin-top: 10px;
-    font-family: Arial, sans-serif;
-  }
+.forgot-password-link {
+  color: black; /* Color de texto en negro */
+  text-decoration: none; /* Elimina el subrayado */
+  font-family: Inter;
+  font-weight: 600;
+  font-size: 13px;
+  margin-left: 20%;
+  margin-top: 10px;
+  font-family: Arial, sans-serif;
+}

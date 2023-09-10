@@ -4,6 +4,7 @@ import React from 'react';
 import './LoginFormStyles.css'; // Ruta al archivo de estilos
 
 const LoginForm: React.FC = () => {
+  
   return (
     <div className="form-container">
       <form>
@@ -21,6 +22,9 @@ const LoginForm: React.FC = () => {
           Iniciar Sesión
         </button>
       </form>
+      <a href="#" className="forgot-password-link">
+        ¿Olvidó su contraseña?
+      </a>
     </div>
   );
 };
