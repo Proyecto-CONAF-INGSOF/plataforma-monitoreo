@@ -1,0 +1,8 @@
+/* Content.css */
+.content {
+    margin-top: 60px; /* Igual a la altura de la barra de navegación */
+    margin-left: 250px; /* Igual al ancho de la barra lateral */
+    padding: 20px; /* Añade espacio para evitar que el contenido se solape con la barra de navegación */
+    /* Estilos adicionales */
+  }
+  

@@ -1,0 +1,94 @@
+/* Sidebar.css */
+
+.sidebar {
+    position: fixed;
+    margin-top: 80px;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 250px; 
+    background-color: #222D32;
+  }
+
+.sidebar input[type="radio"] {
+    margin-left: 14px;
+    margin-right: 5px; /* Espacio entre radio y texto */
+    width: 10px; 
+    height: 10px; 
+}
+
+/* Estilo para el contenedor de radio button y párrafo */
+.sidebar .radio-container {
+    display: flex; /* Hace que los elementos se muestren en línea */
+    align-items: center; /* Centra verticalmente los elementos */
+    margin-bottom: 5px; /* Espacio entre las opciones */
+}
+
+/* Estilo para el texto al lado derecho del radio button */
+.sidebar p {
+    margin: 0;
+    font-size: 8px;
+    color: #fff;
+}
+
+/* Estilos de los "titulos"(label) de los apartados del formulario */
+label {
+    display: block;
+    margin-left: 14px;
+    margin-top: 30px;
+    margin-bottom: 3px;
+    font-weight: bold;
+    font-size: 15px;
+    color: #fff;
+}
+
+select{
+    -webkit-appearance: none;
+    
+    margin-bottom: 20px;
+    appearance: none;
+    width:88%;
+    margin-left: 14px;
+    height: 35px;
+    border-radius: 7px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #5E5E5E;
+    text-align: center;
+    padding-left: 10px;
+    background-image: url('Polygon1.png'); /* Ruta a tu imagen de flecha */
+    background-repeat: no-repeat;
+    background-position: right 4% center; /* Ajusta el valor según tus necesidades */
+    background-size: 14px 12px;
+}
+
+
+
+
+select::-ms-expand {
+    display: none; /*Evita que se muestre la flecha por defecto en versiones de IE*/
+    }
+
+
+
+button{
+    background-color: #FFFFFF;
+    border-radius: 12px;
+    border: none;
+    color: #5E5E5E;
+    padding: 12px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin-left: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 30px;
+}
+
+button:hover {
+    background-color: rgba(214, 214, 236, 0.843); 
+    color: white;
+    transition: 0.3s;
+}
