@@ -1,6 +1,15 @@
 :root{
     font-family: Arial, sans-serif;
 }
-body{
-    margin: 0;
-}
+
+/* CSS específico para Safari para evitar el comportamiento elástico */
+@media not all and (min-resolution:.001dpcm) { @supports (-webkit-appearance:none) {
+    /* Estilos solo para Safari */
+    html, body {
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+    }
+  }}
+  
+  
