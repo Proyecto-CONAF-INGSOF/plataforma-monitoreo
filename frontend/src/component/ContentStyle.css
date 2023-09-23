@@ -1,8 +1,54 @@
-/* Content.css */
+/* ContentStyle.css */
 .content {
-    margin-top: 60px; /* Igual a la altura de la barra de navegación */
-    margin-left: 250px; /* Igual al ancho de la barra lateral */
-    padding: 20px; /* Añade espacio para evitar que el contenido se solape con la barra de navegación */
-    /* Estilos adicionales */
-  }
+  margin-top: 60px;
+  margin-left: 250px;
+  padding: 20px;
+}
+
+.separador {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ccc;
+  margin: 10px;
+  background-color: #f5f5f5;
   
+}
+
+.boton {
+  display: block;
+  background-color: #bdbdbd;
+  color: #fff;
+  border: none;
+  padding: auto auto;
+  cursor: pointer;
+  text-align: center;
+  font-size: 16px;
+  align-items: center;
+  border-radius: 5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  height: 75px;
+}
+
+.boton:hover {
+  background-color: #afadd3;
+}
+
+.boton:focus {
+  outline: none;
+}
+
+.boton.visible {
+  width: 100%;
+}
+
+.separador > div {
+  padding: 10px 20px;
+  display: none;
+}
+
+.separador.visible > div {
+  display: block;
+}
