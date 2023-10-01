@@ -39,3 +39,5 @@ services:
       - POSTGRES_DB=${DB_CONAF_NAME}
     volumes:
       - "./db.sql:/docker-entrypoint-initdb.d/db.sql"
+    ports:
+      - 5432:5432
