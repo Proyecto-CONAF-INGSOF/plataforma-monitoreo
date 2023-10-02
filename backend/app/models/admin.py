@@ -1,17 +1,25 @@
 from typing import Optional
 
 import bcrypt
-from sqlmodel import Field, SQLModel
+from pydantic import BaseModel
 
 
-# Modelo SQL de admin, id es opcional porque se genera automáticamente
-class Admin(SQLModel, table=True):
-    id: Optional[int] = Field(default=None, primary_key=True, index=True)
+class Admin(BaseModel):
+    id: Optional[int] = None
     nombre: str
     apellido: str
-    username: str = Field(unique=True, index=True)
+    username: str
     contrasena: str
-    email: str = Field(unique=True, index=True)
+    email: str
+    _contrasena_hasheada: Optional[bool] = False
+
+    def create(self, nombre, apellido, username, contrasena, email):
+        self.nombre = nombre
+        self.apellido = apellido
+        self.username = username
+        self.contrasena = contrasena
+        self.email = email
+        self._contrasena_hasheada = False
 
     # Hashear la contrasena antes de guardar en base de datos
     def hashear_contrasena(self):
@@ -19,6 +27,7 @@ class Admin(SQLModel, table=True):
         self.contrasena = bcrypt.hashpw(self.contrasena.encode("utf-8"), salt).decode(
             "utf-8"
         )
+        self._contrasena_hasheada = True
 
     # Comparar contrasena, esto compara la contrasena hasheada con la
     # contrasena que el usuario ingresa en el login
