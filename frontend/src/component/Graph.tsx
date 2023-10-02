@@ -34,6 +34,7 @@ const Graph = (props: Props) => {
           data={data}
           color="#5AC4C3"
           style={{strokeWidth: 2}}
+          barWidth={0.5} 
           onValueMouseOver={(datapoint) => setHoveredBar(datapoint)}
           onValueMouseOut={() => setHoveredBar(null)}
         />
