@@ -3,6 +3,7 @@ import Header from './Navbar';
 import Sidebar from './Sidebar';
 import Content from './Content';
 
+
 const Monitoring = () => {
   return (
     <div className='MonitorContainer'>
@@ -10,7 +11,7 @@ const Monitoring = () => {
       <Header />
       <Sidebar />
       <Content />
-
+      
     </div>
       
   );
