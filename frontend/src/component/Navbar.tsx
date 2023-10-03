@@ -11,7 +11,7 @@ const Navbar = () => {
         </section>
         <button type='button' className="actionButton"> </button>
         <section className='RigthNav'>
-          <img src="logoMon.png" alt="" className='logoMon'/>
+          <a href='#'><img src="logoMon.png" alt="" className='logoMon'/></a> {/*Boton de seccion de monitoreo e informacion con enlace*/}
           
         </section>
       </nav>
