@@ -14,7 +14,7 @@ async def get_example(conn: Connection):
 
 async def obtener_regiones(conn: Connection):
     try:
-        query = 'SELECT Distinct("Nom_region") FROM inputs'
+        query = 'SELECT Distinct("Nom_region"), "Ord_region" FROM inputs'
         result = await conn.fetch(query, record_class=Record)
         return result
     except Exception as e:
@@ -43,7 +43,7 @@ async def obtener_anios(unidad: str, region: int, conn: Connection):
 
 
 async def obtener_especies(unidad: str, anio: int, region: int, conn: Connection):
-    query = 'SELECT DISTINCT("Nom_comun") FROM inputs WHERE "Ano" = $1 AND "Unidad_COD" = $2 AND "Ord_region" = $3'
+    query = 'SELECT DISTINCT("Nom_comun"), "Unidad", "Ord_region", "Cod_especie", "Ano" FROM inputs WHERE "Ano" = $1 AND "Unidad_COD" = $2 AND "Ord_region" = $3'
     try:
         result = await conn.fetch(query, anio, unidad, region, record_class=Record)
         return result
