@@ -1,6 +1,5 @@
 from typing import Optional
 from pydantic import BaseModel
-import bcrypt
 
 class Act(BaseModel):
     id: Optional[int] = None

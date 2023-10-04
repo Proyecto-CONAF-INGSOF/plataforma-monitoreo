@@ -27,3 +27,8 @@ async def get_session_admin():
     async with create_pool(url_admins) as pool:
         async with pool.acquire() as con:
             yield con
+
+async def get_session_fotomonitoreo():
+    async with create_pool(url_conaf) as pool:
+        async with pool.acquire() as con:
+            yield con
