@@ -1,6 +1,4 @@
-from asyncpg.connection import asyncpg
-from fastapi import APIRouter, Cookie, Depends, HTTPException, Response
-from pydantic import BaseModel
+from fastapi import APIRouter, Depends
 from app.crud.fotomonitoreo import get_example
 from asyncpg import Connection
 from app.crud.database import get_session_fotomonitoreo
