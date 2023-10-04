@@ -11,6 +11,12 @@ async def get_example(conn: Connection):
     except Exception as _:
         raise HTTPException(status_code=500, detail="Error inesperado")
 
+async def get_superposicion_horaria(conn:Connection):
+    try:
+        query = "SELECT "
+    except Exception as _:
+        raise HTTPException(status_code=500, detail="Error inesperado")
+
 
 async def obtener_regiones(conn: Connection):
     try:

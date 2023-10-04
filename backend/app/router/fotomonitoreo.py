@@ -1,3 +1,5 @@
+from fastapi import APIRouter, Depends
+from asyncpg import Connection
 from app.crud.database import get_session_fotomonitoreo
 from app.crud.fotomonitoreo import (get_example, obtener_anios,
                                     obtener_especies, obtener_regiones,
