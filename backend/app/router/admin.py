@@ -1,4 +1,5 @@
-from app.crud.admin import crear_admin, obtener_admin, remover_token
+from app.crud.admin import (crear_admin, find_token, obtener_admin,
+                            remover_token)
 from app.crud.database import get_session_admin
 from app.models.admin import Admin
 from app.router.utils import crear_token
@@ -10,14 +11,20 @@ from pydantic import BaseModel
 router = APIRouter()
 
 
-async def auth_middleware(user_token: str = Cookie(None)):
-    if user_token == "fake-cookie-session-token":
+# Auth middleware es chequeado antes de request restringidas
+async def auth_middleware(conn: Connection, user_token: str):
+    if user_token is None:
         raise HTTPException(status_code=401, detail="Unauthorized")
+    await find_token(user_token, conn)
 
 
 @router.post("/registro")
-async def registro(admin: Admin, conn: Connection = Depends(get_session_admin)):
-    _ = await auth_middleware()
+async def registro(
+    admin: Admin,
+    conn: Connection = Depends(get_session_admin),
+    user_token: str = Cookie(None),
+):
+    _ = await auth_middleware(conn, user_token)
     try:
         await crear_admin(admin, conn)
     except asyncpg.exceptions.UniqueViolationError:

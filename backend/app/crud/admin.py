@@ -51,3 +51,15 @@ async def remover_token(token: str, conn: Connection):
     # Not found exception
     except Exception as _:
         raise HTTPException(status_code=500, detail="Error interno")
+
+
+async def find_token(token: str, conn: Connection):
+    await conn.fetchrow(
+        """
+        SELECT * FROM session_auth WHERE token = $1
+        """,
+        token,
+        record_class=Record,
+    )
+    if token is None:
+        raise HTTPException(status_code=401, detail="Unauthorized")
