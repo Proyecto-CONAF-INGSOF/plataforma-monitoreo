@@ -29,8 +29,7 @@ async def get_actividad(
 @router.get("/regiones")
 async def get_regiones(conn: Connection = Depends(get_session_fotomonitoreo)):
     regiones = await obtener_regiones(conn)
-    r = [region["Nom_region"] for region in regiones]
-    return r
+    return regiones
 
 
 @router.get("/regiones/{region}")
