@@ -7,19 +7,29 @@ import Login from './component/Login';
 import Home from './pages/Home';
 import Header from './component/Navbar';
 import Sidebar from './component/Sidebar';
+import RequireAuth from './component/RequireAuth';
+import Protected from './component/Protected';
 
 
 function App() {
   return (
     <Router>
-      <Header/> 
+      <Header />
       {
-        window.location.pathname !== '/admin' ? <Sidebar/> : null
+        window.location.pathname !== '/admin' ? <Sidebar /> : null
       }
       <Routes>
-        <Route path="/" element={<Home/>} />
-        <Route path="/admin" element={<Login/>} />
+        <Route path="/" element={<Home />} />
+        <Route path="/admin" element={<Login />} />
         {/* Agrega más rutas para otras páginas */}
+        <Route
+          path="/protected"
+          element={
+            <RequireAuth>
+              <Protected></Protected>
+            </RequireAuth>
+          }
+        />
       </Routes>
     </Router>
   )

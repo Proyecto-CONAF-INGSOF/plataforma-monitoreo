@@ -18,6 +18,16 @@ async function loginAdmin(admin: LoginAdmin) {
   }
 }
 
+async function useAuth() {
+  try {
+    let { status } = await axios.get(`http://${ip}:${port}/admin/auth`)
+    return status === 200;
+  } catch (error) {
+    return error
+  }
+}
+
 export {
-  loginAdmin
+  loginAdmin,
+  useAuth
 }

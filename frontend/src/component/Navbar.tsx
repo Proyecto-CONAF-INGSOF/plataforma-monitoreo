@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import './NavbarStyles.css';
 
 const Navbar = ({ toggleSidebar }) => {
@@ -6,7 +5,7 @@ const Navbar = ({ toggleSidebar }) => {
     <div className="navbar">
       <nav className="nav-container">
         <section className='LeftNav'>
-          <img src="SnapseIcon.png" alt="" className="logo"/>
+          <img src="SnapseIcon.png" alt="" className="logo" />
           <p>Monitoreo SNAPSE</p>
         </section>
         {/* Add the hamburger button */}
@@ -16,7 +15,7 @@ const Navbar = ({ toggleSidebar }) => {
           <div className="hamburger-icon"></div>
         </button>
         <section className='RightNav'>
-          <a href='#'><img src="logoMon.png" alt="" className='logoMon'/></a>
+          <a href='#'><img src="logoMon.png" alt="" className='logoMon' /></a>
         </section>
       </nav>
     </div>
