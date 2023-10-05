@@ -1,5 +1,9 @@
 import axios from "axios";
 
+// Importamos las variables de entorno definidas en el archivo .env
+const ip = import.meta.env.VITE_BACKEND_IP || 'localhost';
+const port = import.meta.env.VITE_BACKEND_PORT || 8080;
+
 export interface Region {
     Nom_region: string;
     Ord_region: number;
@@ -7,7 +11,7 @@ export interface Region {
 
 async function getRegiones() {
     try {
-        const {data, status} = await axios.get<Region[]>("http://localhost:8080/fotomonitoreo/regiones");
+        const {data, status} = await axios.get<Region[]>(`http://${ip}:${port}/fotomonitoreo/regiones`);
         return data;
     } catch (error) {
         if (axios.isAxiosError(error)) {
@@ -30,7 +34,7 @@ export interface Unidad {
 async function getUnidades(region: string) {
     try {
         console.log("Region: ", region);
-        const url = "http://localhost:8080/fotomonitoreo/regiones/" + region;
+        const url = `http://${ip}:${port}/fotomonitoreo/regiones/${region}`;
         console.log(url);
         const {data, status} = await axios.get<Unidad[]>(url);
         return data
@@ -52,7 +56,7 @@ async function getAnios(region: string, unidad: string) {
     try {
         console.log("Region: ", region);
         console.log("Unidad: ", unidad);
-        const url = "http://localhost:8080/fotomonitoreo/regiones/" + region + "/" + unidad;
+        const url = `http://${ip}:${port}/fotomonitoreo/regiones/${region}/${unidad}`;
         console.log(url);
         const {data, status} = await axios.get<Anio[]>(url);
         return data
@@ -80,7 +84,7 @@ async function getEspecies(region: string, unidad: string, anio: string) {
         console.log("Region: ", region);
         console.log("Unidad: ", unidad);
         console.log("Anio: ", anio);
-        const url = "http://localhost:8080/fotomonitoreo/regiones/" + region + "/" + unidad + "/" + anio;
+        const url = `http://${ip}:${port}/fotomonitoreo/regiones/${region}/${unidad}/${anio}`;
         console.log(url);
         const {data, status} = await axios.get<Especie[]>(url);
         return data
