@@ -13,7 +13,9 @@ function App() {
   return (
     <Router>
       <Header/> 
-      <Sidebar/>       
+      {
+        window.location.pathname !== '/admin' ? <Sidebar/> : null
+      }
       <Routes>
         <Route path="/" element={<Home/>} />
         <Route path="/admin" element={<Login/>} />

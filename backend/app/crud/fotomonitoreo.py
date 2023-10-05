@@ -11,7 +11,8 @@ async def get_example(conn: Connection):
     except Exception as _:
         raise HTTPException(status_code=500, detail="Error inesperado")
 
-async def get_superposicion_horaria(conn:Connection):
+
+async def get_superposicion_horaria(conn: Connection):
     try:
         query = "SELECT "
     except Exception as _:
@@ -29,7 +30,7 @@ async def obtener_regiones(conn: Connection):
 
 
 async def obtener_unidades(region: int, conn: Connection):
-    query = 'SELECT DISTINCT("Unidad"), "Unidad_COD", "Nom_region"  FROM inputs WHERE "Ord_region" = $1'
+    query = 'SELECT DISTINCT("Unidad"), "Unidad_COD", "Nom_region", "Ord_region"  FROM inputs WHERE "Ord_region" = $1'
     try:
         result = await conn.fetch(query, region, record_class=Record)
         return result
