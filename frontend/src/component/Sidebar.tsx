@@ -1,28 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import './SidebarStyles.css';
 import { getRegiones, Region, Especie, Unidad, getUnidades, Anio, getAnios, getEspecies } from '../services/sidebar';
-
-interface SidebarProps {
-  region: string;
-  unidad: string;
-  anio: string;
-  especie_1: string;
-  especie_2: string;
-}
+import { Actividad, getActividad } from '../services/actividad';
 
 const Sidebar: React.FC = () => {
   const [regiones, setRegiones] = useState<Region[]>([]);
   const [unidad, setUnidad] = useState<Unidad[]>([]);
   const [anios, setAnios] = useState<Anio[]>([]);
   const [especies, setEspecies] = useState<Especie[]>([]);
-
-  const [sidebarProps, setSidebarProps] = useState<SidebarProps>({
-    region: '',
-    unidad: '',
-    anio: '',
-    especie_1: '',
-    especie_2: '',
-  });
 
   const fetchRegiones = async () => {
     try {
@@ -118,9 +103,26 @@ const Sidebar: React.FC = () => {
         fetchEspecies(formData["region"], formData["unit"], value);
         break;
       default:
+        setFormData({
+          ...formData,
+          [name]: value,
+        });
         break;
     }
   };
+
+  // Ejemplo de como obtener los datos de la actividad
+  const fetchActividad = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log(formData)
+    // LLamamos a la funcion getActividad con los datos del formulario, se nececita 
+    // el codigo de la Unidad, el año y el codigo de la especie
+    // Esta funcion puede retornar un objeto Actividad o un Error, por lo que puede ser
+    // buena idea hacer un try catch para llamarla
+    let actividad: Actividad[] = await getActividad(formData["unit"], formData["year"], formData["species_1"]);
+    console.log("Actividades");
+    console.log(actividad);
+  }
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -133,7 +135,7 @@ const Sidebar: React.FC = () => {
 
   return (
     <div className="sidebar">
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={fetchActividad}>
         <label>Seleccion de proyecto:</label>
         <div className="radio-container">
           <input
@@ -201,7 +203,7 @@ const Sidebar: React.FC = () => {
         <br />
 
         <label htmlFor="species_2">Selecciona Especie 2:</label>
-        <select name="species_2" id="species_2" disabled={formData["year"] == ''} >
+        <select name="species_2" id="species_2" onChange={handleChange} disabled={formData["year"] == ''} >
           <option value="" disabled selected>Escoger</option>
           {
             especies.map((especie) => (
@@ -211,7 +213,7 @@ const Sidebar: React.FC = () => {
         </select>
         <br />
 
-        <button type="submit">Realizar análisis</button>
+        <button type="submit" >Realizar análisis</button>
       </form>
     </div>
   );

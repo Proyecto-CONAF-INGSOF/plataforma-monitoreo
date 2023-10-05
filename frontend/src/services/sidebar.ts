@@ -11,7 +11,7 @@ export interface Region {
 
 async function getRegiones() {
     try {
-        const {data, status} = await axios.get<Region[]>(`http://${ip}:${port}/fotomonitoreo/regiones`);
+        const { data } = await axios.get<Region[]>(`http://${ip}:${port}/fotomonitoreo/regiones`);
         return data;
     } catch (error) {
         if (axios.isAxiosError(error)) {
@@ -36,7 +36,7 @@ async function getUnidades(region: string) {
         console.log("Region: ", region);
         const url = `http://${ip}:${port}/fotomonitoreo/regiones/${region}`;
         console.log(url);
-        const {data, status} = await axios.get<Unidad[]>(url);
+        const { data } = await axios.get<Unidad[]>(url);
         return data
     } catch (error) {
         if (axios.isAxiosError(error)) {
@@ -58,7 +58,7 @@ async function getAnios(region: string, unidad: string) {
         console.log("Unidad: ", unidad);
         const url = `http://${ip}:${port}/fotomonitoreo/regiones/${region}/${unidad}`;
         console.log(url);
-        const {data, status} = await axios.get<Anio[]>(url);
+        const { data } = await axios.get<Anio[]>(url);
         return data
     } catch (error) {
         if (axios.isAxiosError(error)) {
@@ -86,7 +86,7 @@ async function getEspecies(region: string, unidad: string, anio: string) {
         console.log("Anio: ", anio);
         const url = `http://${ip}:${port}/fotomonitoreo/regiones/${region}/${unidad}/${anio}`;
         console.log(url);
-        const {data, status} = await axios.get<Especie[]>(url);
+        const { data } = await axios.get<Especie[]>(url);
         return data
     } catch (error) {
         if (axios.isAxiosError(error)) {
@@ -100,4 +100,4 @@ async function getEspecies(region: string, unidad: string, anio: string) {
 }
 
 
-export {getRegiones, getUnidades, getAnios, getEspecies};
+export { getRegiones, getUnidades, getAnios, getEspecies };

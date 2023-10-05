@@ -11,7 +11,7 @@ export interface LoginAdmin {
 
 async function loginAdmin(admin: LoginAdmin) {
   try {
-    let { data, status } = await axios.post(`http://${ip}:${port}/admin/login`, admin)
+    let { status } = await axios.post(`http://${ip}:${port}/admin/login`, admin)
     return status;
   } catch (error) {
     return error
