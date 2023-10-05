@@ -1,4 +1,4 @@
-FROM python:slim
+FROM python:3.11-slim
 
 # Path: /app
 RUN mkdir /app
