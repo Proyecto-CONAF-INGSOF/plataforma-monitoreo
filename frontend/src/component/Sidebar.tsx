@@ -2,11 +2,27 @@ import React, { useState, useEffect } from 'react';
 import './SidebarStyles.css';
 import { getRegiones, Region, Especie, Unidad, getUnidades, Anio, getAnios, getEspecies } from '../services/sidebar';
 
+interface SidebarProps {
+  region: string;
+  unidad: string;
+  anio: string;
+  especie_1: string;
+  especie_2: string;
+}
+
 const Sidebar: React.FC = () => {
   const [regiones, setRegiones] = useState<Region[]>([]);
   const [unidad, setUnidad] = useState<Unidad[]>([]);
   const [anios, setAnios] = useState<Anio[]>([]);
   const [especies, setEspecies] = useState<Especie[]>([]);
+
+  const [sidebarProps, setSidebarProps] = useState<SidebarProps>({
+    region: '',
+    unidad: '',
+    anio: '',
+    especie_1: '',
+    especie_2: '',
+  });
 
   const fetchRegiones = async () => {
     try {
@@ -185,7 +201,7 @@ const Sidebar: React.FC = () => {
         <br />
 
         <label htmlFor="species_2">Selecciona Especie 2:</label>
-        <select name="species_2" id="species_2" onChange={handleChange} disabled={formData["year"] == ''}>
+        <select name="species_2" id="species_2" disabled={formData["year"] == ''} >
           <option value="" disabled selected>Escoger</option>
           {
             especies.map((especie) => (
