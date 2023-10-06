@@ -4,6 +4,7 @@ import React from 'react';
 import './ContentStyle.css';
 import Map from './Map';
 import Graph from './Graph';
+import BoxPlotOcupacion from './BoxPlotOcupacion';
 
 const Content: React.FC = () => {
   return (
@@ -11,7 +12,7 @@ const Content: React.FC = () => {
       {/* Contenido principal */}
       <Map />
       <Graph/>
-      
+      <BoxPlotOcupacion/>      
     </div>
   );
 };
