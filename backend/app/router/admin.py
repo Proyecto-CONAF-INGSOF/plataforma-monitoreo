@@ -18,6 +18,17 @@ async def auth_middleware(conn: Connection, user_token: str):
     await find_token(user_token, conn)
 
 
+@router.get("/auth")
+async def auth(
+    conn: Connection = Depends(get_session_admin), user_token: str = Cookie(None)
+):
+    if user_token is None:
+        raise HTTPException(status_code=401, detail="Unauthorized")
+    _ = await auth_middleware(conn, user_token)
+    # Return 200
+    return Response(status_code=200)
+
+
 @router.post("/registro")
 async def registro(
     admin: Admin,
@@ -34,7 +45,8 @@ async def registro(
         print(e)
         raise HTTPException(status_code=400, detail="Formato invalido")
 
-    return HTTPException(status_code=200)
+    # Return 201 created
+    return Response(status_code=201)
 
 
 class LoginAdmin(BaseModel):
@@ -54,6 +66,7 @@ async def login(
         raise HTTPException(status_code=401, detail="Contraseña incorrecta")
 
     id = admin_db.id or 0
+
     admin_sess = await crear_token(id, conn)
     response.set_cookie(key="user_token", value=admin_sess.token)
     return "OK"

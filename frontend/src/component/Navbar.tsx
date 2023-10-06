@@ -1,18 +1,21 @@
-import React from 'react';
-import './NavbarStyles.css'; // Importa el archivo CSS
+import './NavbarStyles.css';
 
-const Navbar = () => {
+const Navbar = ({ toggleSidebar }) => {
   return (
     <div className="navbar">
       <nav className="nav-container">
         <section className='LeftNav'>
-          <img src="SnapseIcon.png" alt="" className="logo"/>
+          <img src="SnapseIcon.png" alt="" className="logo" />
           <p>Monitoreo SNAPSE</p>
         </section>
-        <button type='button' className="actionButton"> </button>
-        <section className='RigthNav'>
-          <a href='#'><img src="logoMon.png" alt="" className='logoMon'/></a> {/*Boton de seccion de monitoreo e informacion con enlace*/}
-          
+        {/* Add the hamburger button */}
+        <button type='button' className="actionButton" onClick={toggleSidebar}>
+          <div className="hamburger-icon"></div>
+          <div className="hamburger-icon"></div>
+          <div className="hamburger-icon"></div>
+        </button>
+        <section className='RightNav'>
+          <a href='#'><img src="logoMon.png" alt="" className='logoMon' /></a>
         </section>
       </nav>
     </div>
