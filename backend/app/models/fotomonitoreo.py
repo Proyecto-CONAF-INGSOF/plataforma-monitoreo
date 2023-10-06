@@ -1,6 +1,5 @@
 from pydantic import BaseModel
 
-
 class Act(BaseModel):
     row_names: str
     nom_comun: str

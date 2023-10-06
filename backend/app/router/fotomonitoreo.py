@@ -1,8 +1,7 @@
-from fastapi import APIRouter, Depends
-from asyncpg import Connection
 from app.crud.database import get_session_fotomonitoreo
-from app.crud.fotomonitoreo import (get_example, obtener_anios,
+from app.crud.fotomonitoreo import (obtener_actividad, obtener_anios,
                                     obtener_especies, obtener_regiones,
+                                    obtener_superposicion_horaria,
                                     obtener_unidades)
 from asyncpg import Connection
 from fastapi import APIRouter, Depends
@@ -10,11 +9,25 @@ from fastapi import APIRouter, Depends
 router = APIRouter()
 
 
-@router.get("")
-async def idk(
+@router.get("/superposicion_horaria/{especie1}/{especie2}")
+async def get_superposicion_horaria(
+    especie1: str,
+    especie2: str,
     conn: Connection = Depends(get_session_fotomonitoreo),
 ):
-    return await get_example(conn)
+    r = await obtener_superposicion_horaria(especie1, especie2, conn)
+    return r
+
+
+@router.get("/actividad/{unidad}/{anio}/{especie}")
+async def get_actividad(
+    unidad: str,
+    anio: int,
+    especie: str,
+    conn: Connection = Depends(get_session_fotomonitoreo),
+):
+    r = await obtener_actividad(unidad, anio, especie, conn)
+    return r
 
 
 @router.get("/regiones")

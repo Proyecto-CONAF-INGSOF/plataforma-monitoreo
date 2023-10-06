@@ -14,7 +14,7 @@ services:
       database:
         condition: service_healthy
   frontend:
-    image: node
+    image: node:20.8
     ports:
       - 5173:5173
     volumes:

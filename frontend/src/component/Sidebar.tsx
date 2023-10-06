@@ -1,7 +1,65 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './SidebarStyles.css';
+import { getRegiones, Region, Especie, Unidad, getUnidades, Anio, getAnios, getEspecies } from '../services/sidebar';
+import { Actividad, getActividad } from '../services/actividad';
 
 const Sidebar: React.FC = () => {
+  const [regiones, setRegiones] = useState<Region[]>([]);
+  const [unidad, setUnidad] = useState<Unidad[]>([]);
+  const [anios, setAnios] = useState<Anio[]>([]);
+  const [especies, setEspecies] = useState<Especie[]>([]);
+
+  const fetchRegiones = async () => {
+    try {
+      let r = await getRegiones();
+      if (typeof r == 'string') {
+        r = [];
+      } else {
+        setRegiones(r);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const fetchUnidades = async (region: string) => {
+    try {
+      let u = await getUnidades(region);
+      if (typeof u == 'string') {
+        u = [];
+      } else {
+        setUnidad(u);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const fetchAnios = async (region: string, unidad: string) => {
+    try {
+      let a = await getAnios(region, unidad);
+      if (typeof a == 'string') {
+        a = [];
+      } else {
+        setAnios(a);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const fetchEspecies = async (region: string, unidad: string, anio: string) => {
+    try {
+      let e = await getEspecies(region, unidad, anio);
+      if (typeof e == 'string') {
+        e = [];
+      } else {
+        setEspecies(e);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
   const [formData, setFormData] = useState({
     proyecto: '',
     region: '',
@@ -13,21 +71,71 @@ const Sidebar: React.FC = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    switch (name) {
+      case "region":
+        setFormData({
+          ...formData,
+          "region": value,
+          unit: '',
+          year: '',
+          species_1: '',
+          species_2: '',
+        });
+        fetchUnidades(value);
+        break;
+      case "unit":
+        setFormData({
+          ...formData,
+          "unit": value,
+          year: '',
+          species_1: '',
+          species_2: '',
+        });
+        fetchAnios(formData["region"], value);
+        break;
+      case "year":
+        setFormData({
+          ...formData,
+          "year": value,
+          species_1: '',
+          species_2: '',
+        })
+        fetchEspecies(formData["region"], formData["unit"], value);
+        break;
+      default:
+        setFormData({
+          ...formData,
+          [name]: value,
+        });
+        break;
+    }
   };
+
+  // Ejemplo de como obtener los datos de la actividad
+  const fetchActividad = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log(formData)
+    // LLamamos a la funcion getActividad con los datos del formulario, se nececita 
+    // el codigo de la Unidad, el año y el codigo de la especie
+    // Esta funcion puede retornar un objeto Actividad o un Error, por lo que puede ser
+    // buena idea hacer un try catch para llamarla
+    let actividad: Actividad[] = await getActividad(formData["unit"], formData["year"], formData["species_1"]);
+    console.log("Actividades");
+    console.log(actividad);
+  }
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log('Datos del formulario:', formData);
     // Puedes enviar los datos a un servidor aquí o realizar otras acciones.
   };
+  useEffect(() => {
+    fetchRegiones();
+  }, []);
 
   return (
     <div className="sidebar">
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={fetchActividad}>
         <label>Seleccion de proyecto:</label>
         <div className="radio-container">
           <input
@@ -50,54 +158,62 @@ const Sidebar: React.FC = () => {
           />
           <p>Otros</p>
         </div>
-
-        {/* Opciones de la casilla despegable */}
         <label htmlFor="region">Selecciona región:</label>
         <select name="region" id="region" onChange={handleChange}>
           <option value="" disabled selected>Escoger</option>
-          <option value="arica">Arica</option>
-          <option value="otra">Otra región</option>
-          {/* Agregar más opciones */}
-        </select>
-        <br />
-
-        <label htmlFor="year">Selecciona año de monitoreo:</label>
-        <select name="year" id="year" onChange={handleChange}>
-          <option value="" disabled selected>Escoger</option>
-          <option value="2021">2021</option>
-          <option value="2022">2022</option>
-          {/* Agregar más opciones */}
+          {
+            regiones.map((region) => (
+              <option value={region.Ord_region}>{region.Nom_region}</option>
+            ))
+          }
         </select>
         <br />
 
         <label htmlFor="unit">Selecciona unidad SNAPSE:</label>
-        <select name="unit" id="unit" onChange={handleChange}>
+        <select name="unit" id="unit" onChange={handleChange} disabled={formData["region"] == ''}>
           <option value="" disabled selected>Escoger</option>
-          <option value="unidad1">Unidad 1</option>
-          <option value="unidad2">Unidad 2</option>
-          {/* Agregar más opciones */}
+          {
+            unidad.map((unidad) => (
+              <option value={unidad.Unidad_COD}>{unidad.Unidad}</option>
+            ))
+          }
+        </select>
+        <br />
+
+        <label htmlFor="year">Selecciona año de monitoreo:</label>
+        <select name="year" id="year" onChange={handleChange} disabled={formData["unit"] == ""}>
+          <option value="" disabled selected>Escoger</option>
+          {
+            anios.map((anio) => (
+              <option value={anio.Ano}>{anio.Ano}</option>
+            ))
+          }
         </select>
         <br />
 
         <label htmlFor="species_1">Selecciona Especie 1:</label>
-        <select name="species_1" id="species_1" onChange={handleChange}>
+        <select name="species_1" id="species_1" onChange={handleChange} disabled={formData["year"] == ''}>
           <option value="" disabled selected>Escoger</option>
-          <option value="especie1">Especie 1</option>
-          <option value="especie2">Especie 2</option>
-          {/* Agregar más opciones */}
+          {
+            especies.map((especie) => (
+              <option value={especie.Cod_especie}>{especie.Nom_comun}</option>
+            ))
+          }
         </select>
         <br />
 
         <label htmlFor="species_2">Selecciona Especie 2:</label>
-        <select name="species_2" id="species_2" onChange={handleChange}>
+        <select name="species_2" id="species_2" onChange={handleChange} disabled={formData["year"] == ''} >
           <option value="" disabled selected>Escoger</option>
-          <option value="especie3">Especie 3</option>
-          <option value="especie4">Especie 4</option>
-          {/* Agregar más opciones */}
+          {
+            especies.map((especie) => (
+              <option value={especie.Cod_especie}>{especie.Nom_comun}</option>
+            ))
+          }
         </select>
         <br />
 
-        <button type="submit">Realizar análisis</button>
+        <button type="submit" >Realizar análisis</button>
       </form>
     </div>
   );
