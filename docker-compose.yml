@@ -14,7 +14,7 @@ services:
       database:
         condition: service_healthy
   frontend:
-    image: node
+    image: node:20.8
     ports:
       - 5173:5173
     volumes:
@@ -32,6 +32,8 @@ services:
       interval: 10s
       timeout: 3s
       retries: 3
+    volumes:
+      - "./backend/migrations.sql:/docker-entrypoint-initdb.d/db.sql"
   dbconaf:
     image: postgis/postgis
     environment:
@@ -39,3 +41,5 @@ services:
       - POSTGRES_DB=${DB_CONAF_NAME}
     volumes:
       - "./db.sql:/docker-entrypoint-initdb.d/db.sql"
+    ports:
+      - 5432:5432
