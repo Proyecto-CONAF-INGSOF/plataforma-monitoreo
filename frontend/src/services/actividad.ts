@@ -6,15 +6,14 @@ const port = import.meta.env.VITE_BACKEND_PORT || 8080;
 
 export interface Actividad {
   Hora: string;
-  Act: string;
+  Act: number;
 }
 
 async function getActividad(unidad: string, anio: string, cod_specie: string): Promise<Actividad[] | any> {
   let url = `http://${ip}:${port}/fotomonitoreo/actividad/${unidad}/${anio}/${cod_specie}`;
 
   try {
-    let { data, status } = await axios.get<Actividad[]>(url);
-    console.log(status);
+    let { data } = await axios.get<Actividad[]>(url);
     return data;
   } catch (error: any) {
     if (axios.isAxiosError(error)) {

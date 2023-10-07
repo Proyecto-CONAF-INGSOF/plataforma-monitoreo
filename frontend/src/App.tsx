@@ -6,7 +6,6 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './component/Login';
 import Home from './pages/Home';
 import Header from './component/Navbar';
-import Sidebar from './component/Sidebar';
 import RequireAuth from './component/RequireAuth';
 import Protected from './component/Protected';
 
@@ -15,9 +14,6 @@ function App() {
   return (
     <Router>
       <Header />
-      {
-        window.location.pathname !== '/admin' ? <Sidebar /> : null
-      }
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/admin" element={<Login />} />
