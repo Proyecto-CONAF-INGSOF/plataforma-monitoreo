@@ -7,6 +7,14 @@ const Sidebar: React.FC<{ setSidebarProps: (newProps: SidebarProps) => void }>
   = (
     { setSidebarProps }
   ) => {
+    const default_value = "escoger";
+    const [side_bar_props, SetSBP] = useState<SidebarProps>({
+      region: default_value,
+      unidad: default_value,
+      anio: default_value,
+      especie_1: default_value,
+      especie_2: default_value,
+    });
     const [regiones, setRegiones] = useState<Region[]>([]);
     const [unidad, setUnidad] = useState<Unidad[]>([]);
     const [anios, setAnios] = useState<Anio[]>([]);
@@ -63,66 +71,60 @@ const Sidebar: React.FC<{ setSidebarProps: (newProps: SidebarProps) => void }>
         console.log(error);
       }
     }
-    const [formData, setFormData] = useState({
-      proyecto: '',
-      region: '',
-      year: '',
-      unit: '',
-      species_1: '',
-      species_2: '',
-    });
-
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
       const { name, value } = e.target;
       switch (name) {
         case "region":
-          setFormData({
-            ...formData,
-            "region": value,
-            unit: '',
-            year: '',
-            species_1: '',
-            species_2: '',
-          });
+          SetSBP({
+            region: value,
+            unidad: default_value,
+            anio: default_value,
+            especie_1: default_value,
+            especie_2: default_value,
+          })
           fetchUnidades(value);
           break;
         case "unit":
-          setFormData({
-            ...formData,
-            "unit": value,
-            year: '',
-            species_1: '',
-            species_2: '',
-          });
-          fetchAnios(formData["region"], value);
+          SetSBP({
+            ...side_bar_props,
+            unidad: value,
+            anio: default_value,
+            especie_1: default_value,
+            especie_2: default_value,
+          })
+          fetchAnios(side_bar_props.region, value);
           break;
         case "year":
-          setFormData({
-            ...formData,
-            "year": value,
-            species_1: '',
-            species_2: '',
+          SetSBP({
+            ...side_bar_props,
+            anio: value,
+            especie_1: default_value,
+            especie_2: default_value,
           })
-          fetchEspecies(formData["region"], formData["unit"], value);
+          fetchEspecies(side_bar_props.region, side_bar_props.unidad, value);
+          break;
+        case "species_1":
+          SetSBP({
+            ...side_bar_props,
+            especie_1: value,
+          })
+          break;
+        case "species_2":
+          SetSBP({
+            ...side_bar_props,
+            especie_2: value,
+          })
           break;
         default:
-          setFormData({
-            ...formData,
-            [name]: value,
-          });
           break;
       }
     };
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      let sb: SidebarProps = {
-        region: formData["region"],
-        unidad: formData["unit"],
-        anio: formData["year"],
-        especie_1: formData["species_1"],
-        especie_2: formData["species_2"],
-      };
-      setSidebarProps(sb);
+      if (side_bar_props.region == default_value || side_bar_props.unidad == default_value || side_bar_props.anio == default_value || side_bar_props.especie_1 == default_value || side_bar_props.especie_2 == default_value) {
+        return;
+      }
+      setSidebarProps(side_bar_props);
       // Puedes enviar los datos a un servidor aquí o realizar otras acciones.
     };
     useEffect(() => {
@@ -155,8 +157,8 @@ const Sidebar: React.FC<{ setSidebarProps: (newProps: SidebarProps) => void }>
             <p>Otros</p>
           </div>
           <label htmlFor="region">Selecciona región:</label>
-          <select name="region" id="region" onChange={handleChange} defaultValue="escoger" >
-            <option value="escoger" key="escoger" disabled>Escoger</option>
+          <select name="region" id="region" onChange={handleChange} value={side_bar_props.region}>
+            <option value={default_value} key={default_value} disabled>Escoger</option>
             {
               regiones.map((region) => (
                 <option value={region.Ord_region} key={region.Ord_region}>{region.Nom_region}</option>
@@ -166,8 +168,8 @@ const Sidebar: React.FC<{ setSidebarProps: (newProps: SidebarProps) => void }>
           <br />
 
           <label htmlFor="unit">Selecciona unidad SNAPSE:</label>
-          <select name="unit" id="unit" onChange={handleChange} defaultValue="escoger" disabled={formData["region"] == ''}>
-            <option value="escoger" key="escoger" disabled>Escoger</option>
+          <select name="unit" id="unit" onChange={handleChange} disabled={side_bar_props.region == default_value} value={side_bar_props.unidad}>
+            <option value={default_value} key={default_value} disabled>Escoger</option>
             {
               unidad.map((unidad) => (
                 <option value={unidad.Unidad_COD} key={unidad.Unidad_COD}>{unidad.Unidad}</option>
@@ -177,8 +179,8 @@ const Sidebar: React.FC<{ setSidebarProps: (newProps: SidebarProps) => void }>
           <br />
 
           <label htmlFor="year">Selecciona año de monitoreo:</label>
-          <select name="year" id="year" onChange={handleChange} defaultValue="escoger" disabled={formData["unit"] == ""}>
-            <option value="escoger" key="escoger" disabled>Escoger</option>
+          <select name="year" id="year" onChange={handleChange} disabled={side_bar_props.unidad == default_value} value={side_bar_props.anio}>
+            <option value={default_value} key={default_value} disabled>Escoger</option>
             {
               anios.map((anio) => (
                 <option value={anio.Ano} key={anio.Ano}>{anio.Ano}</option>
@@ -188,8 +190,8 @@ const Sidebar: React.FC<{ setSidebarProps: (newProps: SidebarProps) => void }>
           <br />
 
           <label htmlFor="species_1">Selecciona Especie 1:</label>
-          <select name="species_1" id="species_1" onChange={handleChange} defaultValue="escoger" disabled={formData["year"] == ''}>
-            <option value="escoger" key="escoger" disabled>Escoger</option>
+          <select name="species_1" id="species_1" onChange={handleChange} disabled={side_bar_props.anio == default_value} value={side_bar_props.especie_1}>
+            <option value={default_value} key={default_value} disabled>Escoger</option>
             {
               especies.map((especie) => (
                 <option value={especie.Cod_especie} key={especie.Cod_especie} >{especie.Nom_comun}</option>
@@ -199,8 +201,8 @@ const Sidebar: React.FC<{ setSidebarProps: (newProps: SidebarProps) => void }>
           <br />
 
           <label htmlFor="species_2">Selecciona Especie 2:</label>
-          <select name="species_2" id="species_2" onChange={handleChange} defaultValue="escoger" disabled={formData["year"] == ''} >
-            <option value="escoger" key="escoger" disabled>Escoger</option>
+          <select name="species_2" id="species_2" onChange={handleChange} disabled={side_bar_props.anio == default_value} value={side_bar_props.especie_2}>
+            <option value={default_value} key={default_value} disabled>Escoger</option>
             {
               especies.map((especie) => (
                 <option value={especie.Cod_especie} key={especie.Cod_especie}>{especie.Nom_comun}</option>
@@ -209,7 +211,7 @@ const Sidebar: React.FC<{ setSidebarProps: (newProps: SidebarProps) => void }>
           </select>
           <br />
 
-          <button type="submit" disabled={formData["species_1"] == '' || formData["species_2"] == ''}
+          <button type="submit" disabled={side_bar_props.especie_1 == default_value || side_bar_props.especie_2 == default_value}
           >Realizar análisis</button>
         </form>
       </div>

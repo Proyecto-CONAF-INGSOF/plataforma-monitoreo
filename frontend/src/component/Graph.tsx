@@ -32,7 +32,7 @@ const WindroseChart: React.FC<{
           type: 'column',
         },
         title: {
-          text: 'Windrose Chart for a Day',
+          text: 'Densidad Horaria' + ' ' + sidebar_props.especie_1,
         },
         xAxis: {
           categories: categories,
@@ -75,7 +75,6 @@ const WindroseChart: React.FC<{
 
     return (
       <div>
-        <h1>Windrose Chart for a Day</h1>
         <div id="windrose-chart" style={{ width: '400px', height: '400px' }} />
       </div>
     );
