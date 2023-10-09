@@ -1,19 +1,19 @@
-import axios from 'axios'
+import axios from 'axios';
 
 const ip = import.meta.env.VITE_BACKEND_IP || 'localhost';
 const port = import.meta.env.VITE_BACKEND_PORT || 8080;
 
 
-export interface Actividad {
+export interface Frecuencia {
   Hora: string;
-  Act: number;
+  Freq: number;
 }
 
-async function getActividad(unidad: string, anio: string, cod_specie: string): Promise<Actividad[] | any> {
-  let url = `http://${ip}:${port}/fotomonitoreo/actividad/${unidad}/${anio}/${cod_specie}`;
+async function getFrecuencia(unidad: string, anio: string, cod_specie: string): Promise<Frecuencia[] | any> {
+  let url = `http://${ip}:${port}/fotomonitoreo/freq_horaria/${unidad}/${anio}/${cod_specie}`;
 
   try {
-    let { data } = await axios.get<Actividad[]>(url);
+    let { data } = await axios.get<Frecuencia[]>(url);
     return data;
   } catch (error: any) {
     if (axios.isAxiosError(error)) {
@@ -27,5 +27,5 @@ async function getActividad(unidad: string, anio: string, cod_specie: string): P
 
 
 export {
-  getActividad
-}
+  getFrecuencia
+};

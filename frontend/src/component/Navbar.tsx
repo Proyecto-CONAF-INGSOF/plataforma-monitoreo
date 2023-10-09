@@ -1,6 +1,6 @@
 import './NavbarStyles.css';
 
-const Navbar = ({ toggleSidebar }) => {
+const Navbar = () => {
   return (
     <div className="navbar">
       <nav className="nav-container">
@@ -9,7 +9,7 @@ const Navbar = ({ toggleSidebar }) => {
           <p>Monitoreo SNAPSE</p>
         </section>
         {/* Add the hamburger button */}
-        <button type='button' className="actionButton" onClick={toggleSidebar}>
+        <button type='button' className="actionButton" onClick={() => { }}>
           <div className="hamburger-icon"></div>
           <div className="hamburger-icon"></div>
           <div className="hamburger-icon"></div>

@@ -14,6 +14,8 @@ const Sidebar: React.FC<{ setSidebarProps: (newProps: SidebarProps) => void }>
       anio: default_value,
       especie_1: default_value,
       especie_2: default_value,
+      nombre_especie_1: "",
+      nombre_especie_2: "",
     });
     const [regiones, setRegiones] = useState<Region[]>([]);
     const [unidad, setUnidad] = useState<Unidad[]>([]);
@@ -71,7 +73,9 @@ const Sidebar: React.FC<{ setSidebarProps: (newProps: SidebarProps) => void }>
         console.log(error);
       }
     }
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+      let selected = e.currentTarget.selectedIndex;
+      let full_nombre = e.currentTarget.options[selected].textContent || "";
       const { name, value } = e.target;
       switch (name) {
         case "region":
@@ -81,6 +85,8 @@ const Sidebar: React.FC<{ setSidebarProps: (newProps: SidebarProps) => void }>
             anio: default_value,
             especie_1: default_value,
             especie_2: default_value,
+            nombre_especie_1: "",
+            nombre_especie_2: "",
           })
           fetchUnidades(value);
           break;
@@ -107,12 +113,14 @@ const Sidebar: React.FC<{ setSidebarProps: (newProps: SidebarProps) => void }>
           SetSBP({
             ...side_bar_props,
             especie_1: value,
+            nombre_especie_1: full_nombre
           })
           break;
         case "species_2":
           SetSBP({
             ...side_bar_props,
             especie_2: value,
+            nombre_especie_2: full_nombre
           })
           break;
         default:
@@ -141,7 +149,7 @@ const Sidebar: React.FC<{ setSidebarProps: (newProps: SidebarProps) => void }>
               id="radio1"
               name="proyecto"
               value="Monitoreo estandarizado SNAPSE"
-              onChange={handleChange}
+              onChange={() => { }}
             />
             <p>Monitoreo estandarizado SNAPSE</p>
           </div>
@@ -152,7 +160,7 @@ const Sidebar: React.FC<{ setSidebarProps: (newProps: SidebarProps) => void }>
               id="radio2"
               name="proyecto"
               value="Otros"
-              onChange={handleChange}
+              onChange={() => { }}
             />
             <p>Otros</p>
           </div>
@@ -212,6 +220,11 @@ const Sidebar: React.FC<{ setSidebarProps: (newProps: SidebarProps) => void }>
           <br />
 
           <button type="submit" disabled={side_bar_props.especie_1 == default_value || side_bar_props.especie_2 == default_value}
+            // We Center the button using style
+            style={{
+              display: "block",
+              margin: "auto"
+            }}
           >Realizar análisis</button>
         </form>
       </div>

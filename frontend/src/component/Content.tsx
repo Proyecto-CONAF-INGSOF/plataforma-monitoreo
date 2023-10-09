@@ -3,8 +3,9 @@
 import React from 'react';
 import './ContentStyle.css';
 import Map from './Map';
-import Graph from './Graph';
+import DensidadHoraria from './DensidadHoraria';
 import BoxPlotOcupacion from './BoxPlotOcupacion';
+import FreqHoraria from './FreqHoraria'
 import Sidebar from './Sidebar';
 import { SidebarProps } from '../types';
 
@@ -16,6 +17,8 @@ const Content: React.FC = () => {
     anio: "",
     especie_1: "",
     especie_2: "",
+    nombre_especie_1: "",
+    nombre_especie_2: ""
   });
 
   function updateSidebarProps(newProps: SidebarProps) {
@@ -32,9 +35,14 @@ const Content: React.FC = () => {
         <Map />
         {
           sidebar_props.region !== "" &&
-          <Graph
-            sidebar_props={sidebar_props}
-          />
+          <>
+            <DensidadHoraria
+              sidebar_props={sidebar_props}
+            />
+            <FreqHoraria
+              sidebar_props={sidebar_props}
+            />
+          </>
         }
         {
           sidebar_props.region !== "" &&

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import Highcharts from 'highcharts';
 import HcMore from 'highcharts/highcharts-more';
 import { SidebarProps } from '../types';
-import { Actividad, getActividad } from '../services/actividad';
+import { Actividad, getActividad } from '../services/densidad_horaria';
 
 HcMore(Highcharts);
 
@@ -32,7 +32,7 @@ const WindroseChart: React.FC<{
           type: 'column',
         },
         title: {
-          text: 'Densidad Horaria' + ' ' + sidebar_props.especie_1,
+          text: 'Densidad Horaria' + ' ' + sidebar_props.nombre_especie_1,
         },
         xAxis: {
           categories: categories,
