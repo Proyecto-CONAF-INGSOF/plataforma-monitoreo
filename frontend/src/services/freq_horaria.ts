@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { RoseChartData } from '../types';
 
 const ip = import.meta.env.VITE_BACKEND_IP || 'localhost';
 const port = import.meta.env.VITE_BACKEND_PORT || 8080;
@@ -25,7 +26,19 @@ async function getFrecuencia(unidad: string, anio: string, cod_specie: string): 
   }
 }
 
+async function fetchFreq(setFreq: (freq: RoseChartData) => void, unidad: string, anio: string, cod_especie: string, nombre_especie: string) {
+  let densidad: Frecuencia[] = await getFrecuencia(unidad, anio, cod_especie);
+  let data: RoseChartData = {
+    categories: densidad.map(d => d.Hora),
+    data: densidad.map(d => d.Freq),
+    title: `Frecuencia Horaria - ${nombre_especie}`,
+    subtitle: "Freq"
+  }
+  setFreq(data);
+}
+
 
 export {
-  getFrecuencia
+  getFrecuencia,
+  fetchFreq
 };

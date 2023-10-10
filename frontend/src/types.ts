@@ -8,3 +8,9 @@ export interface SidebarProps {
   nombre_especie_2: string
 }
 
+export interface RoseChartData {
+  categories: string[];
+  data: number[];
+  title: string;
+  subtitle: string;
+}

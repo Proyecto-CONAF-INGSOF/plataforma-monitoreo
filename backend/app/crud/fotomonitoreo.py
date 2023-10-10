@@ -1,5 +1,4 @@
 import json
-from re import escape
 
 from asyncpg import Connection, Record
 from fastapi import HTTPException
