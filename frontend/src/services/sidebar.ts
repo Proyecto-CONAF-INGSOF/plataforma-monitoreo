@@ -33,9 +33,7 @@ export interface Unidad {
 
 async function getUnidades(region: string) {
     try {
-        console.log("Region: ", region);
         const url = `http://${ip}:${port}/fotomonitoreo/regiones/${region}`;
-        console.log(url);
         const { data } = await axios.get<Unidad[]>(url);
         return data
     } catch (error) {
@@ -54,10 +52,7 @@ export interface Anio {
 }
 async function getAnios(region: string, unidad: string) {
     try {
-        console.log("Region: ", region);
-        console.log("Unidad: ", unidad);
         const url = `http://${ip}:${port}/fotomonitoreo/regiones/${region}/${unidad}`;
-        console.log(url);
         const { data } = await axios.get<Anio[]>(url);
         return data
     } catch (error) {
@@ -81,11 +76,7 @@ export interface Especie {
 
 async function getEspecies(region: string, unidad: string, anio: string) {
     try {
-        console.log("Region: ", region);
-        console.log("Unidad: ", unidad);
-        console.log("Anio: ", anio);
         const url = `http://${ip}:${port}/fotomonitoreo/regiones/${region}/${unidad}/${anio}`;
-        console.log(url);
         const { data } = await axios.get<Especie[]>(url);
         return data
     } catch (error) {

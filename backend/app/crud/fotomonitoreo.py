@@ -1,7 +1,8 @@
-from re import escape
+import json
+
 from asyncpg import Connection, Record
 from fastapi import HTTPException
-import json
+
 
 async def get_example(conn: Connection):
     try:
@@ -11,6 +12,7 @@ async def get_example(conn: Connection):
         print(result)
     except Exception as _:
         raise HTTPException(status_code=500, detail="Error inesperado")
+
 
 async def obtener_superposicion_horaria(especie1: str, especie2: str, conn: Connection):
     try:
@@ -32,36 +34,48 @@ async def obtener_superposicion_horaria(especie1: str, especie2: str, conn: Conn
         print(result1)
 
         return {
-                "query1_result": json.loads(result1_json),
-                "query2_result": json.loads(result2_json)
-                }
+            "query1_result": json.loads(result1_json),
+            "query2_result": json.loads(result2_json),
+        }
 
     except Exception as e:
         print(e)
         raise HTTPException(status_code=500, detail="Error inesperado")
 
-async def obtener_actividad(unidad: str, anio: int,especie: str, conn: Connection):
+
+async def obtener_actividad(unidad: str, anio: int, especie: str, conn: Connection):
     try:
         query = """ SELECT "Hora", "Act"
                     FROM act
                     WHERE "Unidad_COD" = $1 AND "Ano" = $2
                     AND "Cod_especie" = $3"""
-        
+
         result = await conn.fetch(query, unidad, anio, especie, record_class=Record)
 
         return result
     except Exception as e:
         print(e)
         raise HTTPException(status_code=500, detail="Error inesperado")
-    
+
 
 async def obtener_ocupacion_sitio(especie: str, conn: Connection):
     return
+
 
 async def obtener_regiones(conn: Connection):
     try:
         query = 'SELECT Distinct("Nom_region"), "Ord_region" FROM inputs'
         result = await conn.fetch(query, record_class=Record)
+        return result
+    except Exception as e:
+        print(e)
+        raise HTTPException(status_code=500, detail="Error inesperado")
+
+
+async def obtener_freq_horaria(unidad: str, anio: int, especie: str, conn: Connection):
+    query = 'SELECT "Hora", "Freq" FROM freq WHERE "Unidad_COD" = $1 AND "Ano" = $2 AND "Cod_especie" = $3'
+    try:
+        result = await conn.fetch(query, unidad, anio, especie, record_class=Record)
         return result
     except Exception as e:
         print(e)
