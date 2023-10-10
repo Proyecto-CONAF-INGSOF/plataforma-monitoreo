@@ -11,8 +11,6 @@ const Navbar = () => {
         {/* Add the hamburger button */}
         <button type='button' className="actionButton" onClick={() => { }}>
           <div className="hamburger-icon"></div>
-          <div className="hamburger-icon"></div>
-          <div className="hamburger-icon"></div>
         </button>
         <section className='RightNav'>
           <a href='#'><img src="logoMon.png" alt="" className='logoMon' /></a>

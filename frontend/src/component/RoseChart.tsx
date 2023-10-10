@@ -9,8 +9,8 @@ const RoseChart: React.FC<{
   rs_data: RoseChartData,
   id: string,
 }> = ({
-  rs_data,
-  id
+  rs_data, // Datos que se van a graficar
+  id       // Id UNICO del elemento HTML donde se va a poner el grafico. 
 }) => {
     const setOptions = () => {
       const categories = rs_data.categories;
@@ -59,6 +59,9 @@ const RoseChart: React.FC<{
     }
 
 
+    // Use effect que se ejecuta cuando se actualiza el estado de rs_data (los datos 
+    // que se van a graficar) rs_data puede cambiar porque el usuario cambio los datos seleccionados 
+    // en el sidebar. Ver src/component/Sidebar.tsx funtion handleSubmit para mas detalles
     useEffect(() => {
       let options = setOptions();
       Highcharts.chart(id, options);

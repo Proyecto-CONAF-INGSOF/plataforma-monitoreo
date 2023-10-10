@@ -7,7 +7,9 @@ const Sidebar: React.FC<{ setSidebarProps: (newProps: SidebarProps) => void }>
   = (
     { setSidebarProps }
   ) => {
+    // Nuestro default values de los selects
     const default_value = "escoger";
+    // Nuestro estado inicial de sidebar
     const [side_bar_props, SetSBP] = useState<SidebarProps>({
       region: default_value,
       unidad: default_value,
@@ -17,11 +19,14 @@ const Sidebar: React.FC<{ setSidebarProps: (newProps: SidebarProps) => void }>
       nombre_especie_1: "",
       nombre_especie_2: "",
     });
+    // Nuestro estado de regiones, unidades, años y especies
+    // Estos son sacados de la api conforme el usuario va seleccionando
     const [regiones, setRegiones] = useState<Region[]>([]);
     const [unidad, setUnidad] = useState<Unidad[]>([]);
     const [anios, setAnios] = useState<Anio[]>([]);
     const [especies, setEspecies] = useState<Especie[]>([]);
 
+    // Llamadas a la API
     const fetchRegiones = async () => {
       try {
         let r = await getRegiones();
@@ -73,11 +78,13 @@ const Sidebar: React.FC<{ setSidebarProps: (newProps: SidebarProps) => void }>
         console.log(error);
       }
     }
+    // Manejamos los cambios que el usuario puede hacer en sidebar
     const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
       let selected = e.currentTarget.selectedIndex;
       let full_nombre = e.currentTarget.options[selected].textContent || "";
       const { name, value } = e.target;
       switch (name) {
+        // Si la region cambia, queremos que todos los datos que dependen de la region se reseteen
         case "region":
           SetSBP({
             region: value,
@@ -90,6 +97,7 @@ const Sidebar: React.FC<{ setSidebarProps: (newProps: SidebarProps) => void }>
           })
           fetchUnidades(value);
           break;
+        // Si la unidad cambia, queremos que todos los datos que dependen de la unidad se reseteen
         case "unit":
           SetSBP({
             ...side_bar_props,
@@ -100,6 +108,7 @@ const Sidebar: React.FC<{ setSidebarProps: (newProps: SidebarProps) => void }>
           })
           fetchAnios(side_bar_props.region, value);
           break;
+        // Si el año cambia, queremos que todos los datos que dependen del año se reseteen
         case "year":
           SetSBP({
             ...side_bar_props,
@@ -109,6 +118,7 @@ const Sidebar: React.FC<{ setSidebarProps: (newProps: SidebarProps) => void }>
           })
           fetchEspecies(side_bar_props.region, side_bar_props.unidad, value);
           break;
+        // Si la especie 1 cambia, queremos que todos los datos que dependen de la especie 1 se reseteen
         case "species_1":
           SetSBP({
             ...side_bar_props,
@@ -116,6 +126,7 @@ const Sidebar: React.FC<{ setSidebarProps: (newProps: SidebarProps) => void }>
             nombre_especie_1: full_nombre
           })
           break;
+        // Si la especie 2 cambia, queremos que todos los datos que dependen de la especie 2 se reseteen
         case "species_2":
           SetSBP({
             ...side_bar_props,
@@ -123,17 +134,20 @@ const Sidebar: React.FC<{ setSidebarProps: (newProps: SidebarProps) => void }>
             nombre_especie_2: full_nombre
           })
           break;
+        // No hacer nada si no es ninguno de los anteriores
         default:
           break;
       }
     };
+    // Cuando el usuario aprete el boton "Realizar análisis" esta funcion se ejecuta
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
+      // Verificamos que todos los datos esten seleccionados, si no, no hacemos nada
       if (side_bar_props.region == default_value || side_bar_props.unidad == default_value || side_bar_props.anio == default_value || side_bar_props.especie_1 == default_value || side_bar_props.especie_2 == default_value) {
         return;
       }
+      // Acutalizamos el estado de sidebar_props para prograpagar los cambios a otros componentes
       setSidebarProps(side_bar_props);
-      // Puedes enviar los datos a un servidor aquí o realizar otras acciones.
     };
     useEffect(() => {
       fetchRegiones();
