@@ -1,24 +1,27 @@
 // LoginForm.tsx
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './LoginFormStyles.css'; // Ruta al archivo de estilos
-import { JWT, LoginAdmin, loginAdmin } from '../services/admin.ts'
+import { LoginAdmin } from '../services/admin.ts'
 import axios from 'axios';
-// import { useNavigate } from 'react-router-dom';
+import { AuthData } from '../auth/authWrapper.tsx';
+import { useNavigate } from 'react-router-dom';
 
 const LoginForm: React.FC = () => {
   const [error, setError] = useState<string>('');
-  // const navigate = useNavigate();
+  const login = AuthData()?.login;
+  const navigate = useNavigate();
 
   const fetch_login = async (admin: LoginAdmin) => {
     try {
       // Llamada a la API
-      let { status, data } = await loginAdmin(admin);
-      if (status === 200) {
-        let token = data as JWT;
-        // We save the token in the localStorage
-        localStorage.setItem('token', token.access_token)
+      if (login !== undefined) {
+        login(admin);
+      } else {
+        throw new Error('No se pudo iniciar sesión');
       }
+      navigate('/protected');
+
     } catch (error) {
       console.log(error);
       if (axios.isAxiosError(error)) {
@@ -54,6 +57,10 @@ const LoginForm: React.FC = () => {
       fetch_login({ email, contrasena });
     }
   }
+
+  useEffect(() => {
+    console.log("Login form mounted");
+  }, []);
 
   return (
     <div className="form-container">

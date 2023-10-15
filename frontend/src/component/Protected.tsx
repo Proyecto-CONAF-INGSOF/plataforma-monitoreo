@@ -2,7 +2,27 @@
 const Protected = () => {
   return (
     <div>
-      <p>Protected Page</p>
+      <h1>This is protected</h1>
+      <h1>This is protected</h1>
+      <h1>This is protected</h1>
+      <h1>This is protected</h1>
+      <h1>This is protected</h1>
+      <h1>This is protected</h1>
+      <h1>This is protected</h1>
+      <h1>This is protected</h1>
+      <h1>This is protected</h1>
+      <h1>This is protected</h1>
+      <h1>This is protected</h1>
+      <h1>This is protected</h1>
+      <h1>This is protected</h1>
+      <h1>This is protected</h1>
+      <h1>This is protected</h1>
+      <h1>This is protected</h1>
+      <h1>This is protected</h1>
+      <h1>This is protected</h1>
+      <h1>This is protected</h1>
+      <h1>This is protected</h1>
+      <h1>This is protected</h1>
     </div>
   )
 }

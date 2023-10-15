@@ -19,3 +19,11 @@ export interface RoseChartData {
   title: string;
   subtitle: string;
 }
+
+export interface JWTPayload {
+  sub: string;
+  nombre: string;
+  apellido: string;
+  email: string;
+  exp: number;
+}
