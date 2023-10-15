@@ -1,8 +1,8 @@
 // Login.tsx
 
 import React from 'react';
-import './loginStyle.css';
-import LoginForm from './LoginForm';
+import '../component/loginStyle.css';
+import LoginForm from '../component/LoginForm'
 
 const Login: React.FC = () => {
   return (

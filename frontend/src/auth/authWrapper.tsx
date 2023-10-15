@@ -6,8 +6,7 @@ import { JWTPayload } from "../types";
 import Protected from "../component/Protected";
 import { Route, Routes } from "react-router-dom";
 import Home from "../pages/Home";
-import Login from "../component/Login";
-
+import Login from "../pages/Login";
 export type AuthContextType = {
   admin: Admin;
   login: (admin: LoginAdmin) => void;
@@ -80,8 +79,10 @@ export const AuthWrapper = () => {
     <AuthContext.Provider value={{ admin, login, logout }}>
       <>
         <Routes>
+          {/* Estas rutas no estan protegidas */}
           <Route path="/" element={<Home />} />
           <Route path="/admin" element={<Login />} />
+          {/* Si el usuario está autenticado, mostrar la ruta /protected */}
           {
             admin.is_authenticated &&
             <Route
@@ -90,6 +91,8 @@ export const AuthWrapper = () => {
                 <Protected></Protected>
               }
             />
+            ||
+            <Route path="*" element={<h1>404</h1>} />
           }
         </Routes>
       </>
