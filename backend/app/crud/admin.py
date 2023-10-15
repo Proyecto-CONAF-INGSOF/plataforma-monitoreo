@@ -1,6 +1,5 @@
 from app.models.admin import Admin
 from asyncpg import Connection, Record
-from fastapi import HTTPException
 
 
 async def crear_admin(admin: Admin, conn: Connection):
@@ -40,26 +39,22 @@ async def obtener_admin(email: str, conn: Connection) -> Admin | None:
     return admin_new
 
 
-async def remover_token(token: str, conn: Connection):
-    try:
-        await conn.execute(
-            """
-            DELETE FROM session_auth WHERE token = $1
-            """,
-            token,
-        )
-    # Not found exception
-    except Exception as _:
-        raise HTTPException(status_code=500, detail="Error interno")
-
-
-async def find_token(token: str, conn: Connection):
-    await conn.fetchrow(
+async def obtener_admin_por_id(id: int, conn: Connection) -> Admin | None:
+    admin: Record | None = await conn.fetchrow(
         """
-        SELECT * FROM session_auth WHERE token = $1
+        SELECT * FROM admin WHERE id = $1
         """,
-        token,
+        id,
         record_class=Record,
     )
-    if token is None:
-        raise HTTPException(status_code=401, detail="Unauthorized")
+    if admin is None:
+        return None
+    admin_new = Admin(
+        id=admin["id"],
+        nombre=admin["nombre"],
+        apellido=admin["apellido"],
+        username=admin["username"],
+        contrasena=admin["contrasena"],
+        email=admin["email"],
+    )
+    return admin_new

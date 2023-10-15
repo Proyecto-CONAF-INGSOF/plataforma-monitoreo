@@ -1,41 +1,110 @@
-from app.crud.admin import (crear_admin, find_token, obtener_admin,
-                            remover_token)
+from datetime import datetime, timedelta
+from typing import Annotated
+
+from app.crud.admin import crear_admin, obtener_admin, obtener_admin_por_id
 from app.crud.database import get_session_admin
 from app.models.admin import Admin
-from app.router.utils import crear_token
 from asyncpg import Connection
 from asyncpg.connection import asyncpg
-from fastapi import APIRouter, Cookie, Depends, HTTPException, Response
+from fastapi import APIRouter, Depends, HTTPException, Response, status
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from jose import JWTError, jwt
 from pydantic import BaseModel
 
 router = APIRouter()
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="admin/login")
+
+# Generate random key: openssl rand -hex 32
+SECRET_KEY = "76ac56b7e37d973c816a7218027fb68eb0b1aa869b8cb7c9bd3fb95f49ab5cae"
+ALGORITHM = "HS256"
+# Expire in 1 week
+ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24 * 7
 
 
-# Auth middleware es chequeado antes de request restringidas
-async def auth_middleware(conn: Connection, user_token: str):
-    if user_token is None:
-        raise HTTPException(status_code=401, detail="Unauthorized")
-    await find_token(user_token, conn)
+class LoginAdmin(BaseModel):
+    email: str
+    contrasena: str
 
 
-@router.get("/auth")
-async def auth(
-    conn: Connection = Depends(get_session_admin), user_token: str = Cookie(None)
+# Funcion para generar token de acceso
+def create_access_token(data: dict, expires_delta: timedelta | None = None):
+    to_encode = data.copy()
+    if expires_delta:
+        expire = datetime.utcnow() + expires_delta
+    else:
+        expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    to_encode.update({"exp": expire})
+    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+    return encoded_jwt
+
+
+def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
+    credential_exception = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Could not validate credentials",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        user_id = payload.get("sub")
+        if user_id is None:
+            print("user_id is None")
+            raise credential_exception
+        return int(user_id)
+    except JWTError as e:
+        print(e)
+        raise credential_exception
+
+
+# Middleware de seguridad, esto restringe el acceso a las rutas
+# a los usuarios que tengan un token valido
+async def get_current_active_user(
+    current_user: Annotated[int, Depends(get_current_user)],
+    conn: Connection = Depends(get_session_admin),
+) -> Admin | None:
+    # Esto hace que las requests sean mas lentas pero es mas seguro
+    # podemos eliminarlo si queremos que las requests sean mas rapidas a
+    # costa de seguridad
+    user = await obtener_admin_por_id(current_user, conn)
+    if user is None:
+        raise HTTPException(status_code=404, detail="User not found")
+    return user
+
+
+@router.post("/login")
+async def login(
+    form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
+    conn: Connection = Depends(get_session_admin),
 ):
-    if user_token is None:
-        raise HTTPException(status_code=401, detail="Unauthorized")
-    _ = await auth_middleware(conn, user_token)
-    # Return 200
-    return Response(status_code=200)
+    admin_db = await obtener_admin(form_data.username, conn)
+    if admin_db is None:
+        raise HTTPException(status_code=404, detail="Usuario no existe")
+
+    if admin_db.comparar_contrasena(form_data.password) is False:
+        raise HTTPException(status_code=401, detail="Contraseña incorrecta")
+
+    id = admin_db.id or 0
+
+    token_data = {
+        "sub": str(id),
+        "nombre": admin_db.nombre,
+        "apellido": admin_db.apellido,
+        "email": admin_db.email,
+    }
+
+    admin_sess = create_access_token(token_data)
+    return {
+        "access_token": admin_sess,
+        "token_type": "bearer",
+    }
 
 
 @router.post("/registro")
 async def registro(
     admin: Admin,
+    _: Annotated[Admin, Depends(get_current_active_user)],
     conn: Connection = Depends(get_session_admin),
-    user_token: str = Cookie(None),
 ):
-    _ = await auth_middleware(conn, user_token)
     try:
         await crear_admin(admin, conn)
     except asyncpg.exceptions.UniqueViolationError:
@@ -49,38 +118,8 @@ async def registro(
     return Response(status_code=201)
 
 
-class LoginAdmin(BaseModel):
-    email: str
-    contrasena: str
-
-
-@router.post("/login")
-async def login(
-    admin: LoginAdmin, response: Response, conn: Connection = Depends(get_session_admin)
+@router.get("/protected")
+async def protected_route(
+    _: Annotated[Admin, Depends(get_current_active_user)],
 ):
-    admin_db = await obtener_admin(admin.email, conn)
-    if admin_db is None:
-        raise HTTPException(status_code=404, detail="Usuario no existe")
-
-    if admin_db.comparar_contrasena(admin.contrasena) is False:
-        raise HTTPException(status_code=401, detail="Contraseña incorrecta")
-
-    id = admin_db.id or 0
-
-    admin_sess = await crear_token(id, conn)
-    response.set_cookie(key="user_token", value=admin_sess.token)
     return "OK"
-
-
-@router.get("/logout")
-async def logout(
-    response: Response,
-    user_token: str = Cookie(None),
-    conn: Connection = Depends(get_session_admin),
-):
-    if user_token is None:
-        raise HTTPException(status_code=401, detail="Unauthorized")
-    else:
-        await remover_token(user_token, conn)
-    response.delete_cookie(key="user_token")
-    return {"message": "Cierre de sesión"}

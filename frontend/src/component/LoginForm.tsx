@@ -2,18 +2,22 @@
 
 import React, { useState } from 'react';
 import './LoginFormStyles.css'; // Ruta al archivo de estilos
-import { LoginAdmin, loginAdmin } from '../services/admin.ts'
+import { JWT, LoginAdmin, loginAdmin } from '../services/admin.ts'
 import axios from 'axios';
+// import { useNavigate } from 'react-router-dom';
 
 const LoginForm: React.FC = () => {
   const [error, setError] = useState<string>('');
+  // const navigate = useNavigate();
 
-  const login = async (admin: LoginAdmin) => {
+  const fetch_login = async (admin: LoginAdmin) => {
     try {
       // Llamada a la API
-      let status = await loginAdmin(admin);
+      let { status, data } = await loginAdmin(admin);
       if (status === 200) {
-        console.log("Login successful");
+        let token = data as JWT;
+        // We save the token in the localStorage
+        localStorage.setItem('token', token.access_token)
       }
     } catch (error) {
       console.log(error);
@@ -47,7 +51,7 @@ const LoginForm: React.FC = () => {
     }
     else {
       setError('');
-      login({ email, contrasena });
+      fetch_login({ email, contrasena });
     }
   }
 
