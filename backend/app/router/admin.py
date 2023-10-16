@@ -1,3 +1,4 @@
+import os
 from datetime import datetime, timedelta
 from typing import Annotated
 
@@ -6,17 +7,23 @@ from app.crud.database import get_session_admin
 from app.models.admin import Admin
 from asyncpg import Connection
 from asyncpg.connection import asyncpg
+from dotenv import load_dotenv
 from fastapi import APIRouter, Depends, HTTPException, Response, status
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jose import JWTError, jwt
 from pydantic import BaseModel
 
+load_dotenv()
+
 router = APIRouter()
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="admin/login")
 
 # Generate random key: openssl rand -hex 32
-SECRET_KEY = "76ac56b7e37d973c816a7218027fb68eb0b1aa869b8cb7c9bd3fb95f49ab5cae"
-ALGORITHM = "HS256"
+SECRET_KEY = (
+    os.getenv("SECRET_KEY")
+    or "0508485514647e9e4d1ae73da26a8666de48aa0d9f4439ce53b1dab585c25790"
+)
+ALGORITHM = os.getenv("ALGORITHM") or "HS256"
 # Expire in 1 week
 ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24 * 7
 

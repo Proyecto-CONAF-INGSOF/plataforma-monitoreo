@@ -65,13 +65,18 @@ export const AuthWrapper = () => {
     let token = localStorage.getItem('token');
     if (token) {
       let jwt_payload = jwt_decode(token) as JWTPayload;
-      setAdmin({
-        id: Number(jwt_payload.sub),
-        nombre: jwt_payload.nombre,
-        apellido: jwt_payload.apellido,
-        email: jwt_payload.email,
-        is_authenticated: true,
-      });
+      // Check the expiration date
+      if (jwt_payload.exp < Date.now() / 1000) {
+        logout();
+      } else {
+        setAdmin({
+          id: Number(jwt_payload.sub),
+          nombre: jwt_payload.nombre,
+          apellido: jwt_payload.apellido,
+          email: jwt_payload.email,
+          is_authenticated: true,
+        });
+      }
     }
   }, [])
 
@@ -81,7 +86,11 @@ export const AuthWrapper = () => {
         <Routes>
           {/* Estas rutas no estan protegidas */}
           <Route path="/" element={<Home />} />
-          <Route path="/admin" element={<Login />} />
+          <Route path="/admin" element={
+            <Login
+              is_authenticated={admin.is_authenticated}
+            ></Login>
+          } />
           {/* Si el usuario está autenticado, mostrar la ruta /protected */}
           {
             admin.is_authenticated &&
