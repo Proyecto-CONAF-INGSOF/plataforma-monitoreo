@@ -14,7 +14,7 @@ const RoseChart: React.FC<{
 }) => {
     const setOptions = () => {
       const categories = rs_data.categories;
-      let data = rs_data.data;
+      const data = rs_data.data;
 
       const options: Highcharts.Options = {
         credits: {
@@ -63,7 +63,7 @@ const RoseChart: React.FC<{
     // que se van a graficar) rs_data puede cambiar porque el usuario cambio los datos seleccionados 
     // en el sidebar. Ver src/component/Sidebar.tsx funtion handleSubmit para mas detalles
     useEffect(() => {
-      let options = setOptions();
+      const options = setOptions();
       Highcharts.chart(id, options);
     }, [rs_data]);
 

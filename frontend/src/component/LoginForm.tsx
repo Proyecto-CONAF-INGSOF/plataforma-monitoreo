@@ -22,6 +22,9 @@ const LoginForm: React.FC = () => {
             case 404:
               setError('Usuario o contraseña incorrectos');
               break;
+            case 401:
+              setError('Usuario o contraseña incorrectos');
+              break;
             case 500:
               setError('Error al iniciar sesión, intentalo más tarde');
               break;

@@ -28,6 +28,7 @@ const Content: React.FC = () => {
     // Chequeamos que el sidebar tenga propiedades
     if (Object.keys(sidebar_props).length !== 0) {
       // Si el sidebar tiene propiedades, entonces hacemos las peticiones
+      // Todo: Handle posibles errores al llamar a las funciones fetch. Estas pueden retornar errores de axios
       fetchDensidad(setDensidadE1, sidebar_props.unidad, sidebar_props.anio, sidebar_props.especie_1, sidebar_props.nombre_especie_1)
       fetchFreq(setFreqE1, sidebar_props.unidad, sidebar_props.anio, sidebar_props.especie_1, sidebar_props.nombre_especie_1)
 

@@ -80,8 +80,8 @@ const Sidebar: React.FC<{ setSidebarProps: (newProps: SidebarProps) => void }>
     }
     // Manejamos los cambios que el usuario puede hacer en sidebar
     const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-      let selected = e.currentTarget.selectedIndex;
-      let full_nombre = e.currentTarget.options[selected].textContent || "";
+      const selected = e.currentTarget.selectedIndex;
+      const full_nombre = e.currentTarget.options[selected].textContent || "";
       const { name, value } = e.target;
       switch (name) {
         // Si la region cambia, queremos que todos los datos que dependen de la region se reseteen

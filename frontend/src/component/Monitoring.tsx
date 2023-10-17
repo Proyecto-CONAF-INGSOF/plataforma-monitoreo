@@ -1,4 +1,3 @@
-import React from 'react';
 import Header from './Navbar';
 import Sidebar from './Sidebar';
 import Content from './Content';
@@ -11,9 +10,9 @@ const Monitoring = () => {
       <Header />
       <Sidebar />
       <Content />
-      
+
     </div>
-      
+
   );
 };
 

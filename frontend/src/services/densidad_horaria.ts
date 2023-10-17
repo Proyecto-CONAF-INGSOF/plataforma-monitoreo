@@ -11,20 +11,11 @@ export interface Densidad {
 }
 
 
-async function getDensidadHr(unidad: string, anio: string, cod_specie: string): Promise<Densidad[] | any> {
+async function getDensidadHr(unidad: string, anio: string, cod_specie: string): Promise<Densidad[]> {
   const url = `http://${ip}:${port}/fotomonitoreo/actividad/${unidad}/${anio}/${cod_specie}`;
 
-  try {
-    const { data } = await axios.get<Densidad[]>(url);
-    return data;
-  } catch (error: any) {
-    if (axios.isAxiosError(error)) {
-      console.log("Error message: ", error.message);
-    } else {
-      console.log("Unexpected error: ", error);
-    }
-    return error;
-  }
+  const { data } = await axios.get<Densidad[]>(url);
+  return data;
 }
 
 async function fetchDensidad(setDensidad: (densidad: RoseChartData) => void, unidad: string, anio: string, cod_especie: string, nombre_especie: string) {

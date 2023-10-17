@@ -1,4 +1,4 @@
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 
 // Importamos las variables de entorno definidas en el archivo .env
 const ip = import.meta.env.VITE_BACKEND_IP || 'localhost';
@@ -29,25 +29,7 @@ async function loginAdmin(admin: LoginAdmin): Promise<{ status: number, data: ob
   return { status, data };
 }
 
-async function useAuth() {
-  // We retrieve the token from the local storage
-  const token = localStorage.getItem('token');
-  if (token == null) {
-    throw new Error('No token found');
-  }
-  try {
-    const { status } = await axios.get(`http://${ip}:${port}/admin/protected`, {
-      headers: {
-        'Authorization': `Bearer ${token}`
-      }
-    })
-    return status === 200;
-  } catch (error) {
-    return error
-  }
-}
 
 export {
   loginAdmin,
-  useAuth
 }
