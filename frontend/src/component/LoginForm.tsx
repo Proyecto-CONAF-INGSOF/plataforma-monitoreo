@@ -20,10 +20,10 @@ const LoginForm: React.FC = () => {
           console.log(e.response?.status);
           switch (e.response?.status) {
             case 404:
-              setError('Usuario o contraseña incorrectos');
+              setError('Email o contraseña incorrectos');
               break;
             case 401:
-              setError('Usuario o contraseña incorrectos');
+              setError('Email o contraseña incorrectos');
               break;
             case 500:
               setError('Error al iniciar sesión, intentalo más tarde');
@@ -49,7 +49,7 @@ const LoginForm: React.FC = () => {
     const contrasena: string = (e.target as HTMLFormElement).password.value;
 
     if (email === '' || contrasena === '') {
-      setError('Ingrese un usuario y contraseña');
+      setError('Ingrese un email y contraseña');
     }
     else {
       setError('');
@@ -65,9 +65,9 @@ const LoginForm: React.FC = () => {
     <div className="form-container">
       <form onSubmit={handleSubmit}>
         <label htmlFor="username" className="label">
-          Usuario
+          Email
         </label>
-        <input type="text" placeholder="Nombre de usuario" id="username" name="username" required className="input" />
+        <input type="text" placeholder="Email" id="username" name="username" required className="input" />
 
         <label htmlFor="password" className="label">
           Contraseña

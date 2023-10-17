@@ -98,7 +98,10 @@ export const AuthWrapper = () => {
             <Route
               path="/protected"
               element={
-                <Protected></Protected>
+                <Protected
+                  admin={admin}
+                  logout={logout}
+                ></Protected>
               }
             />
             ||
