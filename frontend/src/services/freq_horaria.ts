@@ -11,10 +11,10 @@ export interface Frecuencia {
 }
 
 async function getFrecuencia(unidad: string, anio: string, cod_specie: string): Promise<Frecuencia[] | any> {
-  let url = `http://${ip}:${port}/fotomonitoreo/freq_horaria/${unidad}/${anio}/${cod_specie}`;
+  const url = `http://${ip}:${port}/fotomonitoreo/freq_horaria/${unidad}/${anio}/${cod_specie}`;
 
   try {
-    let { data } = await axios.get<Frecuencia[]>(url);
+    const { data } = await axios.get<Frecuencia[]>(url);
     return data;
   } catch (error: any) {
     if (axios.isAxiosError(error)) {
@@ -27,8 +27,8 @@ async function getFrecuencia(unidad: string, anio: string, cod_specie: string): 
 }
 
 async function fetchFreq(setFreq: (freq: RoseChartData) => void, unidad: string, anio: string, cod_especie: string, nombre_especie: string) {
-  let densidad: Frecuencia[] = await getFrecuencia(unidad, anio, cod_especie);
-  let data: RoseChartData = {
+  const densidad: Frecuencia[] = await getFrecuencia(unidad, anio, cod_especie);
+  const data: RoseChartData = {
     categories: densidad.map(d => d.Hora),
     data: densidad.map(d => d.Freq),
     title: `Frecuencia Horaria - ${nombre_especie}`,

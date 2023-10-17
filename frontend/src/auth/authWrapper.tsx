@@ -9,7 +9,7 @@ import Home from "../pages/Home";
 import Login from "../pages/Login";
 export type AuthContextType = {
   admin: Admin;
-  login: (admin: LoginAdmin) => void;
+  login: (admin: LoginAdmin) => Promise<void>;
   logout: () => void;
 }
 
@@ -33,21 +33,22 @@ export const AuthWrapper = () => {
     is_authenticated: false,
   });
 
-  const login = (admin: LoginAdmin) => {
-    loginAdmin(admin).then((response) => {
-      if (response.status === 200) {
-        let token = response.data as JWT;
-        let jwt_payload = jwt_decode(token.access_token) as JWTPayload;
-        localStorage.setItem('token', token.access_token);
-        setAdmin({
-          id: Number(jwt_payload.sub),
-          nombre: jwt_payload.nombre,
-          apellido: jwt_payload.apellido,
-          email: jwt_payload.email,
-          is_authenticated: true,
-        });
-      }
-    })
+  const login = async (admin: LoginAdmin) => {
+    const response = await loginAdmin(admin);
+    if (response.status === 200) {
+      const token = response.data as JWT;
+      const jwt_payload = jwt_decode(token.access_token) as JWTPayload;
+      localStorage.setItem('token', token.access_token);
+      setAdmin({
+        id: Number(jwt_payload.sub),
+        nombre: jwt_payload.nombre,
+        apellido: jwt_payload.apellido,
+        email: jwt_payload.email,
+        is_authenticated: true,
+      });
+    } else {
+      throw new Error('No se pudo iniciar sesión');
+    }
   }
   const logout = () => {
     localStorage.removeItem('token');
@@ -62,9 +63,9 @@ export const AuthWrapper = () => {
 
   // Verificar si hay un token en el local storage, si lo hay, setear el admin
   useEffect(() => {
-    let token = localStorage.getItem('token');
+    const token = localStorage.getItem('token');
     if (token) {
-      let jwt_payload = jwt_decode(token) as JWTPayload;
+      const jwt_payload = jwt_decode(token) as JWTPayload;
       // Check the expiration date
       if (jwt_payload.exp < Date.now() / 1000) {
         logout();

@@ -10,7 +10,7 @@ const Login: React.FC<{
 }> = (
   { is_authenticated }
 ) => {
-    let component = <div className="login-container">
+    const component = <div className="login-container">
       <img src="coipo.svg" id="guaren" alt="Guaren Image" />
       <LoginForm />
     </div>

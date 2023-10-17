@@ -12,10 +12,10 @@ export interface Densidad {
 
 
 async function getDensidadHr(unidad: string, anio: string, cod_specie: string): Promise<Densidad[] | any> {
-  let url = `http://${ip}:${port}/fotomonitoreo/actividad/${unidad}/${anio}/${cod_specie}`;
+  const url = `http://${ip}:${port}/fotomonitoreo/actividad/${unidad}/${anio}/${cod_specie}`;
 
   try {
-    let { data } = await axios.get<Densidad[]>(url);
+    const { data } = await axios.get<Densidad[]>(url);
     return data;
   } catch (error: any) {
     if (axios.isAxiosError(error)) {
@@ -28,8 +28,8 @@ async function getDensidadHr(unidad: string, anio: string, cod_specie: string): 
 }
 
 async function fetchDensidad(setDensidad: (densidad: RoseChartData) => void, unidad: string, anio: string, cod_especie: string, nombre_especie: string) {
-  let densidad: Densidad[] = await getDensidadHr(unidad, anio, cod_especie);
-  let data: RoseChartData = {
+  const densidad: Densidad[] = await getDensidadHr(unidad, anio, cod_especie);
+  const data: RoseChartData = {
     categories: densidad.map(d => d.Hora),
     data: densidad.map(d => d.Act),
     title: `Densidad horaria - ${nombre_especie}`,

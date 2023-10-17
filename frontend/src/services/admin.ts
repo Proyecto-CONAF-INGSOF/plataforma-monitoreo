@@ -14,24 +14,19 @@ export interface LoginAdmin {
   contrasena: string;
 }
 
-async function loginAdmin(admin: LoginAdmin): Promise<{ status: number, data: Object }> {
-  try {
-    // Create a formdata object and add the form data
-    let form_data = new FormData();
-    form_data.append('grant_type', 'password');
-    form_data.append('username', admin.email);
-    form_data.append('password', admin.contrasena);
+async function loginAdmin(admin: LoginAdmin): Promise<{ status: number, data: object }> {
+  const form_data = new FormData();
+  form_data.append('grant_type', 'password');
+  form_data.append('username', admin.email);
+  form_data.append('password', admin.contrasena);
 
-    let config = {
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      }
+  const config = {
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
     }
-    let { status, data } = await axios.post(`http://${ip}:${port}/admin/login`, form_data, config)
-    return { status, data };
-  } catch (error) {
-    throw error as AxiosError;
   }
+  const { status, data } = await axios.post(`http://${ip}:${port}/admin/login`, form_data, config)
+  return { status, data };
 }
 
 async function useAuth() {
@@ -41,7 +36,7 @@ async function useAuth() {
     throw new Error('No token found');
   }
   try {
-    let { status } = await axios.get(`http://${ip}:${port}/admin/protected`, {
+    const { status } = await axios.get(`http://${ip}:${port}/admin/protected`, {
       headers: {
         'Authorization': `Bearer ${token}`
       }
