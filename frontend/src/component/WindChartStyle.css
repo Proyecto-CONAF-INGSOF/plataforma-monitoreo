@@ -1,0 +1,48 @@
+/* Estilos para el título del gráfico */
+.highcharts-title {
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* Estilos para la leyenda */
+.highcharts-legend {
+  font-size: 14px;
+}
+
+/* Estilos para los ejes X e Y */
+.highcharts-xaxis,
+.highcharts-yaxis {
+  font-size: 12px;
+  font-weight: normal;
+  color: #333; /* Cambia el color del texto del eje */
+}
+
+/* Estilos para las series específicas (sustituye "Densidad" por el nombre de tu serie) */
+.highcharts-series-Densidad {
+  stroke: blue; /* Cambia el color de la línea de la serie */
+  fill: rgba(0, 0, 255, 0.3); /* Cambia el color del área debajo de la serie */
+}
+
+/* Estilos para los marcadores de la serie */
+.highcharts-markers {
+  fill: red; /* Cambia el color de los marcadores */
+  stroke: white; /* Cambia el color del borde de los marcadores */
+}
+
+/* Estilos para el fondo del gráfico */
+.highcharts-plot-background {
+  
+}
+
+/* Estilos para el área de trama del gráfico */
+.highcharts-plot-area {
+  fill: white; /* Cambia el color del área de trama */
+}
+
+/* Estilos para las etiquetas de datos */
+.highcharts-data-labels {
+  font-size: 12px;
+  font-weight: bold;
+  fill: green; /* Cambia el color del texto de las etiquetas de datos */
+}

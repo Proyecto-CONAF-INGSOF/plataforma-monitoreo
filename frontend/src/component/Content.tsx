@@ -3,15 +3,16 @@
 import React from 'react';
 import './ContentStyle.css';
 import Map from './Map';
-import Graph from './Graph';
+import FrecuencyChart from './FrequencyChart';
+import DensityChart from './DensityChart';
 
 const Content: React.FC = () => {
   return (
     <div className="content">
       {/* Contenido principal */}
       <Map />
-      <Graph/>
-      
+      <FrecuencyChart/>
+      <DensityChart/>
     </div>
   );
 };
