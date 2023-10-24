@@ -1,8 +1,12 @@
 /* App.css */
 
 .MonitorContainer {
-    display: flex;
+    
   }
   
   /* Ajusta el estilo de acuerdo a tus necesidades */
   
+  .middle{
+    padding: auto;
+
+  }

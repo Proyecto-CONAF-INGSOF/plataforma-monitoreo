@@ -1,4 +1,10 @@
 /* loginStyle.css */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
 
 .login-container {
   background-image: url(../../public/forest.jpg); /* Ruta al archivo forest.svg */
