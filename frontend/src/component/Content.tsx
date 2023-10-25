@@ -46,56 +46,58 @@ const Content: React.FC = () => {
       <div className="content">
         {/* Contenido principal */}
         <Map />
+        {
+          sidebar_props.especie_1 !== undefined &&
+          <div className={`separador ${seccion1Visible ? 'visible' : ''}`}>
+            <button className="boton" onClick={() => setSeccion1Visible(!seccion1Visible)}>
+              <img src="#" />
+            </button>
+            {seccion1Visible && (
+              <div>
+                {
+                  sidebar_props.especie_1 !== undefined &&
+                  <>
+                    <RoseChart
+                      rs_data={densidad_e1}
+                      id='densidad-horaria-e1'
+                    />
 
-        <div className={`separador ${seccion1Visible ? 'visible' : ''}`}>
-          <button className="boton" onClick={() => setSeccion1Visible(!seccion1Visible)}>
-            <img src="#" />
-          </button>
-          {seccion1Visible && (
-            <div>
-              {
-                sidebar_props.especie_1 !== undefined &&
-                <>
-                  <RoseChart
-                    rs_data={densidad_e1}
-                    id='densidad-horaria-e1'
-                  />
+                    <RoseChart
+                      rs_data={freq_e1}
+                      id='freq-horaria-e1'
+                    />
+                  </>
+                }
+              </div>
+            )}
+          </div>
+        }
+        {
+          sidebar_props.especie_2 !== undefined &&
+          <div className={`separador ${seccion2Visible ? 'visible' : ''}`}>
+            <button className="boton" onClick={() => setSeccion2Visible(!seccion2Visible)}>
+              <img src="#" />
+            </button>
+            {seccion2Visible && (
+              <div>
+                {
+                  sidebar_props.especie_2 !== undefined &&
+                  <>
+                    <RoseChart
+                      rs_data={densidad_e2}
+                      id='densidad-horaria-e2'
+                    />
 
-                  <RoseChart
-                    rs_data={freq_e1}
-                    id='freq-horaria-e1'
-                  />
-                </>
-              }
-            </div>
-          )}
-        </div>
-
-        {/* Botón y contenido para la Sección 2 */}
-        <div className={`separador ${seccion2Visible ? 'visible' : ''}`}>
-          <button className="boton" onClick={() => setSeccion2Visible(!seccion2Visible)}>
-            <img src="#" />
-          </button>
-          {seccion2Visible && (
-            <div>
-              {
-                sidebar_props.especie_2 !== undefined &&
-                <>
-                  <RoseChart
-                    rs_data={densidad_e2}
-                    id='densidad-horaria-e2'
-                  />
-
-                  <RoseChart
-                    rs_data={freq_e2}
-                    id='freq-horaria-e2'
-                  />
-                </>
-              }
-            </div>
-          )}
-        </div>
-
+                    <RoseChart
+                      rs_data={freq_e2}
+                      id='freq-horaria-e2'
+                    />
+                  </>
+                }
+              </div>
+            )}
+          </div>
+        }
       </div>
     </>
   );
