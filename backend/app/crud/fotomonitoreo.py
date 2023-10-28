@@ -58,8 +58,19 @@ async def obtener_actividad(unidad: str, anio: int, especie: str, conn: Connecti
         raise HTTPException(status_code=500, detail="Error inesperado")
 
 
-async def obtener_ocupacion_sitio(especie: str, conn: Connection):
-    return
+async def obtener_ocupacion_sitio(
+    unidad: str, dias: int, especie: str, conn: Connection
+) -> list[Record]:
+    try:
+        query = 'SELECT "Dias", "Naive", "Ano", "Superior", "Inferior" from occ WHERE "Cod_especie" = $1 AND "Dias" = $2 AND "Unidad_COD" = $3'
+        result: list[Record] = await conn.fetch(
+            query, especie, dias, unidad, record_class=Record
+        )
+
+        return result
+    except Exception as e:
+        print(e)
+        raise HTTPException(status_code=500, detail="Error inesperado")
 
 
 async def obtener_regiones(conn: Connection):

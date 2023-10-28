@@ -1,7 +1,7 @@
 from app.crud.database import get_session_fotomonitoreo
 from app.crud.fotomonitoreo import (obtener_actividad, obtener_anios,
                                     obtener_especies, obtener_freq_horaria,
-                                    obtener_regiones,
+                                    obtener_ocupacion_sitio, obtener_regiones,
                                     obtener_superposicion_horaria,
                                     obtener_unidades)
 from asyncpg import Connection
@@ -20,6 +20,7 @@ async def get_superposicion_horaria(
     return r
 
 
+# Densidad Horaria por especie
 @router.get("/actividad/{unidad}/{anio}/{especie}")
 async def get_actividad(
     unidad: str,
@@ -31,6 +32,7 @@ async def get_actividad(
     return r
 
 
+# Frecuencia horaria por especie
 @router.get("/freq_horaria/{unidad}/{anio}/{especie}")
 async def get_freq_horaria(
     unidad: str,
@@ -40,6 +42,18 @@ async def get_freq_horaria(
 ):
     r = await obtener_freq_horaria(unidad, anio, especie, conn)
     return r
+
+
+# Ocupacion de sitio historica por especie
+@router.get("/ocupacion_sitio/{unidad}/{dias}/{especie}")
+async def get_ocupacion_sitio(
+    unidad: str,
+    dias: int,
+    especie: str,
+    conn: Connection = Depends(get_session_fotomonitoreo),
+):
+    ocupacion = await obtener_ocupacion_sitio(unidad, dias, especie, conn)
+    return ocupacion
 
 
 @router.get("/regiones")
