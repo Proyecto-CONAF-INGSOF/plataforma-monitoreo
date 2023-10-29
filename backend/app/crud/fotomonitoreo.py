@@ -61,18 +61,16 @@ async def obtener_densidad(unidad: str, anio: int, especie: str, conn: Connectio
 # Todo: Esta tabla no tiene especie por id, solo por nombre comun
 async def obtener_actividad(unidad: str, anio: int, especie: str, conn: Connection):
     # SELECT "Hora", "Act_den" FROM act_over WHERE "Unidad_COD" = 'MNCD' AND "Ano" = 2022 AND "Nom_comun" = 'Puma';
-    # try:
-    #     query = """ SELECT "Hora", "Act"
-    #                 FROM act
-    #                 WHERE "Unidad_COD" = $1 AND "Ano" = $2
-    #                 AND "Cod_especie" = $3"""
-    #
-    #     result = await conn.fetch(query, unidad, anio, especie, record_class=Record)
-    #
-    #     return result
-    # except Exception as e:
-    #     print(e)
-    raise HTTPException(status_code=500, detail="Error inesperado")
+    # SELECT * FROM act_over WHERE "Unidad_COD" = 'PNVPR' AND "Ano" = 2022 AND "Nom_comun" = (SELECT DISTINCT("Nom_comun") FROM inputs WHERE "Cod_especie" = 'LOPR' LIMIT 1);
+    try:
+        query = 'SELECT "Hora", "Act_den" FROM act_over WHERE "Unidad_COD" = $1 AND "Ano" = $2 AND "Nom_comun" = (SELECT DISTINCT("Nom_comun") FROM inputs WHERE "Cod_especie" = $3 LIMIT 1)'
+
+        result = await conn.fetch(query, unidad, anio, especie, record_class=Record)
+
+        return result
+    except Exception as e:
+        print(e)
+        raise HTTPException(status_code=500, detail="Error inesperado")
 
 
 async def obtener_ocupacion_sitio(
