@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import Highcharts from 'highcharts';
+import Highcharts from 'highcharts/highstock';
 import { Ocupacion } from '../services/ocupacion_sitio';
 
+import exporting from "highcharts/modules/exporting"
+import HighchartsReact from 'highcharts-react-official'
+
+exporting(Highcharts);
 const BoxPlotOcupacion: React.FC<{
   ocupacion: Ocupacion[],
-  id: string,
 }> = ({
   ocupacion,
-  id
 }) => {
     const [selectedValue, setSelectedValue] = useState<string>('');
+    const [options, setOptions] = useState<Highcharts.Options>({} as Highcharts.Options);
 
     const handleSelectionChange = (value: string) => {
       setSelectedValue(value);
@@ -46,8 +49,7 @@ const BoxPlotOcupacion: React.FC<{
       });
 
       // Puedes usar selectedValue aquí para tomar decisiones basadas en la selección
-
-      const options: Highcharts.Options = {
+      const hc_options: Highcharts.Options = {
         chart: {
           type: 'boxplot'
         },
@@ -71,22 +73,25 @@ const BoxPlotOcupacion: React.FC<{
         },
         series: series
       }
-      Highcharts.chart(id, options);
-    }, [ocupacion, id, selectedValue]);
+      setOptions(hc_options);
+    }, [ocupacion]);
 
     return (
       <div>
-        <div id={id} />
         <div>
           <h2>Selecciona:</h2>
           <select value={selectedValue} onChange={(e) => handleSelectionChange(e.target.value)}>
             <option value="opcion1">Opción 1</option>
             <option value="opcion2">Opción 2</option>
-            {/* Agrega más opciones según tus necesidades */}
           </select>
         </div>
+        <HighchartsReact
+          highcharts={Highcharts}
+          options={options}
+          constructorType={'chart'}
+        />
       </div>
     )
-}
+  }
 
 export default BoxPlotOcupacion;

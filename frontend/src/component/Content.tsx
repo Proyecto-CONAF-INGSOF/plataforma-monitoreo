@@ -67,17 +67,14 @@ const Content: React.FC = () => {
           <>
             <RoseChart
               rs_data={densidad_e1}
-              id='densidad-horaria-e1'
             />
 
             <RoseChart
               rs_data={freq_e1}
-              id='freq-horaria-e1'
             />
 
             <BoxPlotOcupacion
               ocupacion={ocupacion_e1}
-              id='ocupacion-sitio-e1'
             />
           </>
         }
@@ -86,18 +83,13 @@ const Content: React.FC = () => {
           <>
             <RoseChart
               rs_data={densidad_e2}
-              id='densidad-horaria-e2'
             />
-
             <RoseChart
               rs_data={freq_e2}
-              id='freq-horaria-e2'
             />
             <BoxPlotOcupacion
               ocupacion={ocupacion_e2}
-              id='ocupacion-sitio-e2'
             />
-
           </>
 
         }
@@ -108,7 +100,7 @@ const Content: React.FC = () => {
             actividad2={actividad_e2}
             nombre_especie_1={sidebar_props.nombre_especie_1}
             nombre_especie_2={sidebar_props.nombre_especie_2}
-            id='superposicion'></Superposicion>
+          ></Superposicion>
         }
       </div>
     </>

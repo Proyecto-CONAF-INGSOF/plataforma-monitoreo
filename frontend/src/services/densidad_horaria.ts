@@ -12,7 +12,6 @@ export interface Densidad {
 
 
 async function getDensidadHr(unidad: string, anio: string, cod_specie: string): Promise<Densidad[]> {
-  console.log(unidad, anio, cod_specie);
   const url = `http://${ip}:${port}/fotomonitoreo/densidad_horaria/${unidad}/${anio}/${cod_specie}`;
 
   const { data } = await axios.get<Densidad[]>(url);

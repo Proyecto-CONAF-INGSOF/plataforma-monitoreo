@@ -1,23 +1,25 @@
-import React, { useEffect } from 'react';
-import Highcharts from 'highcharts';
+import React, { useEffect, useState } from 'react';
+import Highcharts from 'highcharts/highstock';
+import HighchartsReact from 'highcharts-react-official'
 import { Actividad } from '../services/actividad';
+import exporting from "highcharts/modules/exporting"
+exporting(Highcharts);
 
 const Superposicion: React.FC<{
   actividad1: Actividad[],
   actividad2: Actividad[],
   nombre_especie_1: string,
   nombre_especie_2: string,
-  id: string,
 }> = ({
   actividad1,
   actividad2,
   nombre_especie_1,
   nombre_especie_2,
-  id
 }) => {
     // Todo: Marcar la superposicion de actividad
+    const [options, setOptions] = useState<Highcharts.Options>({} as Highcharts.Options);
     useEffect(() => {
-      const options: Highcharts.Options = {
+      const hc_options: Highcharts.Options = {
         title: {
           text: `Superposición de actividad: ${nombre_especie_1} y ${nombre_especie_2}`,
         },
@@ -39,7 +41,7 @@ const Superposicion: React.FC<{
             marker: {
               enabled: false
             },
-          }
+          },
         },
         series: [
           {
@@ -57,12 +59,16 @@ const Superposicion: React.FC<{
             color: '#82E0AA'
           }
         ]
-      }
-      Highcharts.chart(id, options);
-    }, [id, actividad1, actividad2, nombre_especie_1, nombre_especie_2]);
+      };
+      setOptions(hc_options);
+    }, [actividad1, actividad2, nombre_especie_1, nombre_especie_2]);
     return (
       <div>
-        <div id={id} />
+        <HighchartsReact
+          highcharts={Highcharts}
+          options={options}
+          constructorType={'chart'}
+        />
       </div>
     )
   }
