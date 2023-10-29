@@ -54,6 +54,14 @@ const Content: React.FC = () => {
     }
   }, [sidebar_props])
 
+  const setChange = (dias: string, especie: number) => {
+    if (especie === 1) {
+      fetchOcupacion(setOcupacionE1, sidebar_props.unidad, dias, sidebar_props.especie_1)
+    } else if (especie === 2) {
+      fetchOcupacion(setOcupacionE2, sidebar_props.unidad, dias, sidebar_props.especie_2)
+    }
+  }
+
   return (
     <>
       <Sidebar
@@ -75,6 +83,8 @@ const Content: React.FC = () => {
 
             <BoxPlotOcupacion
               ocupacion={ocupacion_e1}
+              especie={1}
+              setChange={setChange}
             />
           </>
         }
@@ -89,6 +99,8 @@ const Content: React.FC = () => {
             />
             <BoxPlotOcupacion
               ocupacion={ocupacion_e2}
+              especie={2}
+              setChange={setChange}
             />
           </>
 

@@ -8,14 +8,17 @@ import HighchartsReact from 'highcharts-react-official'
 exporting(Highcharts);
 const BoxPlotOcupacion: React.FC<{
   ocupacion: Ocupacion[],
+  especie: number,
+  setChange: (dias: string, especie: number) => void
 }> = ({
   ocupacion,
+  especie,
+  setChange
 }) => {
-    const [selectedValue, setSelectedValue] = useState<string>('');
     const [options, setOptions] = useState<Highcharts.Options>({} as Highcharts.Options);
 
     const handleSelectionChange = (value: string) => {
-      setSelectedValue(value);
+      setChange(value, especie);
       // Realiza cualquier acción adicional según el valor seleccionado
     };
 
@@ -83,9 +86,12 @@ const BoxPlotOcupacion: React.FC<{
       <div>
         <div>
           <h2>Selecciona:</h2>
-          <select value={selectedValue} onChange={(e) => handleSelectionChange(e.target.value)}>
-            <option value="opcion1">Opción 1</option>
-            <option value="opcion2">Opción 2</option>
+          <select onChange={(e) => handleSelectionChange(e.target.value)} defaultValue={"30"}>
+            <option value="30">30 Días</option>
+            <option value="60" >60 Días</option>
+            <option value="90" >90 Días</option>
+            <option value="120" >120 Días</option>
+            <option value="365" >365 Días</option>
           </select>
         </div>
         <HighchartsReact
