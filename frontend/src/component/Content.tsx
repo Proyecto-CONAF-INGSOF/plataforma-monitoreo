@@ -9,6 +9,8 @@ import { RoseChartData, SidebarProps } from '../types';
 import { fetchDensidad } from '../services/densidad_horaria';
 import { fetchFreq } from '../services/freq_horaria';
 import { Ocupacion, fetchOcupacion } from '../services/ocupacion_sitio';
+import { Actividad, fetchActividad } from '../services/actividad';
+import Superposicion from './Superposicion';
 
 
 const Content: React.FC = () => {
@@ -18,12 +20,16 @@ const Content: React.FC = () => {
   const [freq_e1, setFreqE1] = React.useState<RoseChartData>({} as RoseChartData);
   // Ocupacion de sitio especie 1
   const [ocupacion_e1, setOcupacionE1] = React.useState<Ocupacion[]>([] as Ocupacion[]);
+  // Actividad especie 1
+  const [actividad_e1, setActividadE1] = React.useState<Actividad[]>([] as Actividad[]);
 
   // Densidad horaria para especie 2
   const [densidad_e2, setDensidadE2] = React.useState<RoseChartData>({} as RoseChartData);
   const [freq_e2, setFreqE2] = React.useState<RoseChartData>({} as RoseChartData);
   // Ocupacion de sitio especie 2
   const [ocupacion_e2, setOcupacionE2] = React.useState<Ocupacion[]>([] as Ocupacion[]);
+  // Actividad especie 2
+  const [actividad_e2, setActividadE2] = React.useState<Actividad[]>([] as Actividad[]);
 
 
 
@@ -39,10 +45,12 @@ const Content: React.FC = () => {
       fetchDensidad(setDensidadE1, sidebar_props.unidad, sidebar_props.anio, sidebar_props.especie_1, sidebar_props.nombre_especie_1)
       fetchFreq(setFreqE1, sidebar_props.unidad, sidebar_props.anio, sidebar_props.especie_1, sidebar_props.nombre_especie_1)
       fetchOcupacion(setOcupacionE1, sidebar_props.unidad, "30", sidebar_props.especie_1)
+      fetchActividad(setActividadE1, sidebar_props.unidad, sidebar_props.anio, sidebar_props.especie_1)
 
       fetchDensidad(setDensidadE2, sidebar_props.unidad, sidebar_props.anio, sidebar_props.especie_2, sidebar_props.nombre_especie_2)
       fetchFreq(setFreqE2, sidebar_props.unidad, sidebar_props.anio, sidebar_props.especie_2, sidebar_props.nombre_especie_2)
       fetchOcupacion(setOcupacionE2, sidebar_props.unidad, "30", sidebar_props.especie_2)
+      fetchActividad(setActividadE2, sidebar_props.unidad, sidebar_props.anio, sidebar_props.especie_2)
     }
   }, [sidebar_props])
 
@@ -92,6 +100,15 @@ const Content: React.FC = () => {
 
           </>
 
+        }
+        {
+          sidebar_props.especie_1 !== undefined && sidebar_props.especie_2 !== undefined &&
+          <Superposicion
+            actividad1={actividad_e1}
+            actividad2={actividad_e2}
+            nombre_especie_1={sidebar_props.nombre_especie_1}
+            nombre_especie_2={sidebar_props.nombre_especie_2}
+            id='superposicion'></Superposicion>
         }
       </div>
     </>
