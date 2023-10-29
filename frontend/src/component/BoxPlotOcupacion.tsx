@@ -50,6 +50,9 @@ const BoxPlotOcupacion: React.FC<{
 
       // Puedes usar selectedValue aquí para tomar decisiones basadas en la selección
       const hc_options: Highcharts.Options = {
+        credits: {
+          enabled: false // Desactiva la atribución de Highcharts
+        },
         chart: {
           type: 'boxplot'
         },

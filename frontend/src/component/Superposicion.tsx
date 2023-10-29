@@ -20,6 +20,9 @@ const Superposicion: React.FC<{
     const [options, setOptions] = useState<Highcharts.Options>({} as Highcharts.Options);
     useEffect(() => {
       const hc_options: Highcharts.Options = {
+        credits: {
+          enabled: false // Desactiva la atribución de Highcharts
+        },
         title: {
           text: `Superposición de actividad: ${nombre_especie_1} y ${nombre_especie_2}`,
         },
