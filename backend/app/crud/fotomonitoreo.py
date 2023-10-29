@@ -43,7 +43,7 @@ async def obtener_superposicion_horaria(especie1: str, especie2: str, conn: Conn
         raise HTTPException(status_code=500, detail="Error inesperado")
 
 
-async def obtener_actividad(unidad: str, anio: int, especie: str, conn: Connection):
+async def obtener_densidad(unidad: str, anio: int, especie: str, conn: Connection):
     try:
         query = """ SELECT "Hora", "Act"
                     FROM act
@@ -58,8 +58,34 @@ async def obtener_actividad(unidad: str, anio: int, especie: str, conn: Connecti
         raise HTTPException(status_code=500, detail="Error inesperado")
 
 
-async def obtener_ocupacion_sitio(especie: str, conn: Connection):
-    return
+# Todo: Esta tabla no tiene especie por id, solo por nombre comun
+async def obtener_actividad(unidad: str, anio: int, especie: str, conn: Connection):
+    # SELECT "Hora", "Act_den" FROM act_over WHERE "Unidad_COD" = 'MNCD' AND "Ano" = 2022 AND "Nom_comun" = 'Puma';
+    # SELECT * FROM act_over WHERE "Unidad_COD" = 'PNVPR' AND "Ano" = 2022 AND "Nom_comun" = (SELECT DISTINCT("Nom_comun") FROM inputs WHERE "Cod_especie" = 'LOPR' LIMIT 1);
+    try:
+        query = 'SELECT "Hora", "Act_den" FROM act_over WHERE "Unidad_COD" = $1 AND "Ano" = $2 AND "Nom_comun" = (SELECT DISTINCT("Nom_comun") FROM inputs WHERE "Cod_especie" = $3 LIMIT 1)'
+
+        result = await conn.fetch(query, unidad, anio, especie, record_class=Record)
+
+        return result
+    except Exception as e:
+        print(e)
+        raise HTTPException(status_code=500, detail="Error inesperado")
+
+
+async def obtener_ocupacion_sitio(
+    unidad: str, dias: int, especie: str, conn: Connection
+) -> list[Record]:
+    try:
+        query = 'SELECT "Dias", "Naive", "Ano", "Superior", "Inferior" from occ WHERE "Cod_especie" = $1 AND "Dias" = $2 AND "Unidad_COD" = $3'
+        result: list[Record] = await conn.fetch(
+            query, especie, dias, unidad, record_class=Record
+        )
+
+        return result
+    except Exception as e:
+        print(e)
+        raise HTTPException(status_code=500, detail="Error inesperado")
 
 
 async def obtener_regiones(conn: Connection):

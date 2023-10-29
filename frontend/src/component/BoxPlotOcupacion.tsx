@@ -1,43 +1,78 @@
-import React from 'react';
-import Plot from 'react-plotly.js';
+import React, { useEffect } from 'react';
+import Highcharts from 'highcharts';
+import { Ocupacion } from '../services/ocupacion_sitio';
 
-const BoxPlotOcupacion: React.FC = () => {
-  return (
-    <Plot
-      data={[
-        {
-          x: [1, 2, 3, 4, 4, 4, 8, 9, 10],
-          type: 'box',
-          name: 'Guanaco',
-          marker: { color: '#8884d8' }
+const BoxPlotOcupacion: React.FC<{
+  ocupacion: Ocupacion[],
+  id: string,
+}> = ({
+  ocupacion,
+  id
+}) => {
+    useEffect(() => {
+      const series: Highcharts.SeriesOptionsType[] = []
+      ocupacion.map((occ) => {
+        series.push(
+          {
+            pointWidth: 100,
+            type: 'column',
+            centerInCategory: true,
+            data: [
+              { x: occ.Ano, y: occ.Naive }
+            ],
+            color: '#82E0AA'
+          },
+        );
+        series.push(
+          {
+            type: 'errorbar',
+            centerInCategory: true,
+            data: [
+              {
+                x: occ.Ano,
+                low: occ.Inferior,
+                high: occ.Superior
+              }
+            ]
+          }
+        )
+      })
+      const options: Highcharts.Options = {
+
+        chart: {
+          type: 'boxplot'
         },
-        {
-          x: [1, 2, 3, 3, 3, 4, 8, 9, 10],
-          type: 'box',
-          name: 'Liebre europea',
-          marker: { color: '#808080' }
+        xAxis: {
+          title: {
+            text: 'Año'
+          }
         },
-        {
-          x: [1, 2, 3, 5, 5, 5, 8, 9, 10],
-          type: 'box',
-          name: 'Perro domestico',
-          marker: { color: '#8884d8' }
+        yAxis: {
+          title: {
+            text: 'Ocupación de sitio'
+          },
+          min: 0,
+          max: 100,
         },
-        {
-          x: [1, 1, 1, 1, 2, 3, 5, 8, 10],
-          type: 'box',
-          name: 'Zorro chilla',
-          marker: { color: '#808080' }
+
+        title: {
+          text: "Ocupación de sitio histórica"
         },
-        {
-          x: [2, 3, 3, 3, 3, 5, 9, 10, 10],
-          type: 'box',
-          name: 'Zorro culpeo',
-          marker: { color: '#808080' }
-        }
-      ]}
-      layout={{ width: 500, height: 400, title: 'Ocupacion de sitio' }}
-    />);
-}
+
+        legend: {
+          enabled: false
+        },
+
+
+        series: series
+      }
+      Highcharts.chart(id, options);
+    }, [ocupacion, id]);
+    return (
+      <div>
+        <div id={id} />
+      </div>
+    )
+  }
 
 export default BoxPlotOcupacion;
