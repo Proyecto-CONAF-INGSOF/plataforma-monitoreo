@@ -7,23 +7,12 @@ from app.crud.fotomonitoreo import (
     obtener_freq_horaria,
     obtener_ocupacion_sitio,
     obtener_regiones,
-    obtener_superposicion_horaria,
     obtener_unidades,
 )
 from asyncpg import Connection
 from fastapi import APIRouter, Depends
 
 router = APIRouter()
-
-
-@router.get("/superposicion_horaria/{especie1}/{especie2}")
-async def get_superposicion_horaria(
-    especie1: str,
-    especie2: str,
-    conn: Connection = Depends(get_session_fotomonitoreo),
-):
-    r = await obtener_superposicion_horaria(especie1, especie2, conn)
-    return r
 
 
 # Densidad Horaria por especie
@@ -62,6 +51,7 @@ async def get_ocupacion_sitio(
     return ocupacion
 
 
+# Actividad aka grafico de superposicion horaria
 @router.get("/actividad/{unidad}/{anio}/{especie}")
 async def get_actividad(
     unidad: str,
