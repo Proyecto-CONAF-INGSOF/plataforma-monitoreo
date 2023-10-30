@@ -1,6 +1,7 @@
 import React from "react"
-import { Admin } from "../auth/authWrapper"
 import { useNavigate } from "react-router-dom"
+
+import { Admin } from "@/auth/authWrapper"
 
 // Random component to showcase the use of the protected route
 const Protected: React.FC<{

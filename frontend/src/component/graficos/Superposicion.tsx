@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import Highcharts from 'highcharts/highstock';
 import HighchartsReact from 'highcharts-react-official'
-import { Actividad } from '../services/actividad';
 import exporting from "highcharts/modules/exporting"
+
+import { Actividad } from '@services/actividad';
+
 exporting(Highcharts);
 
 const Superposicion: React.FC<{

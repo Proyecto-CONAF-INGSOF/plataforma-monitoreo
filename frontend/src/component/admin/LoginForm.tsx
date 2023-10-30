@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import './LoginFormStyles.css'; // Ruta al archivo de estilos
-import { LoginAdmin } from '../services/admin.ts'
 import { AxiosError } from 'axios';
-import { AuthData } from '../auth/authWrapper.tsx';
 import { useNavigate } from 'react-router-dom';
+
+import '@styles/LoginFormStyles.css'; // Ruta al archivo de estilos
+
+import { LoginAdmin } from '@services/admin.ts'
+import { AuthData } from '@/auth/authWrapper.tsx';
 
 const LoginForm: React.FC = () => {
   const [error, setError] = useState<string>('');

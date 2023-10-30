@@ -1,9 +1,9 @@
 // Login.tsx
-
 import React from 'react';
-import '../component/loginStyle.css';
-import LoginForm from '../component/LoginForm'
 import { Navigate } from 'react-router-dom';
+
+import '@styles/loginStyle.css';
+import LoginForm from '@admin/LoginForm'
 
 const Login: React.FC<{
   is_authenticated: boolean;
