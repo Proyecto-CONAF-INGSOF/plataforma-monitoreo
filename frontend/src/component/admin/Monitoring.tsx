@@ -1,6 +1,5 @@
-import Header from './Navbar';
-import Sidebar from './Sidebar';
-import Content from './Content';
+import Header from '@component/Navbar';
+import Content from '@component/Content';
 
 
 const Monitoring = () => {
@@ -8,7 +7,6 @@ const Monitoring = () => {
     <div className='MonitorContainer'>
 
       <Header />
-      <Sidebar />
       <Content />
 
     </div>

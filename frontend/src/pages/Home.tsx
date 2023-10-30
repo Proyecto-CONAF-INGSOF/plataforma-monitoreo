@@ -1,5 +1,5 @@
-import Content from '../component/Content.tsx';
-import Header from '../component/Navbar';
+import Content from '@component/Content.tsx';
+import Header from '@component/Navbar';
 
 function Home() {
   return (

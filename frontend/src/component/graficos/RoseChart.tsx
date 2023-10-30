@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import Highcharts from 'highcharts/highstock';
 import HcMore from 'highcharts/highcharts-more';
-import { RoseChartData } from '../types';
 import HighchartsReact from 'highcharts-react-official'
 import exporting from "highcharts/modules/exporting"
-exporting(Highcharts);
 
+import { RoseChartData } from '@/types';
+
+exporting(Highcharts);
 HcMore(Highcharts);
 
 const RoseChart: React.FC<{

@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import Highcharts from 'highcharts/highstock';
-import { Ocupacion } from '../services/ocupacion_sitio';
-
 import exporting from "highcharts/modules/exporting"
 import HighchartsReact from 'highcharts-react-official'
 
+import { Ocupacion } from '@services/ocupacion_sitio';
+
 exporting(Highcharts);
+
 const BoxPlotOcupacion: React.FC<{
   ocupacion: Ocupacion[],
   especie: number,

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import './SidebarStyles.css';
-import { getRegiones, Region, Especie, Unidad, getUnidades, Anio, getAnios, getEspecies } from '../services/sidebar';
-import { SidebarProps } from '../types';
+
+import '@styles/SidebarStyles.css';
+import { getRegiones, Region, Especie, Unidad, getUnidades, Anio, getAnios, getEspecies } from '@services/sidebar';
+import { SidebarProps } from '@/types';
 
 const Sidebar: React.FC<{ setSidebarProps: (newProps: SidebarProps) => void }>
   = (

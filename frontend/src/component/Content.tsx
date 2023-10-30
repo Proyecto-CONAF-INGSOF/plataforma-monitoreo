@@ -1,16 +1,20 @@
 // Content.tsx
 import React, { useEffect } from 'react';
-import './ContentStyle.css';
-import Map from './Map';
-import RoseChart from './RoseChart';
-import BoxPlotOcupacion from './BoxPlotOcupacion';
-import Sidebar from './Sidebar';
-import { RoseChartData, SidebarProps } from '../types';
-import { fetchDensidad } from '../services/densidad_horaria';
-import { fetchFreq } from '../services/freq_horaria';
-import { Ocupacion, fetchOcupacion } from '../services/ocupacion_sitio';
-import { Actividad, fetchActividad } from '../services/actividad';
-import Superposicion from './Superposicion';
+
+import '@styles/ContentStyle.css';
+import { RoseChartData, SidebarProps } from '@/types';
+
+import { fetchDensidad } from '@services/densidad_horaria';
+import { fetchFreq } from '@services/freq_horaria';
+import { Ocupacion, fetchOcupacion } from '@services/ocupacion_sitio';
+import { Actividad, fetchActividad } from '@services/actividad';
+
+import Superposicion from '@graficos/Superposicion';
+import RoseChart from '@graficos/RoseChart';
+import BoxPlotOcupacion from '@graficos/BoxPlotOcupacion';
+
+import Map from '@component/Map';
+import Sidebar from '@component/Sidebar';
 
 
 const Content: React.FC = () => {
