@@ -1,10 +1,8 @@
 
-import './App.css'
 import { BrowserRouter as Router } from 'react-router-dom';
 
-
+import '@styles/App.css'
 import { AuthWrapper } from './auth/authWrapper';
-
 
 function App() {
   return (
