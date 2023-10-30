@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 
 // Importamos las variables de entorno definidas en el archivo .env
 const ip = import.meta.env.VITE_BACKEND_IP || 'localhost';
@@ -29,4 +29,4 @@ async function fetchOcupacion(setOcupacion: (ocupacion: Ocupacion[]) => void, un
 export {
   getOcupacion,
   fetchOcupacion
-}
+};

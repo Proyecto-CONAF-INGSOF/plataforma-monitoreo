@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Highcharts from 'highcharts/highstock';
 import HcMore from 'highcharts/highcharts-more';
-import HighchartsReact from 'highcharts-react-official'
-import exporting from "highcharts/modules/exporting"
+import HighchartsReact from 'highcharts-react-official';
+import exporting from 'highcharts/modules/exporting';
 
 import { RoseChartData } from '@/types';
 

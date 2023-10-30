@@ -1,7 +1,7 @@
-import React from "react"
-import { useNavigate } from "react-router-dom"
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import { Admin } from "@/auth/authWrapper"
+import { Admin } from '@/auth/authWrapper';
 
 // Random component to showcase the use of the protected route
 const Protected: React.FC<{
@@ -11,12 +11,12 @@ const Protected: React.FC<{
   admin,
   logout
 }) => {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     const redirect_logout = () => {
-      logout()
-      navigate('/admin')
-    }
+      logout();
+      navigate('/admin');
+    };
     return (
       <div>
         <button onClick={redirect_logout}>Logout {admin.nombre} {admin.apellido}</button>
@@ -33,7 +33,7 @@ const Protected: React.FC<{
         <button onClick={redirect_logout}>Logout {admin.nombre} {admin.apellido}</button>
         <button onClick={redirect_logout}>Logout {admin.nombre} {admin.apellido}</button>
       </div>
-    )
-  }
+    );
+  };
 
-export default Protected
+export default Protected;

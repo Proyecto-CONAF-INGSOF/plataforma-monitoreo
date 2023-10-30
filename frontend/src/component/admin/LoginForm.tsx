@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import '@styles/LoginFormStyles.css'; // Ruta al archivo de estilos
 
-import { LoginAdmin } from '@services/admin.ts'
+import { LoginAdmin } from '@services/admin.ts';
 import { AuthData } from '@/auth/authWrapper.tsx';
 
 const LoginForm: React.FC = () => {
@@ -42,10 +42,10 @@ const LoginForm: React.FC = () => {
       throw new Error('No se pudo iniciar sesión');
     }
 
-  }
+  };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    console.log("Handling submit");
+    console.log('Handling submit');
     e.preventDefault();
     const email: string = (e.target as HTMLFormElement).username.value;
     const contrasena: string = (e.target as HTMLFormElement).password.value;
@@ -57,10 +57,10 @@ const LoginForm: React.FC = () => {
       setError('');
       fetch_login({ email, contrasena });
     }
-  }
+  };
 
   useEffect(() => {
-    console.log("Login form mounted");
+    console.log('Login form mounted');
   }, []);
 
   return (

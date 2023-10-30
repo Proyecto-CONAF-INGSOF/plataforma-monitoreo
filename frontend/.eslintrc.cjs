@@ -16,5 +16,7 @@ module.exports = {
       'warn',
       { allowConstantExport: true },
     ],
+    'quotes': ['error', 'single'],
+    'semi': ['error', 'always'], // Enforce semicolons at the end of lines
   },
 }

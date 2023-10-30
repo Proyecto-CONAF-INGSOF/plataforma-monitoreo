@@ -24,8 +24,8 @@ async function fetchDensidad(setDensidad: (densidad: RoseChartData) => void, uni
     categories: densidad.map(d => d.Hora),
     data: densidad.map(d => d.Act),
     title: `Densidad horaria - ${nombre_especie}`,
-    subtitle: "Act"
-  }
+    subtitle: 'Act'
+  };
   setDensidad(data);
 }
 

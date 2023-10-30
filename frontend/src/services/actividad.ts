@@ -23,4 +23,4 @@ async function fetchActividad(setActividad: (actividad: Actividad[]) => void, un
 export {
   getActividad,
   fetchActividad
-}
+};

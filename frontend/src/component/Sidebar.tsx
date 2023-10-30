@@ -9,7 +9,7 @@ const Sidebar: React.FC<{ setSidebarProps: (newProps: SidebarProps) => void }>
     { setSidebarProps }
   ) => {
     // Nuestro default values de los selects
-    const default_value = "escoger";
+    const default_value = 'escoger';
     // Nuestro estado inicial de sidebar
     const [side_bar_props, SetSBP] = useState<SidebarProps>({
       region: default_value,
@@ -17,8 +17,8 @@ const Sidebar: React.FC<{ setSidebarProps: (newProps: SidebarProps) => void }>
       anio: default_value,
       especie_1: default_value,
       especie_2: default_value,
-      nombre_especie_1: "",
-      nombre_especie_2: "",
+      nombre_especie_1: '',
+      nombre_especie_2: '',
     });
     // Nuestro estado de regiones, unidades, años y especies
     // Estos son sacados de la api conforme el usuario va seleccionando
@@ -39,7 +39,7 @@ const Sidebar: React.FC<{ setSidebarProps: (newProps: SidebarProps) => void }>
       } catch (error) {
         console.log(error);
       }
-    }
+    };
 
     const fetchUnidades = async (region: string) => {
       try {
@@ -52,7 +52,7 @@ const Sidebar: React.FC<{ setSidebarProps: (newProps: SidebarProps) => void }>
       } catch (error) {
         console.log(error);
       }
-    }
+    };
 
     const fetchAnios = async (region: string, unidad: string) => {
       try {
@@ -65,7 +65,7 @@ const Sidebar: React.FC<{ setSidebarProps: (newProps: SidebarProps) => void }>
       } catch (error) {
         console.log(error);
       }
-    }
+    };
 
     const fetchEspecies = async (region: string, unidad: string, anio: string) => {
       try {
@@ -78,62 +78,62 @@ const Sidebar: React.FC<{ setSidebarProps: (newProps: SidebarProps) => void }>
       } catch (error) {
         console.log(error);
       }
-    }
+    };
     // Manejamos los cambios que el usuario puede hacer en sidebar
     const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
       const selected = e.currentTarget.selectedIndex;
-      const full_nombre = e.currentTarget.options[selected].textContent || "";
+      const full_nombre = e.currentTarget.options[selected].textContent || '';
       const { name, value } = e.target;
       switch (name) {
         // Si la region cambia, queremos que todos los datos que dependen de la region se reseteen
-        case "region":
+        case 'region':
           SetSBP({
             region: value,
             unidad: default_value,
             anio: default_value,
             especie_1: default_value,
             especie_2: default_value,
-            nombre_especie_1: "",
-            nombre_especie_2: "",
-          })
+            nombre_especie_1: '',
+            nombre_especie_2: '',
+          });
           fetchUnidades(value);
           break;
         // Si la unidad cambia, queremos que todos los datos que dependen de la unidad se reseteen
-        case "unit":
+        case 'unit':
           SetSBP({
             ...side_bar_props,
             unidad: value,
             anio: default_value,
             especie_1: default_value,
             especie_2: default_value,
-          })
+          });
           fetchAnios(side_bar_props.region, value);
           break;
         // Si el año cambia, queremos que todos los datos que dependen del año se reseteen
-        case "year":
+        case 'year':
           SetSBP({
             ...side_bar_props,
             anio: value,
             especie_1: default_value,
             especie_2: default_value,
-          })
+          });
           fetchEspecies(side_bar_props.region, side_bar_props.unidad, value);
           break;
         // Si la especie 1 cambia, queremos que todos los datos que dependen de la especie 1 se reseteen
-        case "species_1":
+        case 'species_1':
           SetSBP({
             ...side_bar_props,
             especie_1: value,
             nombre_especie_1: full_nombre
-          })
+          });
           break;
         // Si la especie 2 cambia, queremos que todos los datos que dependen de la especie 2 se reseteen
-        case "species_2":
+        case 'species_2':
           SetSBP({
             ...side_bar_props,
             especie_2: value,
             nombre_especie_2: full_nombre
-          })
+          });
           break;
         // No hacer nada si no es ninguno de los anteriores
         default:
@@ -237,8 +237,8 @@ const Sidebar: React.FC<{ setSidebarProps: (newProps: SidebarProps) => void }>
           <button type="submit" disabled={side_bar_props.especie_1 == default_value || side_bar_props.especie_2 == default_value}
             // We Center the button using style
             style={{
-              display: "block",
-              margin: "auto"
+              display: 'block',
+              margin: 'auto'
             }}
           >Realizar análisis</button>
         </form>

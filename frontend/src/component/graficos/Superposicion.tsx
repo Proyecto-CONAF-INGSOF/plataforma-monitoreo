@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Highcharts from 'highcharts/highstock';
-import HighchartsReact from 'highcharts-react-official'
-import exporting from "highcharts/modules/exporting"
+import HighchartsReact from 'highcharts-react-official';
+import exporting from 'highcharts/modules/exporting';
 
 import { Actividad } from '@services/actividad';
 
@@ -33,12 +33,12 @@ const Superposicion: React.FC<{
         },
         xAxis: {
           title: {
-            text: "Hora del día"
+            text: 'Hora del día'
           }
         },
         yAxis: {
           title: {
-            text: "Actividad"
+            text: 'Actividad'
           }
         },
         plotOptions: {
@@ -75,7 +75,7 @@ const Superposicion: React.FC<{
           constructorType={'chart'}
         />
       </div>
-    )
-  }
+    );
+  };
 
 export default Superposicion;

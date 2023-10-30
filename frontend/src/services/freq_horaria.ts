@@ -22,8 +22,8 @@ async function fetchFreq(setFreq: (freq: RoseChartData) => void, unidad: string,
     categories: densidad.map(d => d.Hora),
     data: densidad.map(d => d.Freq),
     title: `Frecuencia Horaria - ${nombre_especie}`,
-    subtitle: "Freq"
-  }
+    subtitle: 'Freq'
+  };
   setFreq(data);
 }
 

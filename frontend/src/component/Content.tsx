@@ -46,25 +46,25 @@ const Content: React.FC = () => {
     if (Object.keys(sidebar_props).length !== 0) {
       // Si el sidebar tiene propiedades, entonces hacemos las peticiones
       // Todo: Handle posibles errores al llamar a las funciones fetch. Estas pueden retornar errores de axios
-      fetchDensidad(setDensidadE1, sidebar_props.unidad, sidebar_props.anio, sidebar_props.especie_1, sidebar_props.nombre_especie_1)
-      fetchFreq(setFreqE1, sidebar_props.unidad, sidebar_props.anio, sidebar_props.especie_1, sidebar_props.nombre_especie_1)
-      fetchOcupacion(setOcupacionE1, sidebar_props.unidad, "30", sidebar_props.especie_1)
-      fetchActividad(setActividadE1, sidebar_props.unidad, sidebar_props.anio, sidebar_props.especie_1)
+      fetchDensidad(setDensidadE1, sidebar_props.unidad, sidebar_props.anio, sidebar_props.especie_1, sidebar_props.nombre_especie_1);
+      fetchFreq(setFreqE1, sidebar_props.unidad, sidebar_props.anio, sidebar_props.especie_1, sidebar_props.nombre_especie_1);
+      fetchOcupacion(setOcupacionE1, sidebar_props.unidad, '30', sidebar_props.especie_1);
+      fetchActividad(setActividadE1, sidebar_props.unidad, sidebar_props.anio, sidebar_props.especie_1);
 
-      fetchDensidad(setDensidadE2, sidebar_props.unidad, sidebar_props.anio, sidebar_props.especie_2, sidebar_props.nombre_especie_2)
-      fetchFreq(setFreqE2, sidebar_props.unidad, sidebar_props.anio, sidebar_props.especie_2, sidebar_props.nombre_especie_2)
-      fetchOcupacion(setOcupacionE2, sidebar_props.unidad, "30", sidebar_props.especie_2)
-      fetchActividad(setActividadE2, sidebar_props.unidad, sidebar_props.anio, sidebar_props.especie_2)
+      fetchDensidad(setDensidadE2, sidebar_props.unidad, sidebar_props.anio, sidebar_props.especie_2, sidebar_props.nombre_especie_2);
+      fetchFreq(setFreqE2, sidebar_props.unidad, sidebar_props.anio, sidebar_props.especie_2, sidebar_props.nombre_especie_2);
+      fetchOcupacion(setOcupacionE2, sidebar_props.unidad, '30', sidebar_props.especie_2);
+      fetchActividad(setActividadE2, sidebar_props.unidad, sidebar_props.anio, sidebar_props.especie_2);
     }
-  }, [sidebar_props])
+  }, [sidebar_props]);
 
   const setChange = (dias: string, especie: number) => {
     if (especie === 1) {
-      fetchOcupacion(setOcupacionE1, sidebar_props.unidad, dias, sidebar_props.especie_1)
+      fetchOcupacion(setOcupacionE1, sidebar_props.unidad, dias, sidebar_props.especie_1);
     } else if (especie === 2) {
-      fetchOcupacion(setOcupacionE2, sidebar_props.unidad, dias, sidebar_props.especie_2)
+      fetchOcupacion(setOcupacionE2, sidebar_props.unidad, dias, sidebar_props.especie_2);
     }
-  }
+  };
 
   return (
     <>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Highcharts from 'highcharts/highstock';
-import exporting from "highcharts/modules/exporting"
-import HighchartsReact from 'highcharts-react-official'
+import exporting from 'highcharts/modules/exporting';
+import HighchartsReact from 'highcharts-react-official';
 
 import { Ocupacion } from '@services/ocupacion_sitio';
 
@@ -49,7 +49,7 @@ const BoxPlotOcupacion: React.FC<{
               }
             ]
           }
-        )
+        );
       });
 
       // Puedes usar selectedValue aquí para tomar decisiones basadas en la selección
@@ -73,13 +73,13 @@ const BoxPlotOcupacion: React.FC<{
           max: 100,
         },
         title: {
-          text: "Ocupación de sitio histórica"
+          text: 'Ocupación de sitio histórica'
         },
         legend: {
           enabled: false
         },
         series: series
-      }
+      };
       setOptions(hc_options);
     }, [ocupacion]);
 
@@ -87,7 +87,7 @@ const BoxPlotOcupacion: React.FC<{
       <div>
         <div>
           <h2>Selecciona:</h2>
-          <select onChange={(e) => handleSelectionChange(e.target.value)} defaultValue={"30"}>
+          <select onChange={(e) => handleSelectionChange(e.target.value)} defaultValue={'30'}>
             <option value="30">30 Días</option>
             <option value="60" >60 Días</option>
             <option value="90" >90 Días</option>
@@ -101,7 +101,7 @@ const BoxPlotOcupacion: React.FC<{
           constructorType={'chart'}
         />
       </div>
-    )
-  }
+    );
+  };
 
 export default BoxPlotOcupacion;
