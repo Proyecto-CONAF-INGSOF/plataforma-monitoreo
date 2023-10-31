@@ -10,36 +10,32 @@ import { Ocupacion, fetchOcupacion } from '@services/ocupacion_sitio';
 import { Actividad, fetchActividad } from '@services/actividad';
 
 import Superposicion from '@graficos/Superposicion';
-import RoseChart from '@graficos/RoseChart';
-import BoxPlotOcupacion from '@graficos/BoxPlotOcupacion';
+import Especie from '@graficos/Especie';
 
 import Map from '@component/Map';
 import Sidebar from '@component/Sidebar';
+import ButtonEspecie from '@component/ButtonEspecie';
 
 
 const Content: React.FC = () => {
-  // Botones para mostrar/ocultar secciones
+  // Botones especies
   const [seccion1Visible, setSeccion1Visible] = useState(false);
   const [seccion2Visible, setSeccion2Visible] = useState(false);
 
+  // Sidebar
   const [sidebar_props, setSidebarProps] = React.useState<SidebarProps>({} as SidebarProps);
-  // Densidad horaria para especie 1
+
+  // Especie 1
   const [densidad_e1, setDensidadE1] = React.useState<RoseChartData>({} as RoseChartData);
   const [freq_e1, setFreqE1] = React.useState<RoseChartData>({} as RoseChartData);
-  // Ocupacion de sitio especie 1
   const [ocupacion_e1, setOcupacionE1] = React.useState<Ocupacion[]>([] as Ocupacion[]);
-  // Actividad especie 1
   const [actividad_e1, setActividadE1] = React.useState<Actividad[]>([] as Actividad[]);
 
-  // Densidad horaria para especie 2
+  // Especie 2
   const [densidad_e2, setDensidadE2] = React.useState<RoseChartData>({} as RoseChartData);
   const [freq_e2, setFreqE2] = React.useState<RoseChartData>({} as RoseChartData);
-  // Ocupacion de sitio especie 2
   const [ocupacion_e2, setOcupacionE2] = React.useState<Ocupacion[]>([] as Ocupacion[]);
-  // Actividad especie 2
   const [actividad_e2, setActividadE2] = React.useState<Actividad[]>([] as Actividad[]);
-
-
 
   function updateSidebarProps(newProps: SidebarProps) {
     setSidebarProps(newProps);
@@ -85,61 +81,35 @@ const Content: React.FC = () => {
             nombre_especie_2={sidebar_props.nombre_especie_2}
           ></Superposicion>
         }
+        <ButtonEspecie
+          especie={sidebar_props.especie_1}
+          seccion_visible={seccion1Visible}
+          setSeccion={setSeccion1Visible}
+        />
         {
           sidebar_props.especie_1 !== undefined &&
-          <div className={`separador ${seccion1Visible ? 'visible' : ''}`}>
-            <button className="boton" onClick={() => setSeccion1Visible(!seccion1Visible)}>
-              <img src={`/icons/${sidebar_props.especie_1}.png`} style={{
-                height: '100%',
-              }} />
-            </button>
-          </div>
+          < Especie
+            seccionVisible={seccion1Visible}
+            densidad={densidad_e1}
+            frecuencia={freq_e1}
+            ocupacion={ocupacion_e1}
+            setChange={setChange}
+          />
         }
-        {
-          seccion1Visible &&
-          sidebar_props.especie_1 !== undefined &&
-          <>
-            <RoseChart
-              rs_data={densidad_e1}
-            />
-
-            <RoseChart
-              rs_data={freq_e1}
-            />
-
-            <BoxPlotOcupacion
-              ocupacion={ocupacion_e1}
-              especie={1}
-              setChange={setChange}
-            />
-          </>
-        }
+        <ButtonEspecie
+          especie={sidebar_props.especie_2}
+          seccion_visible={seccion2Visible}
+          setSeccion={setSeccion2Visible}
+        />
         {
           sidebar_props.especie_2 !== undefined &&
-          <div className={`separador ${seccion2Visible ? 'visible' : ''}`}>
-            <button className="boton" onClick={() => setSeccion2Visible(!seccion2Visible)}>
-              <img src={`/icons/${sidebar_props.especie_2}.png`} style={{
-                height: '100%',
-              }} />
-            </button>
-          </div>
-        }
-        {
-          seccion2Visible &&
-          sidebar_props.especie_2 !== undefined &&
-          <>
-            <RoseChart
-              rs_data={densidad_e2}
-            />
-            <RoseChart
-              rs_data={freq_e2}
-            />
-            <BoxPlotOcupacion
-              ocupacion={ocupacion_e2}
-              especie={2}
-              setChange={setChange}
-            />
-          </>
+          <Especie
+            seccionVisible={seccion2Visible}
+            densidad={densidad_e2}
+            frecuencia={freq_e2}
+            ocupacion={ocupacion_e2}
+            setChange={setChange}
+          />
         }
       </div>
     </>
