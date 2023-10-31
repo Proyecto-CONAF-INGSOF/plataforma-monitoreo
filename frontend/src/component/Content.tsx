@@ -1,5 +1,5 @@
-// Content.tsx
 import React, { useEffect } from 'react';
+import { useState } from 'react';
 
 import '@styles/ContentStyle.css';
 import { RoseChartData, SidebarProps } from '@/types';
@@ -18,6 +18,10 @@ import Sidebar from '@component/Sidebar';
 
 
 const Content: React.FC = () => {
+  // Botones para mostrar/ocultar secciones
+  const [seccion1Visible, setSeccion1Visible] = useState(false);
+  const [seccion2Visible, setSeccion2Visible] = useState(false);
+
   const [sidebar_props, setSidebarProps] = React.useState<SidebarProps>({} as SidebarProps);
   // Densidad horaria para especie 1
   const [densidad_e1, setDensidadE1] = React.useState<RoseChartData>({} as RoseChartData);
@@ -68,13 +72,31 @@ const Content: React.FC = () => {
 
   return (
     <>
-      <Sidebar
-        setSidebarProps={updateSidebarProps}
-      />
+      <Sidebar setSidebarProps={updateSidebarProps} />
       <div className="content">
-        {/* Contenido principal */}
         <Map />
         {
+          sidebar_props.especie_1 !== undefined &&
+          sidebar_props.especie_2 !== undefined &&
+          <Superposicion
+            actividad1={actividad_e1}
+            actividad2={actividad_e2}
+            nombre_especie_1={sidebar_props.nombre_especie_1}
+            nombre_especie_2={sidebar_props.nombre_especie_2}
+          ></Superposicion>
+        }
+        {
+          sidebar_props.especie_1 !== undefined &&
+          <div className={`separador ${seccion1Visible ? 'visible' : ''}`}>
+            <button className="boton" onClick={() => setSeccion1Visible(!seccion1Visible)}>
+              <img src={`/icons/${sidebar_props.especie_1}.png`} style={{
+                height: '100%',
+              }} />
+            </button>
+          </div>
+        }
+        {
+          seccion1Visible &&
           sidebar_props.especie_1 !== undefined &&
           <>
             <RoseChart
@@ -94,6 +116,17 @@ const Content: React.FC = () => {
         }
         {
           sidebar_props.especie_2 !== undefined &&
+          <div className={`separador ${seccion2Visible ? 'visible' : ''}`}>
+            <button className="boton" onClick={() => setSeccion2Visible(!seccion2Visible)}>
+              <img src={`/icons/${sidebar_props.especie_2}.png`} style={{
+                height: '100%',
+              }} />
+            </button>
+          </div>
+        }
+        {
+          seccion2Visible &&
+          sidebar_props.especie_2 !== undefined &&
           <>
             <RoseChart
               rs_data={densidad_e2}
@@ -107,20 +140,9 @@ const Content: React.FC = () => {
               setChange={setChange}
             />
           </>
-
-        }
-        {
-          sidebar_props.especie_1 !== undefined && sidebar_props.especie_2 !== undefined &&
-          <Superposicion
-            actividad1={actividad_e1}
-            actividad2={actividad_e2}
-            nombre_especie_1={sidebar_props.nombre_especie_1}
-            nombre_especie_2={sidebar_props.nombre_especie_2}
-          ></Superposicion>
         }
       </div>
     </>
-
   );
 };
 
