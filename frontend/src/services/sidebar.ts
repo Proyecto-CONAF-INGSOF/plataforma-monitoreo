@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 
 // Importamos las variables de entorno definidas en el archivo .env
 const ip = import.meta.env.VITE_BACKEND_IP || 'localhost';
@@ -15,10 +15,10 @@ async function getRegiones() {
         return data;
     } catch (error) {
         if (axios.isAxiosError(error)) {
-            console.log("Error message: ", error.message);
+            console.log('Error message: ', error.message);
             return error.message;
         } else {
-            console.log("Unexpected error: ", error);
+            console.log('Unexpected error: ', error);
             return 'Error inesperado';
         }
     }
@@ -35,13 +35,13 @@ async function getUnidades(region: string) {
     try {
         const url = `http://${ip}:${port}/fotomonitoreo/regiones/${region}`;
         const { data } = await axios.get<Unidad[]>(url);
-        return data
+        return data;
     } catch (error) {
         if (axios.isAxiosError(error)) {
-            console.log("Error message: ", error.message);
+            console.log('Error message: ', error.message);
             return error.message;
         } else {
-            console.log("Unexpected error: ", error);
+            console.log('Unexpected error: ', error);
             return 'Error inesperado';
         }
     }
@@ -54,13 +54,13 @@ async function getAnios(region: string, unidad: string) {
     try {
         const url = `http://${ip}:${port}/fotomonitoreo/regiones/${region}/${unidad}`;
         const { data } = await axios.get<Anio[]>(url);
-        return data
+        return data;
     } catch (error) {
         if (axios.isAxiosError(error)) {
-            console.log("Error message: ", error.message);
+            console.log('Error message: ', error.message);
             return error.message;
         } else {
-            console.log("Unexpected error: ", error);
+            console.log('Unexpected error: ', error);
             return 'Error inesperado';
         }
     }
@@ -78,13 +78,13 @@ async function getEspecies(region: string, unidad: string, anio: string) {
     try {
         const url = `http://${ip}:${port}/fotomonitoreo/regiones/${region}/${unidad}/${anio}`;
         const { data } = await axios.get<Especie[]>(url);
-        return data
+        return data;
     } catch (error) {
         if (axios.isAxiosError(error)) {
-            console.log("Error message: ", error.message);
+            console.log('Error message: ', error.message);
             return error.message;
         } else {
-            console.log("Unexpected error: ", error);
+            console.log('Unexpected error: ', error);
             return 'Error inesperado';
         }
     }

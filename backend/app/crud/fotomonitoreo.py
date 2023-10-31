@@ -1,49 +1,8 @@
-import json
-
 from asyncpg import Connection, Record
 from fastapi import HTTPException
 
 
-async def get_example(conn: Connection):
-    try:
-        query = "SELECT * from inputs limit 5;"
-        result = await conn.fetch(query)
-        # Process the result here (e.g., print it)
-        print(result)
-    except Exception as _:
-        raise HTTPException(status_code=500, detail="Error inesperado")
-
-
-async def obtener_superposicion_horaria(especie1: str, especie2: str, conn: Connection):
-    try:
-        query1 = """SELECT b."Ano", b."Unidad_COD", b."Fecha_hora", b."Nom_comun", b."Hora", a."Act_den" 
-                    FROM base_de_datos AS b
-                    JOIN Act_over AS a ON b."row.names" = a."row.names" 
-                    WHERE b."Nom_comun" = $1;"""
-
-        query2 = """SELECT b."Ano", b."Unidad_COD", b."Fecha_hora", b."Nom_comun", b."Hora", a."Act_den" 
-                    FROM base_de_datos AS b
-                    JOIN Act_over AS a ON b."row.names" = a."row.names" 
-                    WHERE b."Nom_comun" = $1;"""
-
-        result1 = await conn.fetch(query1, especie1, record_class=Record)
-        result2 = await conn.fetch(query2, especie2, record_class=Record)
-
-        result1_json = json.dumps(result1, indent=4, default=str)
-        result2_json = json.dumps(result2, indent=4, default=str)
-        print(result1)
-
-        return {
-            "query1_result": json.loads(result1_json),
-            "query2_result": json.loads(result2_json),
-        }
-
-    except Exception as e:
-        print(e)
-        raise HTTPException(status_code=500, detail="Error inesperado")
-
-
-async def obtener_actividad(unidad: str, anio: int, especie: str, conn: Connection):
+async def obtener_densidad(unidad: str, anio: int, especie: str, conn: Connection):
     try:
         query = """ SELECT "Hora", "Act"
                     FROM act
@@ -58,8 +17,34 @@ async def obtener_actividad(unidad: str, anio: int, especie: str, conn: Connecti
         raise HTTPException(status_code=500, detail="Error inesperado")
 
 
-async def obtener_ocupacion_sitio(especie: str, conn: Connection):
-    return
+# Todo: Esta tabla no tiene especie por id, solo por nombre comun
+async def obtener_actividad(unidad: str, anio: int, especie: str, conn: Connection):
+    # SELECT "Hora", "Act_den" FROM act_over WHERE "Unidad_COD" = 'MNCD' AND "Ano" = 2022 AND "Nom_comun" = 'Puma';
+    # SELECT * FROM act_over WHERE "Unidad_COD" = 'PNVPR' AND "Ano" = 2022 AND "Nom_comun" = (SELECT DISTINCT("Nom_comun") FROM inputs WHERE "Cod_especie" = 'LOPR' LIMIT 1);
+    try:
+        query = 'SELECT "Hora", "Act_den" FROM act_over WHERE "Unidad_COD" = $1 AND "Ano" = $2 AND "Nom_comun" = (SELECT DISTINCT("Nom_comun") FROM inputs WHERE "Cod_especie" = $3 LIMIT 1)'
+
+        result = await conn.fetch(query, unidad, anio, especie, record_class=Record)
+
+        return result
+    except Exception as e:
+        print(e)
+        raise HTTPException(status_code=500, detail="Error inesperado")
+
+
+async def obtener_ocupacion_sitio(
+    unidad: str, dias: int, especie: str, conn: Connection
+) -> list[Record]:
+    try:
+        query = 'SELECT "Dias", "Naive", "Ano", "Superior", "Inferior" from occ WHERE "Cod_especie" = $1 AND "Dias" = $2 AND "Unidad_COD" = $3'
+        result: list[Record] = await conn.fetch(
+            query, especie, dias, unidad, record_class=Record
+        )
+
+        return result
+    except Exception as e:
+        print(e)
+        raise HTTPException(status_code=500, detail="Error inesperado")
 
 
 async def obtener_regiones(conn: Connection):

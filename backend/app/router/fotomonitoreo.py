@@ -1,36 +1,33 @@
 from app.crud.database import get_session_fotomonitoreo
-from app.crud.fotomonitoreo import (obtener_actividad, obtener_anios,
-                                    obtener_especies, obtener_freq_horaria,
-                                    obtener_regiones,
-                                    obtener_superposicion_horaria,
-                                    obtener_unidades)
+from app.crud.fotomonitoreo import (
+    obtener_actividad,
+    obtener_anios,
+    obtener_densidad,
+    obtener_especies,
+    obtener_freq_horaria,
+    obtener_ocupacion_sitio,
+    obtener_regiones,
+    obtener_unidades,
+)
 from asyncpg import Connection
 from fastapi import APIRouter, Depends
 
 router = APIRouter()
 
 
-@router.get("/superposicion_horaria/{especie1}/{especie2}")
-async def get_superposicion_horaria(
-    especie1: str,
-    especie2: str,
-    conn: Connection = Depends(get_session_fotomonitoreo),
-):
-    r = await obtener_superposicion_horaria(especie1, especie2, conn)
-    return r
-
-
-@router.get("/actividad/{unidad}/{anio}/{especie}")
-async def get_actividad(
+# Densidad Horaria por especie
+@router.get("/densidad_horaria/{unidad}/{anio}/{especie}")
+async def get_densidad_horaria(
     unidad: str,
     anio: int,
     especie: str,
     conn: Connection = Depends(get_session_fotomonitoreo),
 ):
-    r = await obtener_actividad(unidad, anio, especie, conn)
+    r = await obtener_densidad(unidad, anio, especie, conn)
     return r
 
 
+# Frecuencia horaria por especie
 @router.get("/freq_horaria/{unidad}/{anio}/{especie}")
 async def get_freq_horaria(
     unidad: str,
@@ -39,6 +36,30 @@ async def get_freq_horaria(
     conn: Connection = Depends(get_session_fotomonitoreo),
 ):
     r = await obtener_freq_horaria(unidad, anio, especie, conn)
+    return r
+
+
+# Ocupacion de sitio historica por especie
+@router.get("/ocupacion_sitio/{unidad}/{dias}/{especie}")
+async def get_ocupacion_sitio(
+    unidad: str,
+    dias: int,
+    especie: str,
+    conn: Connection = Depends(get_session_fotomonitoreo),
+):
+    ocupacion = await obtener_ocupacion_sitio(unidad, dias, especie, conn)
+    return ocupacion
+
+
+# Actividad aka grafico de superposicion horaria
+@router.get("/actividad/{unidad}/{anio}/{especie}")
+async def get_actividad(
+    unidad: str,
+    anio: int,
+    especie: str,
+    conn: Connection = Depends(get_session_fotomonitoreo),
+):
+    r = await obtener_actividad(unidad, anio, especie, conn)
     return r
 
 

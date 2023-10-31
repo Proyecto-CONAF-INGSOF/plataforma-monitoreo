@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 
 // Importamos las variables de entorno definidas en el archivo .env
 const ip = import.meta.env.VITE_BACKEND_IP || 'localhost';
@@ -24,12 +24,12 @@ async function loginAdmin(admin: LoginAdmin): Promise<{ status: number, data: ob
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
     }
-  }
-  const { status, data } = await axios.post(`http://${ip}:${port}/admin/login`, form_data, config)
+  };
+  const { status, data } = await axios.post(`http://${ip}:${port}/admin/login`, form_data, config);
   return { status, data };
 }
 
 
 export {
   loginAdmin,
-}
+};

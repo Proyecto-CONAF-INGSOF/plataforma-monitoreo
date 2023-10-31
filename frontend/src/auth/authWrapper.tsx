@@ -1,12 +1,15 @@
-import { createContext, useContext, useEffect, useState } from "react";
-import { JWT, LoginAdmin } from "../services/admin";
-import { loginAdmin } from "../services/admin";
-import jwt_decode from "jwt-decode";
-import { JWTPayload } from "../types";
-import Protected from "../component/Protected";
-import { Route, Routes } from "react-router-dom";
-import Home from "../pages/Home";
-import Login from "../pages/Login";
+import { createContext, useContext, useEffect, useState } from 'react';
+import jwt_decode from 'jwt-decode';
+import { Route, Routes } from 'react-router-dom';
+
+import { JWT, LoginAdmin } from '@services/admin';
+import { loginAdmin } from '@services/admin';
+import { JWTPayload } from '@/types';
+import Protected from '@admin/Protected';
+
+import Home from '@pages/Home';
+import Login from '@pages/Login';
+
 export type AuthContextType = {
   admin: Admin;
   login: (admin: LoginAdmin) => Promise<void>;
@@ -49,7 +52,7 @@ export const AuthWrapper = () => {
     } else {
       throw new Error('No se pudo iniciar sesión');
     }
-  }
+  };
   const logout = () => {
     localStorage.removeItem('token');
     setAdmin({
@@ -59,7 +62,7 @@ export const AuthWrapper = () => {
       email: '',
       is_authenticated: false,
     });
-  }
+  };
 
   // Verificar si hay un token en el local storage, si lo hay, setear el admin
   useEffect(() => {
@@ -79,7 +82,7 @@ export const AuthWrapper = () => {
         });
       }
     }
-  }, [])
+  }, []);
 
   return (
     <AuthContext.Provider value={{ admin, login, logout }}>
@@ -110,6 +113,6 @@ export const AuthWrapper = () => {
         </Routes>
       </>
     </AuthContext.Provider >
-  )
+  );
 
-}
+};
