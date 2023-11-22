@@ -74,12 +74,28 @@ const Content: React.FC = () => {
         {
           sidebar_props.especie_1 !== undefined &&
           sidebar_props.especie_2 !== undefined &&
-          <Superposicion
-            actividad1={actividad_e1}
-            actividad2={actividad_e2}
-            nombre_especie_1={sidebar_props.nombre_especie_1}
-            nombre_especie_2={sidebar_props.nombre_especie_2}
-          ></Superposicion>
+
+          <div className='contenedor'>
+            <div className='graficoOcupacion'>
+
+            </div>
+            <div className='graficoSuperposicion'>
+              <div className='header'>
+                <h3 id='titulo'>Superposición de actividad horaria</h3>
+                <button id='informacion'></button>
+                <button id='pliegue'></button>
+              </div>
+
+              <Superposicion
+                actividad1={actividad_e1}
+                actividad2={actividad_e2}
+                nombre_especie_1={sidebar_props.nombre_especie_1}
+                nombre_especie_2={sidebar_props.nombre_especie_2}
+              ></Superposicion>
+
+            </div>
+          </div>
+
         }
         <ButtonEspecie
           especie={sidebar_props.especie_1}
