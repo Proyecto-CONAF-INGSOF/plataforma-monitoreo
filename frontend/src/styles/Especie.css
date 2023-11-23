@@ -1,0 +1,32 @@
+/* styles.css */
+
+.especie-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.grafico {
+  flex: 1 0 50%;
+  box-sizing: border-box;
+  padding: 8px; /* Add padding or adjust as needed */
+  /* Rounded corners */
+}
+
+.highcharts-graf {
+  /* rounded corners */
+  border-radius: 5px;
+}
+
+.boxplot-graf-bottom {
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.boxplot-graf-top {
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -85,9 +85,8 @@ const BoxPlotOcupacion: React.FC<{
 
     return (
       <div>
-        <div>
-          <h2>Selecciona:</h2>
-          <select onChange={(e) => handleSelectionChange(e.target.value)} defaultValue={'30'}>
+        <div className='boxplot-graf-top'>
+          <select onChange={(e) => handleSelectionChange(e.target.value)} defaultValue={'30'} style={{ marginTop: '20px' }}>
             <option value="30">30 Días</option>
             <option value="60" >60 Días</option>
             <option value="90" >90 Días</option>
@@ -99,6 +98,7 @@ const BoxPlotOcupacion: React.FC<{
           highcharts={Highcharts}
           options={options}
           constructorType={'chart'}
+          containerProps={{ className: 'boxplot-graf-bottom' }}
         />
       </div>
     );

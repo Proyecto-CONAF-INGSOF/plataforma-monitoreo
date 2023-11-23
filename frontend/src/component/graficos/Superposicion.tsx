@@ -4,6 +4,7 @@ import HighchartsReact from 'highcharts-react-official';
 import exporting from 'highcharts/modules/exporting';
 
 import { Actividad } from '@services/actividad';
+import '@styles/Chart.css';
 
 exporting(Highcharts);
 
@@ -73,6 +74,7 @@ const Superposicion: React.FC<{
           highcharts={Highcharts}
           options={options}
           constructorType={'chart'}
+          containerProps={{ className: 'chart-superposicion' }}
         />
       </div>
     );

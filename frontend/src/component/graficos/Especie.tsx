@@ -1,4 +1,5 @@
 import { RoseChartData } from '@/types';
+import '@styles/Especie.css';
 import React from 'react';
 import RoseChart from './RoseChart';
 import BoxPlotOcupacion from './BoxPlotOcupacion';
@@ -18,26 +19,24 @@ const Especie: React.FC<{
   setChange,
 }) => {
     return (
-      <>
-        {
-          seccionVisible &&
+      <div className="especie-container">
+        {seccionVisible && (
           <>
-            <RoseChart
-              rs_data={densidad}
-            />
-
-            <RoseChart
-              rs_data={frecuencia}
-            />
-
-            <BoxPlotOcupacion
-              ocupacion={ocupacion}
-              especie={1}
-              setChange={setChange}
-            />
+            <div className="grafico">
+              <RoseChart rs_data={densidad} />
+            </div>
+            <div className="grafico">
+              <RoseChart rs_data={frecuencia} />
+            </div>
+            <div className="grafico">
+              <BoxPlotOcupacion ocupacion={ocupacion} especie={1} setChange={setChange} />
+            </div>
+            <div className="grafico">
+              <div>Placeholder</div>
+            </div>
           </>
-        }
-      </>
+        )}
+      </div>
     );
   };
 

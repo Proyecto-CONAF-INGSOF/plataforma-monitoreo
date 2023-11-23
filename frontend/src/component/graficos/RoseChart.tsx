@@ -78,6 +78,7 @@ const RoseChart: React.FC<{
           highcharts={Highcharts}
           options={options}
           constructorType={'chart'}
+          containerProps={{ className: 'highcharts-graf' }}
         />
       </div>
     );
