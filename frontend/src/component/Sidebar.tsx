@@ -180,7 +180,7 @@ const Sidebar: React.FC<{ setSidebarProps: (newProps: SidebarProps) => void }>
             <p>Otros</p>
           </div>
           <label htmlFor="region">Selecciona región:</label>
-          <select name="region" id="region" onChange={handleChange} value={side_bar_props.region}>
+          <select className='select' name="region" id="region" onChange={handleChange} value={side_bar_props.region}>
             <option value={default_value} key={default_value} disabled>Escoger</option>
             {
               regiones.map((region) => (
@@ -191,7 +191,7 @@ const Sidebar: React.FC<{ setSidebarProps: (newProps: SidebarProps) => void }>
           <br />
 
           <label htmlFor="unit">Selecciona unidad SNAPSE:</label>
-          <select name="unit" id="unit" onChange={handleChange} disabled={side_bar_props.region == default_value} value={side_bar_props.unidad}>
+          <select className='select' name="unit" id="unit" onChange={handleChange} disabled={side_bar_props.region == default_value} value={side_bar_props.unidad}>
             <option value={default_value} key={default_value} disabled>Escoger</option>
             {
               unidad.map((unidad) => (
@@ -202,7 +202,7 @@ const Sidebar: React.FC<{ setSidebarProps: (newProps: SidebarProps) => void }>
           <br />
 
           <label htmlFor="year">Selecciona año de monitoreo:</label>
-          <select name="year" id="year" onChange={handleChange} disabled={side_bar_props.unidad == default_value} value={side_bar_props.anio}>
+          <select className='select' name="year" id="year" onChange={handleChange} disabled={side_bar_props.unidad == default_value} value={side_bar_props.anio}>
             <option value={default_value} key={default_value} disabled>Escoger</option>
             {
               anios.map((anio) => (
@@ -213,7 +213,7 @@ const Sidebar: React.FC<{ setSidebarProps: (newProps: SidebarProps) => void }>
           <br />
 
           <label htmlFor="species_1">Selecciona Especie 1:</label>
-          <select name="species_1" id="species_1" onChange={handleChange} disabled={side_bar_props.anio == default_value} value={side_bar_props.especie_1}>
+          <select className='select' name="species_1" id="species_1" onChange={handleChange} disabled={side_bar_props.anio == default_value} value={side_bar_props.especie_1}>
             <option value={default_value} key={default_value} disabled>Escoger</option>
             {
               especies.map((especie) => (
@@ -224,7 +224,7 @@ const Sidebar: React.FC<{ setSidebarProps: (newProps: SidebarProps) => void }>
           <br />
 
           <label htmlFor="species_2">Selecciona Especie 2:</label>
-          <select name="species_2" id="species_2" onChange={handleChange} disabled={side_bar_props.anio == default_value} value={side_bar_props.especie_2}>
+          <select className='select' name="species_2" id="species_2" onChange={handleChange} disabled={side_bar_props.anio == default_value} value={side_bar_props.especie_2}>
             <option value={default_value} key={default_value} disabled>Escoger</option>
             {
               especies.map((especie) => (
@@ -234,7 +234,7 @@ const Sidebar: React.FC<{ setSidebarProps: (newProps: SidebarProps) => void }>
           </select>
           <br />
 
-          <button type="submit" disabled={side_bar_props.especie_1 == default_value || side_bar_props.especie_2 == default_value}
+          <button className='button' type="submit" disabled={side_bar_props.especie_1 == default_value || side_bar_props.especie_2 == default_value}
             // We Center the button using style
             style={{
               display: 'block',
