@@ -63,8 +63,7 @@ const OcupacionSitio: React.FC<{
         xAxis: {
           title: {
             text: 'Nom_comun'
-          },
-          categories: ["Perro","Gato","Cabra"],
+          }
         },
         yAxis: {
           title: {

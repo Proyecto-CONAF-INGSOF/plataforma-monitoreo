@@ -8,6 +8,7 @@ from app.crud.fotomonitoreo import (
     obtener_ocupacion_sitio,
     obtener_regiones,
     obtener_unidades,
+    obtener_all_occ
 )
 from asyncpg import Connection
 from fastapi import APIRouter, Depends
@@ -96,9 +97,9 @@ async def get_especies(
     return rows
 
 
-@router.get("/regiones/{region}/{unidad}/{anio}/")
+@router.get("/ocupacion_full/{unidad}/{anio}/{dias}")
 async def get_ocupacion_full(
-    region: int, unidad: str, conn: Connection = Depends(get_session_fotomonitoreo)
+     unidad: str, anio: int, conn: Connection = Depends(get_session_fotomonitoreo)
 ): 
-    # rows = await obtener_ocupaciones(unidad, anio, region, conn)
-    return 1    
+    rows = await obtener_all_occ(unidad, anio, conn)
+    return rows

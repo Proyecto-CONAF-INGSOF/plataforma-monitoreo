@@ -3,12 +3,12 @@ import Highcharts from 'highcharts/highstock';
 import exporting from 'highcharts/modules/exporting';
 import HighchartsReact from 'highcharts-react-official';
 
-import { Ocupacion } from '@services/ocupacion_sitio';
+import { OcupacionAll } from '@services/ocupacion_all';
 
 exporting(Highcharts);
 
 const BoxPlotOcupacion: React.FC<{
-  ocupacion: Ocupacion[],
+  ocupacion: OcupacionAll[],
   especie: number,
   setChange: (dias: string, especie: number) => void
 }> = ({

@@ -95,3 +95,17 @@ async def obtener_especies(unidad: str, anio: int, region: int, conn: Connection
     except Exception as e:
         print(e)
         raise HTTPException(status_code=500, detail="Error inesperado")
+
+
+async def obtener_all_occ(unidad: str, anio: int, conn: Connection, dias = 30
+) -> list[Record]:
+    try:
+        query = 'SELECT "Dias", "Naive", "Ano", "Superior", "Inferior", "Nom_comun" from occ WHERE "Dias" = $1 AND "Unidad_COD" = $2 AND "Ano" = $3'
+        result: list[Record] = await conn.fetch(
+            query, dias, unidad, anio, record_class=Record
+        )
+
+        return result
+    except Exception as e:
+        print(e)
+        raise HTTPException(status_code=500, detail="Error inesperado")
