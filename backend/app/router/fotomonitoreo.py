@@ -94,3 +94,11 @@ async def get_especies(
 ):
     rows = await obtener_especies(unidad, anio, region, conn)
     return rows
+
+
+@router.get("/regiones/{region}/{unidad}/{anio}/")
+async def get_ocupacion_full(
+    region: int, unidad: str, conn: Connection = Depends(get_session_fotomonitoreo)
+): 
+    # rows = await obtener_ocupaciones(unidad, anio, region, conn)
+    return 1    

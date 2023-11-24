@@ -1,7 +1,7 @@
 import { RoseChartData } from '@/types';
 import React from 'react';
 import RoseChart from './RoseChart';
-import BoxPlotOcupacion from './BoxPlotOcupacion';
+import OcupacionSitio from './OcupacionSitio';
 import { Ocupacion } from '@/services/ocupacion_sitio';
 
 const Especie: React.FC<{
@@ -30,7 +30,7 @@ const Especie: React.FC<{
               rs_data={frecuencia}
             />
 
-            <BoxPlotOcupacion
+            <OcupacionSitio
               ocupacion={ocupacion}
               especie={1}
               setChange={setChange}

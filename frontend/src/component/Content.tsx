@@ -80,7 +80,17 @@ const Content: React.FC = () => {
             nombre_especie_1={sidebar_props.nombre_especie_1}
             nombre_especie_2={sidebar_props.nombre_especie_2}
           ></Superposicion>
-        }
+        } 
+        {
+          sidebar_props.especie_1 !== undefined &&
+          sidebar_props.especie_2 !== undefined &&
+          <Superposicion
+            actividad1={actividad_e1}
+            actividad2={actividad_e2}
+            nombre_especie_1={sidebar_props.nombre_especie_1}
+            nombre_especie_2={sidebar_props.nombre_especie_2}
+          ></Superposicion>
+        } 
         <ButtonEspecie
           especie={sidebar_props.especie_1}
           seccion_visible={seccion1Visible}
