@@ -3,6 +3,7 @@
   margin-top: 60px;
   margin-left: 250px;
   padding: 20px;
+  background-color: #edf0f4;
 }
 
 .separador {
@@ -55,47 +56,126 @@
 
 .contenedor {
   display: grid;
-  grid-template-areas: 'graficoOcupacion graficoSuperposicion';
+  grid-template-areas: 'graficoIzquierda graficoDerecha';
   grid-template-columns: 1fr 1fr;
   height: 100%;
   margin: 20px;
-  background-color: aqua;
 }
 
-.graficoOcupacion {
-  grid-area: graficoOcupacion;
+.contenedor2 {
+  display: grid;
+  grid-template-areas:
+    'graficoIzquierda graficoDerecha'
+    'graficoIzquierdaBajo graficoDerechaBajo'
+  ;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  height: 100%;
+  margin: 20px;
+
+}
+
+.graficoIzquierda {
+  grid-area: graficoIzquierda;
   background-color: beige;
   margin: 20px;
-  padding: 10px;
+
   border-radius: 10px;
 }
 
-.graficoSuperposicion {
-  grid-area: graficoSuperposicion;
+.graficoDerecha {
+  grid-area: graficoDerecha;
   background-color: beige;
   margin: 20px;
-  padding: 10px;
+
+  border-radius: 10px;
+}
+
+.graficoIzquierdaBajo {
+  grid-area: graficoIzquierdaBajo;
+  background-color: beige;
+  margin: 20px;
+
+  border-radius: 10px;
+}
+
+.graficoDerechaBajo {
+  grid-area: graficoDerechaBajo;
+  background-color: beige;
+  margin: 20px;
+
   border-radius: 10px;
 }
 
 .header {
   display: flex;
-  height: auto;
+  justify-content: space-between;
+  /* Distribuye el espacio entre los elementos */
+  align-items: center;
+  border-top: 10px solid green;
+  padding: 10px;
+  /* Añade relleno para separar del borde */
+}
+
+.left {
+  display: flex;
+  align-items: center;
+}
+
+#titulo {
+  text-align: left;
+  margin-right: 10px;
+  /* Añade espacio entre titulo e informacion */
+}
+
+.informacion {
+  text-align: left;
+  margin-right: auto;
+  /* Empujar hacia la izquierda todo lo posible */
+}
+
+.pliegue {
+  width: 50px;
+  text-align: right;
+}
+
+/* Espaciado entre el título y la información */
+#titulo+#informacion {
+  margin-left: 10px;
+}
+
+.contenedor3 {
+  display: flex;
+  padding: 10px;
+}
+
+.selectionBar {
+  color: '#4B4B4B';
+  border: 1px solid '#4B4B4B';
+  background-color: white;
+  font-weight: lighter;
+
+  width: 100%;
+
+
+}
+
+select {
+  -webkit-appearance: none;
+
+  appearance: none;
+  width: 88%;
+  height: 35px;
+  border-radius: 7px;
+  font-size: 12px;
+  font-weight: bold;
+  color: #5E5E5E;
   text-align: center;
-  border-top-color: green;
-}
-
-.header>titulo {
-  flex: 1;
-  order: 1;
-}
-
-.header>pliegue {
-  order: 3;
-  width: 50px;
-}
-
-.header>informacion {
-  order: 2;
-  width: 50px;
+  padding-left: 10px;
+  background-image: url('Polygon1.png');
+  /* Ruta a tu imagen de flecha */
+  background-repeat: no-repeat;
+  background-position: right 4% center;
+  /* Ajusta el valor según tus necesidades */
+  background-size: 14px 12px;
 }

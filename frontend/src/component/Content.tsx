@@ -65,7 +65,6 @@ const Content: React.FC = () => {
       fetchOcupacion(setOcupacionE2, sidebar_props.unidad, dias, sidebar_props.especie_2);
     }
   };
-
   return (
     <>
       <Sidebar setSidebarProps={updateSidebarProps} />
@@ -76,14 +75,18 @@ const Content: React.FC = () => {
           sidebar_props.especie_2 !== undefined &&
 
           <div className='contenedor'>
-            <div className='graficoOcupacion'>
+            <div className='graficoIzquierda'>
 
             </div>
-            <div className='graficoSuperposicion'>
+            <div className='graficoDerecha'>
               <div className='header'>
-                <h3 id='titulo'>Superposición de actividad horaria</h3>
-                <button id='informacion'></button>
-                <button id='pliegue'></button>
+                <div className='left'>
+                  <h3 id='titulo'>Superposición de actividad horaria</h3>
+                  <button className='informacion' ></button>
+                </div>
+                <div className='right'>
+                  <button className='pliegue'></button>
+                </div>
               </div>
 
               <Superposicion

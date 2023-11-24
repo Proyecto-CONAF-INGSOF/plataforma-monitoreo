@@ -85,9 +85,8 @@ const BoxPlotOcupacion: React.FC<{
 
     return (
       <div>
-        <div>
-          <h2>Selecciona:</h2>
-          <select onChange={(e) => handleSelectionChange(e.target.value)} defaultValue={'30'}>
+        <div className='contenedor3' >
+          <select className='selectionBar' onChange={(e) => handleSelectionChange(e.target.value)} defaultValue={'30'}>
             <option value="30">30 Días</option>
             <option value="60" >60 Días</option>
             <option value="90" >90 Días</option>

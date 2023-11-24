@@ -18,26 +18,61 @@ const Especie: React.FC<{
   setChange,
 }) => {
     return (
-      <>
+      <div>
         {
           seccionVisible &&
-          <>
-            <RoseChart
-              rs_data={densidad}
-            />
+          <div className='contenedor2'>
+            <div className='graficoDerecha'>
+              <div className='header'>
+                <div className='left'>
+                  <h3 id='titulo'>Superposición de actividad horaria</h3>
+                  <button className='informacion' ></button>
+                </div>
+                <div className='right'>
+                  <button className='pliegue'></button>
+                </div>
+              </div>
 
-            <RoseChart
-              rs_data={frecuencia}
-            />
+              <RoseChart
+                rs_data={densidad}
+              />
+            </div>
 
-            <BoxPlotOcupacion
-              ocupacion={ocupacion}
-              especie={1}
-              setChange={setChange}
-            />
-          </>
+            <div className='graficoIzquierda'>
+              <div className='header'>
+                <div className='left'>
+                  <h3 id='titulo'>Superposición de actividad horaria</h3>
+                  <button className='informacion' ></button>
+                </div>
+                <div className='right'>
+                  <button className='pliegue'></button>
+                </div>
+              </div>
+              <RoseChart
+                rs_data={frecuencia}
+              />
+            </div>
+
+            <div className='graficoIzquierdaBajo'>
+              <div className='header'>
+                <div className='left'>
+                  <h3 id='titulo'>Superposición de actividad horaria</h3>
+                  <button className='informacion' ></button>
+                </div>
+                <div className='right'>
+                  <button className='pliegue'></button>
+                </div>
+              </div>
+
+              <BoxPlotOcupacion
+                ocupacion={ocupacion}
+                especie={1}
+                setChange={setChange}
+              />
+            </div>
+          </div>
         }
-      </>
+      </div>
     );
   };
 
