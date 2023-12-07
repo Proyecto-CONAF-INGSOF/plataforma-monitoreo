@@ -1,6 +1,6 @@
 # Plataforma monitoreo
 
-## Configuracion ambiente de desarrollo
+## Configuracion ambiente de desarrollo (Linux)
 
 Para configurar el ambiente de desarrollo, se debe tener `docker` instalado. Luego ejecutar el siguiente comando en la consola/terminal:
 
@@ -26,3 +26,11 @@ docker exec -it plataforma-monitoreo-frontend-1 bash # Entrar al contenedor del 
 npm install chilean-rutify
 exit
 ```
+
+# Configuracion ambiente de desarrollo (Windows)
+
+Abrir powershell y ejecutar el siguiente script
+```powershell
+.\restart-docker.ps1
+```
+Esto creara los contenedores necesarios para correr el ambiente de desarrollo
